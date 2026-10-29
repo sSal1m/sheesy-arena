@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 660" role="img" aria-labelledby="title desc">
+<title id="title">Dual Arduino Ethernet FUEL bağlantısı</title><desc id="desc">Windows bilgisayarı ve iki Arduino VLAN 100 switch üzerinden bağlanır. Her sensör uygun lojik arayüz üzerinden kendi Arduino D2 pinine bağlanır; D3 isteğe bağlı bağımsız ikinci kanaldır.</desc>
+<style>text{font-family:Segoe UI,Arial,sans-serif;fill:#e6edf3;font-size:18px}.small{font-size:15px;fill:#b7c4d4}.box{fill:#172336;stroke:#8294ad;stroke-width:2;rx:12}.line{fill:none;stroke:#91a5bf;stroke-width:3}.red{stroke:#f27583}.blue{stroke:#6baaff}</style>
+<rect width="1100" height="660" fill="#0c1420"/>
+<text x="36" y="42" font-size="26">Dual Arduino Ethernet FUEL — VLAN 100</text>
+<rect class="box" x="350" y="70" width="400" height="88"/><text x="375" y="103">Windows / Cheesy Arena</text><text class="small" x="375" y="133">10.0.100.5/24 · TCP 1760 · HMAC doğrulama</text>
+<path class="line" d="M550 158V200"/><rect class="box" x="350" y="200" width="400" height="90"/><text x="375" y="234">Cisco switch · 10.0.100.3</text><text class="small" x="375" y="265">Gi0/23 ve Gi0/24: access VLAN 100</text>
+<path class="line red" d="M430 290V325H240V355"/><path class="line blue" d="M670 290V325H860V355"/>
+<rect class="box red" x="55" y="355" width="370" height="110"/><text x="80" y="389">RED Uno + Ethernet Shield</text><text class="small" x="80" y="419">10.0.100.201 · fuel-red-01 · Gi0/23</text><text class="small" x="80" y="446">Ethernet CS D10 · SD CS D4 HIGH</text>
+<rect class="box blue" x="675" y="355" width="370" height="110"/><text x="700" y="389">BLUE Uno + Ethernet Shield</text><text class="small" x="700" y="419">10.0.100.202 · fuel-blue-01 · Gi0/24</text><text class="small" x="700" y="446">Ethernet CS D10 · SD CS D4 HIGH</text>
+<path class="line red" d="M240 465V510"/><path class="line blue" d="M860 465V510"/>
+<rect class="box red" x="55" y="510" width="370" height="82"/><text x="80" y="540">RED sensör → uygun lojik arayüz → D2</text><text class="small" x="80" y="568">D3: yalnız bağımsız ikinci kanal varsa</text>
+<rect class="box blue" x="675" y="510" width="370" height="82"/><text x="700" y="540">BLUE sensör → uygun lojik arayüz → D2</text><text class="small" x="700" y="568">Lojik GND / izolasyon sensöre göre</text>
+<text class="small" x="36" y="630">Sensör modeli belirlenmedi: besleme/polarite veri sayfasından doğrulanmalı. 12/24 V sinyal doğrudan GPIO'ya bağlanmaz.</text>
+</svg>

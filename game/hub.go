@@ -156,6 +156,15 @@ func (hub *Hub) getCurrentShift(matchStartTime, currentTime time.Time) (Shift, b
 	return ShiftCount, false
 }
 
+// ScoringShiftAt uses the same grace periods as the cumulative PLC scoring path.
+// Sensors are physical events, including events during inactive shifts.
+func (hub *Hub) ScoringShiftAt(matchStartTime, currentTime time.Time) (Shift, bool) {
+	if matchStartTime.IsZero() || currentTime.Before(matchStartTime) {
+		return ShiftCount, false
+	}
+	return hub.getCurrentShift(matchStartTime, currentTime)
+}
+
 func (hub *Hub) getScoringGracePeriod(shift Shift) time.Duration {
 	if hub.isShiftActive(shift) {
 		return time.Duration(ScoringGracePeriodSec) * time.Second

@@ -15,6 +15,7 @@ import (
 var errNoScoreChange = errors.New("no score change")
 
 type FuelCounts struct {
+	Source           string
 	Auto             int
 	Teleop           int
 	RawAuto          int
@@ -135,18 +136,28 @@ func (arena *Arena) newFuelAttemptLocked(match *model.Match) {
 		mode = model.FuelPlcCorrection
 	}
 	arena.fuel = model.FuelCheckpoint{
-		FuelMetadata: model.FuelMetadata{AttemptId: uuid.NewString(), Mode: mode},
+		FuelMetadata: model.FuelMetadata{AttemptId: uuid.NewString(), Mode: mode, RedSource: arena.automaticFuelSources["red"], BlueSource: arena.automaticFuelSources["blue"]},
 		Match:        *match, Status: "prepared", Phase: int(PreMatch), Revision: revision,
 	}
 	arena.fuel.Red.Suspended = "Waiting for a fresh PLC zero after reset"
 	arena.fuel.ResultAttemptId = arena.fuel.AttemptId
 	arena.fuel.Blue.Suspended = arena.fuel.Red.Suspended
+	if arena.fuel.RedSource == "arduino" {
+		arena.fuel.Red.Suspended = ""
+	}
+	if arena.fuel.BlueSource == "arduino" {
+		arena.fuel.Blue.Suspended = ""
+	}
 }
 
 func (arena *Arena) resetFuelCursor() {
 	arena.scoreMutex.Lock()
 	defer arena.scoreMutex.Unlock()
-	for _, source := range []*model.FuelAlliance{&arena.fuel.Red, &arena.fuel.Blue} {
+	for index, source := range []*model.FuelAlliance{&arena.fuel.Red, &arena.fuel.Blue} {
+		if index == 0 && arena.fuel.RedSource == "arduino" || index == 1 && arena.fuel.BlueSource == "arduino" {
+			source.Suspended = ""
+			continue
+		}
 		source.Armed = false
 		source.Suspended = "Waiting for a fresh PLC zero after reset"
 		source.LastCount = 0
@@ -229,15 +240,18 @@ func (arena *Arena) fuelStateLocked() FuelState {
 		CanRebase:  editable && fuel.Mode == model.FuelPlcCorrection && !fuel.Recovered,
 		Recovered:  fuel.Recovered, CheckpointAt: fuel.UpdatedAt, StorageError: arena.fuelStorageError,
 	}
-	counts := func(source model.FuelAlliance) FuelCounts {
+	counts := func(source model.FuelAlliance, owner string) FuelCounts {
+		if owner == "" {
+			owner = "plc"
+		}
 		hub := effectiveFuel(source, fuel.Mode)
-		result := FuelCounts{Auto: hub.GetShiftCount(game.ShiftAuto, true), Teleop: hub.GetTeleopActiveFuelCount(),
+		result := FuelCounts{Source: owner, Auto: hub.GetShiftCount(game.ShiftAuto, true), Teleop: hub.GetTeleopActiveFuelCount(),
 			RawAuto: source.Raw.GetShiftCount(game.ShiftAuto, true), RawTeleop: source.Raw.GetTeleopActiveFuelCount(), Suspended: source.Suspended}
 		result.AutoAdjustment = result.Auto - result.RawAuto
 		result.TeleopAdjustment = result.Teleop - result.RawTeleop
 		return result
 	}
-	state.Red, state.Blue = counts(fuel.Red), counts(fuel.Blue)
+	state.Red, state.Blue = counts(fuel.Red, fuel.RedSource), counts(fuel.Blue, fuel.BlueSource)
 	return state
 }
 
@@ -246,6 +260,7 @@ func (arena *Arena) syncFuelPhase() {
 	arena.scoreMutex.Lock()
 	defer arena.scoreMutex.Unlock()
 	arena.fuel.ClockStart = arena.MatchStartTime
+	arena.fuel.Aborted, arena.fuel.StoppedAt = arena.matchAborted, arena.matchStopTime
 	if arena.fuel.Phase != int(arena.MatchState) {
 		arena.fuel.Phase = int(arena.MatchState)
 		arena.fuel.Revision++
@@ -267,6 +282,9 @@ func (arena *Arena) processFuelSnapshot(snapshot plc.FuelSnapshot, now time.Time
 	}
 	changed := false
 	for index, source := range []*model.FuelAlliance{&arena.fuel.Red, &arena.fuel.Blue} {
+		if index == 0 && arena.fuel.RedSource == "arduino" || index == 1 && arena.fuel.BlueSource == "arduino" {
+			continue
+		}
 		count := snapshot.Red
 		if index == 1 {
 			count = snapshot.Blue
@@ -432,6 +450,9 @@ func (arena *Arena) ApplyFuelCommand(kind string, command model.FuelCommand, act
 		if !state.CanRebase || command.Alliance != "red" && command.Alliance != "blue" || source.Suspended == "" {
 			return fail(fmt.Errorf("PLC rebase is not available"))
 		}
+		if command.Alliance == "red" && candidate.RedSource == "arduino" || command.Alliance == "blue" && candidate.BlueSource == "arduino" {
+			return fail(fmt.Errorf("this alliance is owned by Arduino, not PLC"))
+		}
 		snapshot := arena.Plc.GetFuelSnapshot()
 		age := time.Since(snapshot.ReadAt)
 		if !snapshot.Healthy || snapshot.ReadAt.IsZero() || age > 500*time.Millisecond || age < -50*time.Millisecond {
@@ -588,7 +609,7 @@ func (arena *Arena) recoverFuel(checkpoint *model.FuelCheckpoint) error {
 }
 
 func (arena *Arena) fuelGracePendingLocked() bool {
-	if !arena.fuel.Started || arena.fuel.Recovered || arena.fuel.Mode == model.FuelManual || !arena.Plc.IsEnabled() {
+	if !arena.fuel.Started || arena.fuel.Recovered || arena.fuel.Mode == model.FuelManual || !arena.Plc.IsEnabled() && arena.fuel.RedSource != "arduino" && arena.fuel.BlueSource != "arduino" {
 		return false
 	}
 	end := arena.MatchStartTime.Add(game.GetDurationToTeleopEnd())

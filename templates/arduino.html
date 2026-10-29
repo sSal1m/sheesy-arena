@@ -1,0 +1,21 @@
+{{define "title"}}Arduino FUEL Devices{{end}}
+{{define "body"}}
+<main class="container my-4">
+  <div class="d-flex justify-content-between flex-wrap gap-2 mb-3"><h1 class="h3">Arduino FUEL Devices</h1><a class="btn btn-outline-secondary" href="/panels/manual_fuel">Manual FUEL Control</a></div>
+  <div id="arduinoError" class="alert alert-danger" hidden role="alert"></div>
+  <div class="alert alert-info" id="arduinoListener">Loading device status…</div>
+  <div id="arduinoDevices" class="row g-4"></div>
+  <p class="small text-body-secondary mt-3">Each alliance has one automatic source: PLC or Arduino. Manual corrections remain separate. Detected / dropped are device boot counters; accepted / rejected / duplicates are server-session counters. Keys are never displayed.</p>
+  <p class="small text-body-secondary">Dropped events may include requests awaiting acknowledgment. Reconcile the audit log before correcting scores.</p>
+  <section class="card mt-4 border-warning"><div class="card-body">
+    <h2 class="h4 text-warning">Isolated sensor simulation</h2>
+    <p>This sandbox never changes the live match, result database or connected devices. RED loses AUTO in this fixture; BLUE wins AUTO. Phase selection uses the existing game scoring rules.</p>
+    <div class="row g-3 align-items-end">
+      <div class="col-md-5"><label for="simulationPhase" class="form-label">Fixture phase</label><select id="simulationPhase" class="form-select"><option value="auto">AUTO</option><option value="transition">TELEOP transition</option><option value="shift1">TELEOP shift 1 (RED active)</option><option value="shift2">TELEOP shift 2 (BLUE active)</option><option value="endgame">Endgame</option><option value="post-match">Post-match grace period</option></select></div>
+      <div class="col-md-7 d-flex gap-2 flex-wrap"><button class="btn btn-danger" data-simulate="red">RED sensor +1</button><button class="btn btn-primary" data-simulate="blue">BLUE sensor +1</button><button class="btn btn-outline-warning" id="simulationReset">Reset sandbox</button></div>
+    </div>
+    <div id="simulationResult" class="mt-3 fw-semibold" role="status">No simulated events.</div>
+  </div></section>
+</main>
+{{end}}
+{{define "script"}}<script src="/static/js/arduino.js"></script>{{end}}

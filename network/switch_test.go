@@ -9,6 +9,8 @@ import (
 	"github.com/Team254/cheesy-arena/model"
 	"github.com/stretchr/testify/assert"
 	"net"
+	"os"
+	"strings"
 	"testing"
 	"time"
 )
@@ -33,6 +35,9 @@ func TestConfigureSwitch(t *testing.T) {
 	mockTelnet(t, sw.port, &command1, &command2)
 	assert.Nil(t, sw.ConfigureTeamEthernet([6]*model.Team{nil, nil, nil, nil, nil, nil}))
 	assert.Equal(t, expectedResetCommand, command1)
+	assert.NotContains(t, command1, "Vlan100")
+	assert.NotContains(t, command1, "GigabitEthernet0/23")
+	assert.NotContains(t, command1, "GigabitEthernet0/24")
 	assert.Equal(t, "", command2)
 	assert.Equal(t, "ACTIVE", sw.Status)
 
@@ -83,6 +88,14 @@ func TestConfigureSwitch(t *testing.T) {
 			"end\nexit\n",
 		command2,
 	)
+}
+
+func TestArduinoSwitchPortsRemainOnFieldVlan(t *testing.T) {
+	data, err := os.ReadFile("../switch_config.txt")
+	assert.NoError(t, err)
+	for _, port := range []int{23, 24} {
+		assert.Contains(t, strings.ReplaceAll(string(data), "\r\n", "\n"), fmt.Sprintf("interface GigabitEthernet0/%d\n switchport access vlan 100\n switchport mode access", port))
+	}
 }
 
 func mockTelnet(t *testing.T, port int, command1 *string, command2 *string) {

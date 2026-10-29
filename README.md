@@ -6,6 +6,8 @@ Türkçe teknik dokümantasyon: [Ayrıntılı sistem haritası](docs/SISTEM-HARI
 
 2026 REBUILT: [Manual FUEL Control — kullanım, mimari ve test raporu](docs/manual-fuel/README.md).
 
+Donanım entegrasyonu: [Dual Arduino Ethernet FUEL — firmware, ağ, panel ve testler](docs/arduino/README.md).
+
 For the game-agnostic version, see [Cheesy Arena Lite](https://github.com/Team254/cheesy-arena-lite).
 
 ## Key features

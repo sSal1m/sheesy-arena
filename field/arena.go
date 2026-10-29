@@ -7,6 +7,7 @@ package field
 
 import (
 	"fmt"
+	"github.com/Team254/cheesy-arena/fueldevice"
 	"github.com/Team254/cheesy-arena/game"
 	"github.com/Team254/cheesy-arena/led"
 	"github.com/Team254/cheesy-arena/model"
@@ -62,6 +63,11 @@ type Arena struct {
 	fuelPersistenceUncertain bool
 	fuelBooting              bool
 	lastFuelPublished        uint64
+	FuelDevices              *fueldevice.Server
+	automaticFuelSources     map[string]string
+	fuelDeviceIds            map[string]string
+	fuelSimulationMutex      sync.Mutex
+	fuelSimulation           [2]model.FuelAlliance
 	Database                 *model.Database
 	EventSettings            *model.EventSettings
 	accessPoint              network.AccessPoint

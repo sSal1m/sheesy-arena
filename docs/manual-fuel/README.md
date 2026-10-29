@@ -1,5 +1,7 @@
 # Manual FUEL Control — kullanım ve teknik teslim
 
+Ek veri kaynağı: [Dual Arduino Ethernet entegrasyonu](../arduino/README.md). Otomatik kaynağın PLC veya Arduino olduğu ittifak bazında belirlenir; aşağıdaki manuel düzeltme ve kurtarma kuralları korunur.
+
 Bu özellik 2026 REBUILT için mevcut Cheesy Arena skor hattına entegredir. Paneldeki değerler **puanlanan FUEL** sayılarıdır. Etkin değerler mevcut `game.Hub.ShiftCounts` alanına yansıtılır; `Score.Summarize`, bonus/RP, canlı ekranlar, MatchResult, sıralama, playoff ve TBA/Nexus sonuç akışları kullanılmaya devam eder.
 
 ## Erişim ve Windows'ta çalıştırma

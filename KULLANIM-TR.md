@@ -2,6 +2,8 @@
 
 Manual FUEL Control: http://localhost:8080/panels/manual_fuel — [kullanım, teknik açıklama, test raporu ve ekran görüntüleri](docs/manual-fuel/README.md).
 
+Arduino yönetimi: http://localhost:8080/panels/arduino — [iki Uno için kurulum, firmware ve bağlantı şeması](docs/arduino/README.md). Donanım yapılandırması varsayılan olarak kapalıdır; mevcut PLC/manüel skorlama korunur.
+
 Bu klasorde Team254/cheesy-arena kaynak kodu ve Windows icin derlenmis uygulama bulunur.
 
 - Baslatmak icin `Baslat.cmd` dosyasina cift tiklayin. Uygulama arka planda baslar ve tarayicida http://localhost:8080/ acilir.

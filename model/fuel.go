@@ -25,10 +25,12 @@ type FuelAlliance struct {
 }
 
 type FuelMetadata struct {
-	AttemptId string
-	Mode      string
-	Red       FuelAlliance
-	Blue      FuelAlliance
+	AttemptId  string
+	Mode       string
+	RedSource  string `json:",omitempty"`
+	BlueSource string `json:",omitempty"`
+	Red        FuelAlliance
+	Blue       FuelAlliance
 }
 
 // FuelCheckpoint is a recovery record, not an officially posted MatchResult.
@@ -39,6 +41,8 @@ type FuelCheckpoint struct {
 	Revision         uint64
 	ResultAttemptId  string
 	ClockStart       time.Time
+	Aborted          bool
+	StoppedAt        time.Time
 	Status           string
 	Phase            int
 	Started          bool
@@ -59,6 +63,9 @@ type FuelCommand struct {
 }
 
 type FuelOperation struct {
+	DeviceId        string `json:",omitempty"`
+	Boot            uint32 `json:",omitempty"`
+	EventSequence   uint32 `json:",omitempty"`
 	ResultAttemptId string
 	Mode            string
 	PreviousBase    int

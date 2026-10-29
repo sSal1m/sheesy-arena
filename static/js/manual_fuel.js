@@ -30,14 +30,15 @@ $(function () {
       for (const alliance of ["red", "blue"]) {
         const values = state[alliance === "red" ? "Red" : "Blue"];
         const manual = state.Mode === "manual";
-        $("#" + alliance + "FuelSource").text(manual ? "Manual FUEL · other PLC functions remain enabled" : "PLC base + operator corrections");
+        const source = values.Source === "arduino" ? "Arduino" : "PLC";
+        $("#" + alliance + "FuelSource").text(manual ? "Manual FUEL · other PLC functions remain enabled" : source + " base + operator corrections");
         $("#" + alliance + "FuelWarning").text(values.Suspended).prop("hidden", manual || !values.Suspended);
-        $("[data-rebase='" + alliance + "']").prop("hidden", manual || !values.Suspended).prop("disabled", !connected || !state.CanRebase || pending > 0);
+        $("[data-rebase='" + alliance + "']").prop("hidden", manual || source !== "PLC" || !values.Suspended).prop("disabled", !connected || !state.CanRebase || pending > 0);
         for (const phase of ["auto", "teleop"]) {
           const key = phase === "auto" ? "Auto" : "Teleop";
           const count = values[key];
           $("#" + alliance + "-" + phase + "-value").text(count);
-          $("#" + alliance + "-" + phase + "-source").text(manual ? "Manual scored FUEL" : "PLC " + values["Raw" + key] + " · correction " + (values[key + "Adjustment"] >= 0 ? "+" : "") + values[key + "Adjustment"]);
+          $("#" + alliance + "-" + phase + "-source").text(manual ? "Manual scored FUEL" : source + " " + values["Raw" + key] + " · correction " + (values[key + "Adjustment"] >= 0 ? "+" : "") + values[key + "Adjustment"]);
           $(".fuel-counter[data-alliance='" + alliance + "'][data-phase='" + phase + "'] [data-delta]").each(function () {
             this.disabled = !connected || !state["Can" + key] || pending >= 32 || count + Number(this.dataset.delta) < 0;
           });

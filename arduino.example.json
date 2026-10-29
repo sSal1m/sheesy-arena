@@ -1,0 +1,8 @@
+{
+  "Enabled": false,
+  "Listen": "10.0.100.5:1760",
+  "Devices": [
+    {"Id":"fuel-red-01","Alliance":"red","IP":"10.0.100.201","Key":"","Source":"arduino"},
+    {"Id":"fuel-blue-01","Alliance":"blue","IP":"10.0.100.202","Key":"","Source":"arduino"}
+  ]
+}

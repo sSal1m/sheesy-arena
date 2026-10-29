@@ -33,3 +33,7 @@ static/img/avatars
 # Local launcher logs
 arena-stdout.log
 arena-stderr.log
+
+# Private Arduino provisioning and local firmware build artifacts
+/arduino.local.json
+/firmware/local/
