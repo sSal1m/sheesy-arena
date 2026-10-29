@@ -2,6 +2,8 @@ Cheesy Arena [![Build Status](https://github.com/Team254/cheesy-arena/actions/wo
 ============
 A field management system that just works.
 
+Türkçe teknik dokümantasyon: [Ayrıntılı sistem haritası](docs/SISTEM-HARITASI.md).
+
 For the game-agnostic version, see [Cheesy Arena Lite](https://github.com/Team254/cheesy-arena-lite).
 
 ## Key features

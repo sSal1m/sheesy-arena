@@ -1,0 +1,7056 @@
+{
+  "source_commit": "a525aa290cebdcb9bc8139e51e0a098f390399f3",
+  "packages": [
+    {
+      "package": ".",
+      "source_files": 1,
+      "source_lines": 33,
+      "test_files": 0,
+      "test_functions": 0,
+      "internal_imports": [
+        "field",
+        "network",
+        "web"
+      ]
+    },
+    {
+      "package": "field",
+      "source_files": 11,
+      "source_lines": 3994,
+      "test_files": 8,
+      "test_functions": 43,
+      "internal_imports": [
+        "game",
+        "led",
+        "model",
+        "network",
+        "partner",
+        "playoff",
+        "plc",
+        "websocket"
+      ]
+    },
+    {
+      "package": "game",
+      "source_files": 9,
+      "source_lines": 810,
+      "test_files": 7,
+      "test_functions": 26,
+      "internal_imports": []
+    },
+    {
+      "package": "led",
+      "source_files": 5,
+      "source_lines": 766,
+      "test_files": 2,
+      "test_functions": 9,
+      "internal_imports": []
+    },
+    {
+      "package": "model",
+      "source_files": 17,
+      "source_lines": 1596,
+      "test_files": 15,
+      "test_functions": 50,
+      "internal_imports": [
+        "game"
+      ]
+    },
+    {
+      "package": "network",
+      "source_files": 3,
+      "source_lines": 615,
+      "test_files": 3,
+      "test_functions": 5,
+      "internal_imports": [
+        "model"
+      ]
+    },
+    {
+      "package": "partner",
+      "source_files": 4,
+      "source_lines": 1151,
+      "test_files": 4,
+      "test_functions": 16,
+      "internal_imports": [
+        "game",
+        "model"
+      ]
+    },
+    {
+      "package": "playoff",
+      "source_files": 9,
+      "source_lines": 1387,
+      "test_files": 5,
+      "test_functions": 32,
+      "internal_imports": [
+        "game",
+        "model"
+      ]
+    },
+    {
+      "package": "plc",
+      "source_files": 5,
+      "source_lines": 700,
+      "test_files": 2,
+      "test_functions": 16,
+      "internal_imports": [
+        "websocket"
+      ]
+    },
+    {
+      "package": "tournament",
+      "source_files": 6,
+      "source_lines": 819,
+      "test_files": 5,
+      "test_functions": 16,
+      "internal_imports": [
+        "game",
+        "model"
+      ]
+    },
+    {
+      "package": "web",
+      "source_files": 37,
+      "source_lines": 7375,
+      "test_files": 35,
+      "test_functions": 119,
+      "internal_imports": [
+        "field",
+        "game",
+        "led",
+        "model",
+        "partner",
+        "playoff",
+        "tournament",
+        "websocket"
+      ]
+    },
+    {
+      "package": "websocket",
+      "source_files": 2,
+      "source_lines": 253,
+      "test_files": 2,
+      "test_functions": 3,
+      "internal_imports": []
+    }
+  ],
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/",
+      "handler": "indexHandler",
+      "file": "web/web.go",
+      "line": 101,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/base.html",
+        "templates/index.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/alliance_selection",
+      "handler": "allianceSelectionGetHandler",
+      "file": "web/alliance_selection.go",
+      "line": 33,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/alliance_selection",
+      "handler": "allianceSelectionPostHandler",
+      "file": "web/alliance_selection.go",
+      "line": 42,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/alliance_selection/websocket",
+      "handler": "allianceSelectionWebsocketHandler",
+      "file": "web/alliance_selection.go",
+      "line": 274,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/alliance_selection/finalize",
+      "handler": "allianceSelectionFinalizeHandler",
+      "file": "web/alliance_selection.go",
+      "line": 178,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/alliance_selection/reset",
+      "handler": "allianceSelectionResetHandler",
+      "file": "web/alliance_selection.go",
+      "line": 148,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/alliance_selection/start",
+      "handler": "allianceSelectionStartHandler",
+      "file": "web/alliance_selection.go",
+      "line": 103,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/alliances",
+      "handler": "alliancesApiHandler",
+      "file": "web/api.go",
+      "line": 185,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/arena/websocket",
+      "handler": "arenaWebsocketApiHandler",
+      "file": "web/api.go",
+      "line": 208,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/bracket/svg",
+      "handler": "bracketSvgApiHandler",
+      "file": "web/api.go",
+      "line": 236,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/matches/{type}",
+      "handler": "matchesApiHandler",
+      "file": "web/api.go",
+      "line": 51,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/rankings",
+      "handler": "rankingsApiHandler",
+      "file": "web/api.go",
+      "line": 124,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/sponsor_slides",
+      "handler": "sponsorSlidesApiHandler",
+      "file": "web/api.go",
+      "line": 97,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/teams/{teamId}/avatar",
+      "handler": "teamAvatarsApiHandler",
+      "file": "web/api.go",
+      "line": 221,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/display",
+      "handler": "placeholderDisplayHandler",
+      "file": "web/placeholder_display.go",
+      "line": 15,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/placeholder_display.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/display/websocket",
+      "handler": "placeholderDisplayWebsocketHandler",
+      "file": "web/placeholder_display.go",
+      "line": 36,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/alliance_station",
+      "handler": "allianceStationDisplayHandler",
+      "file": "web/alliance_station_display.go",
+      "line": 15,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/alliance_station_display.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/alliance_station/websocket",
+      "handler": "allianceStationDisplayWebsocketHandler",
+      "file": "web/alliance_station_display.go",
+      "line": 37,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/announcer",
+      "handler": "announcerDisplayHandler",
+      "file": "web/announcer_display.go",
+      "line": 15,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/announcer_display.html",
+        "templates/base.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/announcer/match_load",
+      "handler": "announcerDisplayMatchLoadHandler",
+      "file": "web/announcer_display.go",
+      "line": 37,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/announcer_display_match_load.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/announcer/score_posted",
+      "handler": "announcerDisplayScorePostedHandler",
+      "file": "web/announcer_display.go",
+      "line": 52,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/announcer_display_score_posted.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/announcer/websocket",
+      "handler": "announcerDisplayWebsocketHandler",
+      "file": "web/announcer_display.go",
+      "line": 67,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/audience",
+      "handler": "audienceDisplayHandler",
+      "file": "web/audience_display.go",
+      "line": 16,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/audience_display.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/audience/websocket",
+      "handler": "audienceDisplayWebsocketHandler",
+      "file": "web/audience_display.go",
+      "line": 48,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/bracket",
+      "handler": "bracketDisplayHandler",
+      "file": "web/bracket_display.go",
+      "line": 15,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/bracket_display.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/bracket/websocket",
+      "handler": "bracketDisplayWebsocketHandler",
+      "file": "web/bracket_display.go",
+      "line": 36,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/field_monitor",
+      "handler": "fieldMonitorDisplayHandler",
+      "file": "web/field_monitor_display.go",
+      "line": 18,
+      "direct_admin_check": true,
+      "conditional_fta_auth": true,
+      "templates": [
+        "templates/field_monitor_display.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/field_monitor/websocket",
+      "handler": "fieldMonitorDisplayWebsocketHandler",
+      "file": "web/field_monitor_display.go",
+      "line": 68,
+      "direct_admin_check": true,
+      "conditional_fta_auth": true,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/fms_field_monitor",
+      "handler": "fmsFieldMonitorDisplayHandler",
+      "file": "web/field_monitor_display.go",
+      "line": 43,
+      "direct_admin_check": true,
+      "conditional_fta_auth": true,
+      "templates": [
+        "templates/fms_field_monitor_display.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/fms_field_monitor/websocket",
+      "handler": "fieldMonitorDisplayWebsocketHandler",
+      "file": "web/field_monitor_display.go",
+      "line": 68,
+      "direct_admin_check": true,
+      "conditional_fta_auth": true,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/logo",
+      "handler": "logoDisplayHandler",
+      "file": "web/logo_display.go",
+      "line": 15,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/logo_display.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/logo/websocket",
+      "handler": "logoDisplayWebsocketHandler",
+      "file": "web/logo_display.go",
+      "line": 36,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/queueing",
+      "handler": "queueingDisplayHandler",
+      "file": "web/queueing_display.go",
+      "line": 22,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/queueing_display.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/queueing/match_load",
+      "handler": "queueingDisplayMatchLoadHandler",
+      "file": "web/queueing_display.go",
+      "line": 46,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/queueing_display_match_load.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/queueing/websocket",
+      "handler": "queueingDisplayWebsocketHandler",
+      "file": "web/queueing_display.go",
+      "line": 110,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/rankings",
+      "handler": "rankingsDisplayHandler",
+      "file": "web/rankings_display.go",
+      "line": 15,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/rankings_display.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/rankings/websocket",
+      "handler": "rankingsDisplayWebsocketHandler",
+      "file": "web/rankings_display.go",
+      "line": 36,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/twitch",
+      "handler": "twitchDisplayHandler",
+      "file": "web/twitch_display.go",
+      "line": 15,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/twitch_display.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/twitch/websocket",
+      "handler": "twitchDisplayWebsocketHandler",
+      "file": "web/twitch_display.go",
+      "line": 36,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/unpicked",
+      "handler": "unpickedDisplayHandler",
+      "file": "web/unpicked_display.go",
+      "line": 13,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/unpicked_display.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/unpicked/websocket",
+      "handler": "unpickedDisplayWebsocketHandler",
+      "file": "web/unpicked_display.go",
+      "line": 38,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/wall",
+      "handler": "wallDisplayHandler",
+      "file": "web/wall_display.go",
+      "line": 16,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/wall_display.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/wall/websocket",
+      "handler": "wallDisplayWebsocketHandler",
+      "file": "web/wall_display.go",
+      "line": 49,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/webpage",
+      "handler": "webpageDisplayHandler",
+      "file": "web/webpage_display.go",
+      "line": 15,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/webpage_display.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/webpage/websocket",
+      "handler": "webpageDisplayWebsocketHandler",
+      "file": "web/webpage_display.go",
+      "line": 36,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/youtube",
+      "handler": "youtubeDisplayHandler",
+      "file": "web/youtube_display.go",
+      "line": 15,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/youtube_display.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/displays/youtube/websocket",
+      "handler": "youtubeDisplayWebsocketHandler",
+      "file": "web/youtube_display.go",
+      "line": 36,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/login",
+      "handler": "loginHandler",
+      "file": "web/login.go",
+      "line": 19,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/login",
+      "handler": "loginPostHandler",
+      "file": "web/login.go",
+      "line": 24,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/match_play",
+      "handler": "matchPlayHandler",
+      "file": "web/match_play.go",
+      "line": 36,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/audience_display_radio_buttons.html",
+        "templates/base.html",
+        "templates/match_play.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/match_play/match_load",
+      "handler": "matchPlayMatchLoadHandler",
+      "file": "web/match_play.go",
+      "line": 65,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/match_play_match_load.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/match_play/websocket",
+      "handler": "matchPlayWebsocketHandler",
+      "file": "web/match_play.go",
+      "line": 116,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/match_logs",
+      "handler": "matchLogsHandler",
+      "file": "web/match_logs.go",
+      "line": 70,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/base.html",
+        "templates/match_logs.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/match_logs/{matchId}/{stationId}/log",
+      "handler": "matchLogsViewGetHandler",
+      "file": "web/match_logs.go",
+      "line": 114,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/base.html",
+        "templates/view_match_log.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/match_review",
+      "handler": "matchReviewHandler",
+      "file": "web/match_review.go",
+      "line": 45,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/base.html",
+        "templates/match_review.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/match_review/{matchId}/edit",
+      "handler": "matchReviewEditGetHandler",
+      "file": "web/match_review.go",
+      "line": 89,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/base.html",
+        "templates/edit_match_result.html"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/match_review/{matchId}/edit",
+      "handler": "matchReviewEditPostHandler",
+      "file": "web/match_review.go",
+      "line": 183,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/match_review/{matchId}/summary",
+      "handler": "matchReviewSummaryPostHandler",
+      "file": "web/match_review.go",
+      "line": 142,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/panels/scoring/{position}",
+      "handler": "scoringPanelHandler",
+      "file": "web/scoring_panel.go",
+      "line": 37,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/base.html",
+        "templates/scoring_panel.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/panels/scoring/{position}/websocket",
+      "handler": "scoringPanelWebsocketHandler",
+      "file": "web/scoring_panel.go",
+      "line": 67,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/panels/referee",
+      "handler": "refereePanelHandler",
+      "file": "web/referee_panel.go",
+      "line": 23,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/base.html",
+        "templates/referee_panel.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/panels/referee/foul_list",
+      "handler": "refereePanelFoulListHandler",
+      "file": "web/referee_panel.go",
+      "line": 45,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/referee_panel_foul_list.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/panels/referee/websocket",
+      "handler": "refereePanelWebsocketHandler",
+      "file": "web/referee_panel.go",
+      "line": 71,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/reports/csv/backups",
+      "handler": "backupTeamsCsvReportHandler",
+      "file": "web/reports.go",
+      "line": 173,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/backups.csv"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/reports/csv/fta",
+      "handler": "ftaCsvReportHandler",
+      "file": "web/reports.go",
+      "line": 949,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/fta.csv"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/reports/csv/rankings",
+      "handler": "rankingsCsvReportHandler",
+      "file": "web/reports.go",
+      "line": 25,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/rankings.csv"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/reports/csv/schedule/{type}",
+      "handler": "scheduleCsvReportHandler",
+      "file": "web/reports.go",
+      "line": 374,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/schedule.csv"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/reports/csv/teams",
+      "handler": "teamsCsvReportHandler",
+      "file": "web/reports.go",
+      "line": 554,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/teams.csv"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/reports/csv/wpa_keys",
+      "handler": "wpaKeysCsvReportHandler",
+      "file": "web/reports.go",
+      "line": 661,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/reports/pdf/alliances",
+      "handler": "alliancesPdfReportHandler",
+      "file": "web/reports.go",
+      "line": 684,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/reports/pdf/backups",
+      "handler": "backupsPdfReportHandler",
+      "file": "web/reports.go",
+      "line": 223,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/reports/pdf/bracket",
+      "handler": "bracketPdfReportHandler",
+      "file": "web/reports.go",
+      "line": 807,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/bracket_report.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/reports/pdf/coupons",
+      "handler": "couponsPdfReportHandler",
+      "file": "web/reports.go",
+      "line": 290,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/reports/pdf/cycle/{type}",
+      "handler": "cyclePdfReportHandler",
+      "file": "web/reports.go",
+      "line": 845,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/reports/pdf/judging_schedule",
+      "handler": "judgingSchedulePdfReportHandler",
+      "file": "web/reports.go",
+      "line": 979,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/reports/pdf/rankings",
+      "handler": "rankingsPdfReportHandler",
+      "file": "web/reports.go",
+      "line": 55,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/reports/pdf/schedule/{type}",
+      "handler": "schedulePdfReportHandler",
+      "file": "web/reports.go",
+      "line": 410,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/reports/pdf/teams",
+      "handler": "teamsPdfReportHandler",
+      "file": "web/reports.go",
+      "line": 584,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/awards",
+      "handler": "awardsGetHandler",
+      "file": "web/setup_awards.go",
+      "line": 17,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/base.html",
+        "templates/setup_awards.html"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/setup/awards",
+      "handler": "awardsPostHandler",
+      "file": "web/setup_awards.go",
+      "line": 54,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/breaks",
+      "handler": "breaksGetHandler",
+      "file": "web/setup_breaks.go",
+      "line": 15,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/base.html",
+        "templates/setup_breaks.html"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/setup/breaks",
+      "handler": "breaksPostHandler",
+      "file": "web/setup_breaks.go",
+      "line": 42,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/setup/db/clear/{type}",
+      "handler": "clearDbHandler",
+      "file": "web/setup_settings.go",
+      "line": 330,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/setup/db/restore",
+      "handler": "restoreDbHandler",
+      "file": "web/setup_settings.go",
+      "line": 244,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/db/save",
+      "handler": "saveDbHandler",
+      "file": "web/setup_settings.go",
+      "line": 227,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/displays",
+      "handler": "displaysGetHandler",
+      "file": "web/setup_displays.go",
+      "line": 20,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/base.html",
+        "templates/setup_displays.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/setup/displays/websocket",
+      "handler": "displaysWebsocketHandler",
+      "file": "web/setup_displays.go",
+      "line": 42,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/field_testing",
+      "handler": "fieldTestingGetHandler",
+      "file": "web/setup_field_testing.go",
+      "line": 28,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/base.html",
+        "templates/setup_field_testing.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/setup/field_testing/websocket",
+      "handler": "fieldTestingWebsocketHandler",
+      "file": "web/setup_field_testing.go",
+      "line": 69,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/judging",
+      "handler": "judgingGetHandler",
+      "file": "web/setup_judging.go",
+      "line": 25,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/setup/judging/clear",
+      "handler": "judgingClearPostHandler",
+      "file": "web/setup_judging.go",
+      "line": 92,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/setup/judging/generate",
+      "handler": "judgingGeneratePostHandler",
+      "file": "web/setup_judging.go",
+      "line": 34,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/lower_thirds",
+      "handler": "lowerThirdsGetHandler",
+      "file": "web/setup_lower_thirds.go",
+      "line": 19,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/audience_display_radio_buttons.html",
+        "templates/base.html",
+        "templates/setup_lower_thirds.html"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/setup/lower_thirds/websocket",
+      "handler": "lowerThirdsWebsocketHandler",
+      "file": "web/setup_lower_thirds.go",
+      "line": 48,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/schedule",
+      "handler": "scheduleGetHandler",
+      "file": "web/setup_schedule.go",
+      "line": 22,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/setup/schedule/generate",
+      "handler": "scheduleGeneratePostHandler",
+      "file": "web/setup_schedule.go",
+      "line": 38,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/setup/schedule/save",
+      "handler": "scheduleSavePostHandler",
+      "file": "web/setup_schedule.go",
+      "line": 122,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/settings",
+      "handler": "settingsGetHandler",
+      "file": "web/setup_settings.go",
+      "line": 23,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/setup/settings",
+      "handler": "settingsPostHandler",
+      "file": "web/setup_settings.go",
+      "line": 32,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/settings/publish_alliances",
+      "handler": "settingsPublishAlliancesHandler",
+      "file": "web/setup_settings.go",
+      "line": 381,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/settings/publish_awards",
+      "handler": "settingsPublishAwardsHandler",
+      "file": "web/setup_settings.go",
+      "line": 403,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/settings/publish_matches",
+      "handler": "settingsPublishMatchesHandler",
+      "file": "web/setup_settings.go",
+      "line": 425,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/settings/publish_rankings",
+      "handler": "settingsPublishRankingsHandler",
+      "file": "web/setup_settings.go",
+      "line": 454,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/settings/publish_teams",
+      "handler": "settingsPublishTeamsHandler",
+      "file": "web/setup_settings.go",
+      "line": 476,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/sponsor_slides",
+      "handler": "sponsorSlidesGetHandler",
+      "file": "web/setup_sponsor_slides.go",
+      "line": 15,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/base.html",
+        "templates/setup_sponsor_slides.html"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/setup/sponsor_slides",
+      "handler": "sponsorSlidesPostHandler",
+      "file": "web/setup_sponsor_slides.go",
+      "line": 46,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/teams",
+      "handler": "teamsGetHandler",
+      "file": "web/setup_teams.go",
+      "line": 26,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/setup/teams",
+      "handler": "teamsPostHandler",
+      "file": "web/setup_teams.go",
+      "line": 35,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/setup/teams/{id}/delete",
+      "handler": "teamDeletePostHandler",
+      "file": "web/setup_teams.go",
+      "line": 202,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/teams/{id}/edit",
+      "handler": "teamEditGetHandler",
+      "file": "web/setup_teams.go",
+      "line": 127,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [
+        "templates/base.html",
+        "templates/edit_team.html"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/setup/teams/{id}/edit",
+      "handler": "teamEditPostHandler",
+      "file": "web/setup_teams.go",
+      "line": 160,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "POST",
+      "path": "/setup/teams/clear",
+      "handler": "teamsClearHandler",
+      "file": "web/setup_teams.go",
+      "line": 108,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/teams/generate_wpa_keys",
+      "handler": "teamsGenerateWpaKeysHandler",
+      "file": "web/setup_teams.go",
+      "line": 231,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/teams/progress",
+      "handler": "teamsUpdateProgressBarHandler",
+      "file": "web/setup_teams.go",
+      "line": 260,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/teams/refresh",
+      "handler": "teamsRefreshHandler",
+      "file": "web/setup_teams.go",
+      "line": 76,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": []
+    }
+  ],
+  "websocket": [
+    {
+      "method": "GET",
+      "path": "/alliance_selection/websocket",
+      "handler": "allianceSelectionWebsocketHandler",
+      "file": "web/alliance_selection.go",
+      "line": 274,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "AllianceSelectionNotifier",
+        "AudienceDisplayModeNotifier"
+      ],
+      "commands": [
+        "setTimer",
+        "startTimer",
+        "stopTimer",
+        "restartTimer",
+        "hideTimer",
+        "setAudienceDisplay"
+      ],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/arena/websocket",
+      "handler": "arenaWebsocketApiHandler",
+      "file": "web/api.go",
+      "line": 208,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "MatchTimingNotifier",
+        "MatchLoadNotifier",
+        "MatchTimeNotifier"
+      ],
+      "commands": [],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/display/websocket",
+      "handler": "placeholderDisplayWebsocketHandler",
+      "file": "web/placeholder_display.go",
+      "line": 36,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "display.Notifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/alliance_station/websocket",
+      "handler": "allianceStationDisplayWebsocketHandler",
+      "file": "web/alliance_station_display.go",
+      "line": 37,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "display.Notifier",
+        "MatchTimingNotifier",
+        "AllianceStationDisplayModeNotifier",
+        "ArenaStatusNotifier",
+        "MatchLoadNotifier",
+        "MatchTimeNotifier",
+        "RealtimeScoreNotifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/announcer/websocket",
+      "handler": "announcerDisplayWebsocketHandler",
+      "file": "web/announcer_display.go",
+      "line": 67,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "display.Notifier",
+        "MatchTimingNotifier",
+        "AudienceDisplayModeNotifier",
+        "EventStatusNotifier",
+        "MatchLoadNotifier",
+        "MatchTimeNotifier",
+        "RealtimeScoreNotifier",
+        "ScorePostedNotifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/audience/websocket",
+      "handler": "audienceDisplayWebsocketHandler",
+      "file": "web/audience_display.go",
+      "line": 48,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "display.Notifier",
+        "MatchTimingNotifier",
+        "AudienceDisplayModeNotifier",
+        "MatchLoadNotifier",
+        "MatchTimeNotifier",
+        "RealtimeScoreNotifier",
+        "PlaySoundNotifier",
+        "ScorePostedNotifier",
+        "AllianceSelectionNotifier",
+        "LowerThirdNotifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/bracket/websocket",
+      "handler": "bracketDisplayWebsocketHandler",
+      "file": "web/bracket_display.go",
+      "line": 36,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "display.Notifier",
+        "MatchLoadNotifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/field_monitor/websocket",
+      "handler": "fieldMonitorDisplayWebsocketHandler",
+      "file": "web/field_monitor_display.go",
+      "line": 68,
+      "direct_admin_check": true,
+      "conditional_fta_auth": true,
+      "templates": [],
+      "subscriptions": [
+        "MatchTimingNotifier",
+        "display.Notifier",
+        "ArenaStatusNotifier",
+        "EventStatusNotifier",
+        "RealtimeScoreNotifier",
+        "MatchTimeNotifier",
+        "MatchLoadNotifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [
+        "updateTeamNotes"
+      ],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/fms_field_monitor/websocket",
+      "handler": "fieldMonitorDisplayWebsocketHandler",
+      "file": "web/field_monitor_display.go",
+      "line": 68,
+      "direct_admin_check": true,
+      "conditional_fta_auth": true,
+      "templates": [],
+      "subscriptions": [
+        "MatchTimingNotifier",
+        "display.Notifier",
+        "ArenaStatusNotifier",
+        "EventStatusNotifier",
+        "RealtimeScoreNotifier",
+        "MatchTimeNotifier",
+        "MatchLoadNotifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [
+        "updateTeamNotes"
+      ],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/logo/websocket",
+      "handler": "logoDisplayWebsocketHandler",
+      "file": "web/logo_display.go",
+      "line": 36,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "display.Notifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/queueing/websocket",
+      "handler": "queueingDisplayWebsocketHandler",
+      "file": "web/queueing_display.go",
+      "line": 110,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "display.Notifier",
+        "MatchTimingNotifier",
+        "MatchLoadNotifier",
+        "MatchTimeNotifier",
+        "EventStatusNotifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/rankings/websocket",
+      "handler": "rankingsDisplayWebsocketHandler",
+      "file": "web/rankings_display.go",
+      "line": 36,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "display.Notifier",
+        "EventStatusNotifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/twitch/websocket",
+      "handler": "twitchDisplayWebsocketHandler",
+      "file": "web/twitch_display.go",
+      "line": 36,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "display.Notifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/unpicked/websocket",
+      "handler": "unpickedDisplayWebsocketHandler",
+      "file": "web/unpicked_display.go",
+      "line": 38,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "display.Notifier",
+        "AllianceSelectionNotifier",
+        "AudienceDisplayModeNotifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/wall/websocket",
+      "handler": "wallDisplayWebsocketHandler",
+      "file": "web/wall_display.go",
+      "line": 49,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "display.Notifier",
+        "MatchTimingNotifier",
+        "AudienceDisplayModeNotifier",
+        "MatchLoadNotifier",
+        "MatchTimeNotifier",
+        "RealtimeScoreNotifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/webpage/websocket",
+      "handler": "webpageDisplayWebsocketHandler",
+      "file": "web/webpage_display.go",
+      "line": 36,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "display.Notifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/displays/youtube/websocket",
+      "handler": "youtubeDisplayWebsocketHandler",
+      "file": "web/youtube_display.go",
+      "line": 36,
+      "direct_admin_check": false,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "display.Notifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/match_play/websocket",
+      "handler": "matchPlayWebsocketHandler",
+      "file": "web/match_play.go",
+      "line": 116,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "MatchTimingNotifier",
+        "AllianceStationDisplayModeNotifier",
+        "ArenaStatusNotifier",
+        "AudienceDisplayModeNotifier",
+        "EventStatusNotifier",
+        "MatchLoadNotifier",
+        "MatchTimeNotifier",
+        "RealtimeScoreNotifier",
+        "ScorePostedNotifier",
+        "ScoringStatusNotifier"
+      ],
+      "commands": [
+        "loadMatch",
+        "showResult",
+        "substituteTeams",
+        "toggleBypass",
+        "startMatch",
+        "abortMatch",
+        "signalVolunteers",
+        "signalReset",
+        "commitAndPost",
+        "discardResults",
+        "setAudienceDisplay",
+        "setAllianceStationDisplay",
+        "startTimeout",
+        "setTimeoutDisplay",
+        "setTestMatchName"
+      ],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/panels/scoring/{position}/websocket",
+      "handler": "scoringPanelWebsocketHandler",
+      "file": "web/scoring_panel.go",
+      "line": 67,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "MatchLoadNotifier",
+        "MatchTimeNotifier",
+        "RealtimeScoreNotifier",
+        "ReloadDisplaysNotifier"
+      ],
+      "commands": [
+        "commitMatch",
+        "autoTower",
+        "endgame",
+        "addFoul"
+      ],
+      "direct_messages": [
+        "resetLocalState"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/panels/referee/websocket",
+      "handler": "refereePanelWebsocketHandler",
+      "file": "web/referee_panel.go",
+      "line": 71,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "MatchLoadNotifier",
+        "MatchTimeNotifier",
+        "RealtimeScoreNotifier",
+        "ScoringStatusNotifier",
+        "ReloadDisplaysNotifier",
+        "ArenaStatusNotifier"
+      ],
+      "commands": [
+        "addFoul",
+        "toggleFoulType",
+        "updateFoulTeam",
+        "updateFoulRule",
+        "deleteFoul",
+        "card",
+        "toggleBypass",
+        "signalVolunteers",
+        "signalReset",
+        "commitAndPost"
+      ],
+      "direct_messages": []
+    },
+    {
+      "method": "GET",
+      "path": "/setup/displays/websocket",
+      "handler": "displaysWebsocketHandler",
+      "file": "web/setup_displays.go",
+      "line": 42,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "DisplayConfigurationNotifier"
+      ],
+      "commands": [
+        "configureDisplay",
+        "reloadDisplay",
+        "reloadAllDisplays"
+      ],
+      "direct_messages": [
+        "displayConfigurationSaved"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/setup/field_testing/websocket",
+      "handler": "fieldTestingWebsocketHandler",
+      "file": "web/setup_field_testing.go",
+      "line": 69,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "Plc.IoChangeNotifier()",
+        "ArenaStatusNotifier"
+      ],
+      "commands": [
+        "playSound",
+        "setPlcCoilOverride",
+        "setLedMode"
+      ],
+      "direct_messages": [
+        "ledStatus"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/setup/lower_thirds/websocket",
+      "handler": "lowerThirdsWebsocketHandler",
+      "file": "web/setup_lower_thirds.go",
+      "line": 48,
+      "direct_admin_check": true,
+      "conditional_fta_auth": false,
+      "templates": [],
+      "subscriptions": [
+        "AudienceDisplayModeNotifier"
+      ],
+      "commands": [
+        "saveLowerThird",
+        "deleteLowerThird",
+        "showLowerThird",
+        "hideLowerThird",
+        "reorderLowerThird",
+        "setAudienceDisplay"
+      ],
+      "direct_messages": []
+    }
+  ],
+  "notifiers": [
+    {
+      "field": "AllianceSelectionNotifier",
+      "type": "allianceSelection",
+      "producer": "arena.generateAllianceSelectionMessage"
+    },
+    {
+      "field": "AllianceStationDisplayModeNotifier",
+      "type": "allianceStationDisplayMode",
+      "producer": "arena.generateAllianceStationDisplayModeMessage"
+    },
+    {
+      "field": "ArenaStatusNotifier",
+      "type": "arenaStatus",
+      "producer": "arena.generateArenaStatusMessage"
+    },
+    {
+      "field": "AudienceDisplayModeNotifier",
+      "type": "audienceDisplayMode",
+      "producer": "arena.generateAudienceDisplayModeMessage"
+    },
+    {
+      "field": "DisplayConfigurationNotifier",
+      "type": "displayConfiguration",
+      "producer": "arena.generateDisplayConfigurationMessage"
+    },
+    {
+      "field": "EventStatusNotifier",
+      "type": "eventStatus",
+      "producer": "arena.generateEventStatusMessage"
+    },
+    {
+      "field": "LowerThirdNotifier",
+      "type": "lowerThird",
+      "producer": "arena.generateLowerThirdMessage"
+    },
+    {
+      "field": "MatchLoadNotifier",
+      "type": "matchLoad",
+      "producer": "arena.GenerateMatchLoadMessage"
+    },
+    {
+      "field": "MatchTimeNotifier",
+      "type": "matchTime",
+      "producer": "arena.generateMatchTimeMessage"
+    },
+    {
+      "field": "MatchTimingNotifier",
+      "type": "matchTiming",
+      "producer": "arena.generateMatchTimingMessage"
+    },
+    {
+      "field": "PlaySoundNotifier",
+      "type": "playSound",
+      "producer": "nil"
+    },
+    {
+      "field": "RealtimeScoreNotifier",
+      "type": "realtimeScore",
+      "producer": "arena.generateRealtimeScoreMessage"
+    },
+    {
+      "field": "ReloadDisplaysNotifier",
+      "type": "reload",
+      "producer": "nil"
+    },
+    {
+      "field": "ScorePostedNotifier",
+      "type": "scorePosted",
+      "producer": "arena.GenerateScorePostedMessage"
+    },
+    {
+      "field": "ScoringStatusNotifier",
+      "type": "scoringStatus",
+      "producer": "arena.generateScoringStatusMessage"
+    }
+  ],
+  "structs": [
+    {
+      "name": "Foul",
+      "file": "game/foul.go",
+      "line": 8,
+      "fields": [
+        {
+          "name": "FoulId",
+          "type": "int"
+        },
+        {
+          "name": "IsMajor",
+          "type": "bool"
+        },
+        {
+          "name": "TeamId",
+          "type": "int"
+        },
+        {
+          "name": "RuleId",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "Hub",
+      "file": "game/hub.go",
+      "line": 12,
+      "fields": [
+        {
+          "name": "WonAuto",
+          "type": "bool"
+        },
+        {
+          "name": "ShiftCounts",
+          "type": "[ShiftCount]int"
+        }
+      ]
+    },
+    {
+      "name": "RankingFields",
+      "file": "game/ranking_fields.go",
+      "line": 10,
+      "fields": [
+        {
+          "name": "RankingPoints",
+          "type": "int"
+        },
+        {
+          "name": "MatchPoints",
+          "type": "int"
+        },
+        {
+          "name": "AutoFuelPoints",
+          "type": "int"
+        },
+        {
+          "name": "TowerPoints",
+          "type": "int"
+        },
+        {
+          "name": "Random",
+          "type": "float64"
+        },
+        {
+          "name": "Wins",
+          "type": "int"
+        },
+        {
+          "name": "Losses",
+          "type": "int"
+        },
+        {
+          "name": "Ties",
+          "type": "int"
+        },
+        {
+          "name": "Disqualifications",
+          "type": "int"
+        },
+        {
+          "name": "Played",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "Ranking",
+      "file": "game/ranking_fields.go",
+      "line": 23,
+      "fields": [
+        {
+          "name": "TeamId",
+          "type": "int `db:\"id,manual\"`"
+        },
+        {
+          "name": "Rank",
+          "type": "int"
+        },
+        {
+          "name": "PreviousRank",
+          "type": "int"
+        },
+        {
+          "name": "(gömülü)",
+          "type": "RankingFields"
+        }
+      ]
+    },
+    {
+      "name": "Score",
+      "file": "game/score.go",
+      "line": 8,
+      "fields": [
+        {
+          "name": "AutoTowerStatuses",
+          "type": "[3]TowerStatus"
+        },
+        {
+          "name": "Hub",
+          "type": "Hub"
+        },
+        {
+          "name": "EndgameTowerStatuses",
+          "type": "[3]TowerStatus"
+        },
+        {
+          "name": "Fouls",
+          "type": "[]Foul"
+        },
+        {
+          "name": "PlayoffDq",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "ScoreSummary",
+      "file": "game/score_summary.go",
+      "line": 8,
+      "fields": [
+        {
+          "name": "AutoFuelPoints",
+          "type": "int"
+        },
+        {
+          "name": "AutoTowerPoints",
+          "type": "int"
+        },
+        {
+          "name": "TeleopFuelPoints",
+          "type": "int"
+        },
+        {
+          "name": "TeleopTowerPoints",
+          "type": "int"
+        },
+        {
+          "name": "NumFuel",
+          "type": "int"
+        },
+        {
+          "name": "NumFuelPostMatch",
+          "type": "int"
+        },
+        {
+          "name": "NumFuelGoal",
+          "type": "int"
+        },
+        {
+          "name": "MatchPoints",
+          "type": "int"
+        },
+        {
+          "name": "PostMatchPoints",
+          "type": "int"
+        },
+        {
+          "name": "FoulPoints",
+          "type": "int"
+        },
+        {
+          "name": "Score",
+          "type": "int"
+        },
+        {
+          "name": "PlayoffDq",
+          "type": "bool"
+        },
+        {
+          "name": "EnergizedBonusRankingPoint",
+          "type": "bool"
+        },
+        {
+          "name": "SuperchargedBonusRankingPoint",
+          "type": "bool"
+        },
+        {
+          "name": "TraversalBonusRankingPoint",
+          "type": "bool"
+        },
+        {
+          "name": "BonusRankingPoints",
+          "type": "int"
+        },
+        {
+          "name": "NumOpponentMajorFouls",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "Alliance",
+      "file": "model/alliance.go",
+      "line": 10,
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int `db:\"id,manual\"`"
+        },
+        {
+          "name": "TeamIds",
+          "type": "[]int"
+        },
+        {
+          "name": "Lineup",
+          "type": "[3]int"
+        },
+        {
+          "name": "YellowCard",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "AllianceSelectionRankedTeam",
+      "file": "model/alliance.go",
+      "line": 17,
+      "fields": [
+        {
+          "name": "Rank",
+          "type": "int"
+        },
+        {
+          "name": "TeamId",
+          "type": "int"
+        },
+        {
+          "name": "Picked",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "Award",
+      "file": "model/award.go",
+      "line": 13,
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int `db:\"id\"`"
+        },
+        {
+          "name": "Type",
+          "type": "AwardType"
+        },
+        {
+          "name": "AwardName",
+          "type": "string"
+        },
+        {
+          "name": "TeamId",
+          "type": "int"
+        },
+        {
+          "name": "PersonName",
+          "type": "string"
+        },
+        {
+          "name": "TbaTypeEnum",
+          "type": "*int"
+        }
+      ]
+    },
+    {
+      "name": "Database",
+      "file": "model/database.go",
+      "line": 23,
+      "fields": [
+        {
+          "name": "Path",
+          "type": "string"
+        },
+        {
+          "name": "bolt",
+          "type": "*bbolt.DB"
+        },
+        {
+          "name": "allianceTable",
+          "type": "*table[Alliance]"
+        },
+        {
+          "name": "awardTable",
+          "type": "*table[Award]"
+        },
+        {
+          "name": "eventSettingsTable",
+          "type": "*table[EventSettings]"
+        },
+        {
+          "name": "judgingSlotTable",
+          "type": "*table[JudgingSlot]"
+        },
+        {
+          "name": "lowerThirdTable",
+          "type": "*table[LowerThird]"
+        },
+        {
+          "name": "matchTable",
+          "type": "*table[Match]"
+        },
+        {
+          "name": "matchResultTable",
+          "type": "*table[MatchResult]"
+        },
+        {
+          "name": "rankingTable",
+          "type": "*table[game.Ranking]"
+        },
+        {
+          "name": "scheduleBlockTable",
+          "type": "*table[ScheduleBlock]"
+        },
+        {
+          "name": "scheduledBreakTable",
+          "type": "*table[ScheduledBreak]"
+        },
+        {
+          "name": "sponsorSlideTable",
+          "type": "*table[SponsorSlide]"
+        },
+        {
+          "name": "teamTable",
+          "type": "*table[Team]"
+        },
+        {
+          "name": "userSessionTable",
+          "type": "*table[UserSession]"
+        }
+      ]
+    },
+    {
+      "name": "EventSettings",
+      "file": "model/event_settings.go",
+      "line": 41,
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int `db:\"id\"`"
+        },
+        {
+          "name": "Name",
+          "type": "string"
+        },
+        {
+          "name": "PlayoffType",
+          "type": "PlayoffType"
+        },
+        {
+          "name": "NumPlayoffAlliances",
+          "type": "int"
+        },
+        {
+          "name": "SelectionRound2Order",
+          "type": "string"
+        },
+        {
+          "name": "SelectionRound3Order",
+          "type": "string"
+        },
+        {
+          "name": "SelectionShowUnpickedTeams",
+          "type": "bool"
+        },
+        {
+          "name": "TbaDownloadEnabled",
+          "type": "bool"
+        },
+        {
+          "name": "TbaPublishingEnabled",
+          "type": "bool"
+        },
+        {
+          "name": "TbaEventCode",
+          "type": "string"
+        },
+        {
+          "name": "TbaSecretId",
+          "type": "string"
+        },
+        {
+          "name": "TbaSecret",
+          "type": "string"
+        },
+        {
+          "name": "AutoAudienceDisplayEnabled",
+          "type": "bool"
+        },
+        {
+          "name": "NexusEnabled",
+          "type": "bool"
+        },
+        {
+          "name": "NexusAutoQueueEnabled",
+          "type": "bool"
+        },
+        {
+          "name": "NexusAutoQueueKey",
+          "type": "string"
+        },
+        {
+          "name": "NetworkSecurityEnabled",
+          "type": "bool"
+        },
+        {
+          "name": "ApAddress",
+          "type": "string"
+        },
+        {
+          "name": "ApPassword",
+          "type": "string"
+        },
+        {
+          "name": "ApChannel",
+          "type": "int"
+        },
+        {
+          "name": "SwitchAddress",
+          "type": "string"
+        },
+        {
+          "name": "SwitchPassword",
+          "type": "string"
+        },
+        {
+          "name": "SCCManagementEnabled",
+          "type": "bool"
+        },
+        {
+          "name": "RedSCCAddress",
+          "type": "string"
+        },
+        {
+          "name": "BlueSCCAddress",
+          "type": "string"
+        },
+        {
+          "name": "SCCUsername",
+          "type": "string"
+        },
+        {
+          "name": "SCCPassword",
+          "type": "string"
+        },
+        {
+          "name": "SCCUpCommands",
+          "type": "string"
+        },
+        {
+          "name": "SCCDownCommands",
+          "type": "string"
+        },
+        {
+          "name": "PlcAddress",
+          "type": "string"
+        },
+        {
+          "name": "LedControllerAddress",
+          "type": "string"
+        },
+        {
+          "name": "LedUniverseMode",
+          "type": "string"
+        },
+        {
+          "name": "AdminPassword",
+          "type": "string"
+        },
+        {
+          "name": "TeamSignRed1Id",
+          "type": "int"
+        },
+        {
+          "name": "TeamSignRed2Id",
+          "type": "int"
+        },
+        {
+          "name": "TeamSignRed3Id",
+          "type": "int"
+        },
+        {
+          "name": "TeamSignRedTimerId",
+          "type": "int"
+        },
+        {
+          "name": "TeamSignBlue1Id",
+          "type": "int"
+        },
+        {
+          "name": "TeamSignBlue2Id",
+          "type": "int"
+        },
+        {
+          "name": "TeamSignBlue3Id",
+          "type": "int"
+        },
+        {
+          "name": "TeamSignBlueTimerId",
+          "type": "int"
+        },
+        {
+          "name": "UseLiteUdpPort",
+          "type": "bool"
+        },
+        {
+          "name": "BlackmagicAddresses",
+          "type": "string"
+        },
+        {
+          "name": "CompanionAddress",
+          "type": "string"
+        },
+        {
+          "name": "CompanionPort",
+          "type": "int"
+        },
+        {
+          "name": "CompanionMatchPreviewPage",
+          "type": "int"
+        },
+        {
+          "name": "CompanionMatchPreviewRow",
+          "type": "int"
+        },
+        {
+          "name": "CompanionMatchPreviewColumn",
+          "type": "int"
+        },
+        {
+          "name": "CompanionSetAudiencePage",
+          "type": "int"
+        },
+        {
+          "name": "CompanionSetAudienceRow",
+          "type": "int"
+        },
+        {
+          "name": "CompanionSetAudienceColumn",
+          "type": "int"
+        },
+        {
+          "name": "CompanionMatchStartPage",
+          "type": "int"
+        },
+        {
+          "name": "CompanionMatchStartRow",
+          "type": "int"
+        },
+        {
+          "name": "CompanionMatchStartColumn",
+          "type": "int"
+        },
+        {
+          "name": "CompanionTeleopStartPage",
+          "type": "int"
+        },
+        {
+          "name": "CompanionTeleopStartRow",
+          "type": "int"
+        },
+        {
+          "name": "CompanionTeleopStartColumn",
+          "type": "int"
+        },
+        {
+          "name": "CompanionEndgameStartPage",
+          "type": "int"
+        },
+        {
+          "name": "CompanionEndgameStartRow",
+          "type": "int"
+        },
+        {
+          "name": "CompanionEndgameStartColumn",
+          "type": "int"
+        },
+        {
+          "name": "CompanionMatchEndPage",
+          "type": "int"
+        },
+        {
+          "name": "CompanionMatchEndRow",
+          "type": "int"
+        },
+        {
+          "name": "CompanionMatchEndColumn",
+          "type": "int"
+        },
+        {
+          "name": "CompanionPostResultPage",
+          "type": "int"
+        },
+        {
+          "name": "CompanionPostResultRow",
+          "type": "int"
+        },
+        {
+          "name": "CompanionPostResultColumn",
+          "type": "int"
+        },
+        {
+          "name": "CompanionAllianceSelectionPage",
+          "type": "int"
+        },
+        {
+          "name": "CompanionAllianceSelectionRow",
+          "type": "int"
+        },
+        {
+          "name": "CompanionAllianceSelectionColumn",
+          "type": "int"
+        },
+        {
+          "name": "CompanionMatchAbortPage",
+          "type": "int"
+        },
+        {
+          "name": "CompanionMatchAbortRow",
+          "type": "int"
+        },
+        {
+          "name": "CompanionMatchAbortColumn",
+          "type": "int"
+        },
+        {
+          "name": "AutoDurationSec",
+          "type": "int"
+        },
+        {
+          "name": "PauseDurationSec",
+          "type": "int"
+        },
+        {
+          "name": "TransitionShiftDurationSec",
+          "type": "int"
+        },
+        {
+          "name": "ShiftDurationSec",
+          "type": "int"
+        },
+        {
+          "name": "EndgameDurationSec",
+          "type": "int"
+        },
+        {
+          "name": "EnergizedBonusThreshold",
+          "type": "int"
+        },
+        {
+          "name": "SuperchargedBonusThreshold",
+          "type": "int"
+        },
+        {
+          "name": "TraversalBonusThreshold",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "JudgingSlot",
+      "file": "model/judging_slot.go",
+      "line": 13,
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int `db:\"id\"`"
+        },
+        {
+          "name": "Time",
+          "type": "time.Time"
+        },
+        {
+          "name": "TeamId",
+          "type": "int"
+        },
+        {
+          "name": "PreviousMatchNumber",
+          "type": "int"
+        },
+        {
+          "name": "PreviousMatchTime",
+          "type": "time.Time"
+        },
+        {
+          "name": "NextMatchNumber",
+          "type": "int"
+        },
+        {
+          "name": "NextMatchTime",
+          "type": "time.Time"
+        },
+        {
+          "name": "JudgeNumber",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "LowerThird",
+      "file": "model/lower_third.go",
+      "line": 12,
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int `db:\"id\"`"
+        },
+        {
+          "name": "TopText",
+          "type": "string"
+        },
+        {
+          "name": "BottomText",
+          "type": "string"
+        },
+        {
+          "name": "DisplayOrder",
+          "type": "int"
+        },
+        {
+          "name": "AwardId",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "Match",
+      "file": "model/match.go",
+      "line": 31,
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int `db:\"id\"`"
+        },
+        {
+          "name": "Type",
+          "type": "MatchType"
+        },
+        {
+          "name": "TypeOrder",
+          "type": "int"
+        },
+        {
+          "name": "Time",
+          "type": "time.Time"
+        },
+        {
+          "name": "LongName",
+          "type": "string"
+        },
+        {
+          "name": "ShortName",
+          "type": "string"
+        },
+        {
+          "name": "NameDetail",
+          "type": "string"
+        },
+        {
+          "name": "PlayoffMatchGroupId",
+          "type": "string"
+        },
+        {
+          "name": "PlayoffRedAlliance",
+          "type": "int"
+        },
+        {
+          "name": "PlayoffBlueAlliance",
+          "type": "int"
+        },
+        {
+          "name": "Red1",
+          "type": "int"
+        },
+        {
+          "name": "Red1IsSurrogate",
+          "type": "bool"
+        },
+        {
+          "name": "Red2",
+          "type": "int"
+        },
+        {
+          "name": "Red2IsSurrogate",
+          "type": "bool"
+        },
+        {
+          "name": "Red3",
+          "type": "int"
+        },
+        {
+          "name": "Red3IsSurrogate",
+          "type": "bool"
+        },
+        {
+          "name": "Blue1",
+          "type": "int"
+        },
+        {
+          "name": "Blue1IsSurrogate",
+          "type": "bool"
+        },
+        {
+          "name": "Blue2",
+          "type": "int"
+        },
+        {
+          "name": "Blue2IsSurrogate",
+          "type": "bool"
+        },
+        {
+          "name": "Blue3",
+          "type": "int"
+        },
+        {
+          "name": "Blue3IsSurrogate",
+          "type": "bool"
+        },
+        {
+          "name": "StartedAt",
+          "type": "time.Time"
+        },
+        {
+          "name": "ScoreCommittedAt",
+          "type": "time.Time"
+        },
+        {
+          "name": "FieldReadyAt",
+          "type": "time.Time"
+        },
+        {
+          "name": "Status",
+          "type": "game.MatchStatus"
+        },
+        {
+          "name": "UseTiebreakCriteria",
+          "type": "bool"
+        },
+        {
+          "name": "TbaMatchKey",
+          "type": "TbaMatchKey"
+        }
+      ]
+    },
+    {
+      "name": "TbaMatchKey",
+      "file": "model/match.go",
+      "line": 62,
+      "fields": [
+        {
+          "name": "CompLevel",
+          "type": "string"
+        },
+        {
+          "name": "SetNumber",
+          "type": "int"
+        },
+        {
+          "name": "MatchNumber",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "MatchResult",
+      "file": "model/match_result.go",
+      "line": 12,
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int `db:\"id\"`"
+        },
+        {
+          "name": "MatchId",
+          "type": "int"
+        },
+        {
+          "name": "PlayNumber",
+          "type": "int"
+        },
+        {
+          "name": "MatchType",
+          "type": "MatchType"
+        },
+        {
+          "name": "RedScore",
+          "type": "*game.Score"
+        },
+        {
+          "name": "BlueScore",
+          "type": "*game.Score"
+        },
+        {
+          "name": "RedCards",
+          "type": "map[string]string"
+        },
+        {
+          "name": "BlueCards",
+          "type": "map[string]string"
+        },
+        {
+          "name": "PlayoffRedAllianceCard",
+          "type": "string"
+        },
+        {
+          "name": "PlayoffBlueAllianceCard",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "ScheduleBlock",
+      "file": "model/schedule_block.go",
+      "line": 13,
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int `db:\"id\"`"
+        },
+        {
+          "name": "MatchType",
+          "type": "MatchType"
+        },
+        {
+          "name": "StartTime",
+          "type": "time.Time"
+        },
+        {
+          "name": "NumMatches",
+          "type": "int"
+        },
+        {
+          "name": "MatchSpacingSec",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "ScheduledBreak",
+      "file": "model/scheduled_break.go",
+      "line": 13,
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int `db:\"id\"`"
+        },
+        {
+          "name": "MatchType",
+          "type": "MatchType"
+        },
+        {
+          "name": "TypeOrderBefore",
+          "type": "int"
+        },
+        {
+          "name": "Time",
+          "type": "time.Time"
+        },
+        {
+          "name": "DurationSec",
+          "type": "int"
+        },
+        {
+          "name": "Description",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "SponsorSlide",
+      "file": "model/sponsor_slide.go",
+      "line": 10,
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int `db:\"id\"`"
+        },
+        {
+          "name": "Subtitle",
+          "type": "string"
+        },
+        {
+          "name": "Line1",
+          "type": "string"
+        },
+        {
+          "name": "Line2",
+          "type": "string"
+        },
+        {
+          "name": "Image",
+          "type": "string"
+        },
+        {
+          "name": "DisplayTimeSec",
+          "type": "int"
+        },
+        {
+          "name": "DisplayOrder",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "Team",
+      "file": "model/team.go",
+      "line": 10,
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int `db:\"id,manual\"`"
+        },
+        {
+          "name": "Name",
+          "type": "string"
+        },
+        {
+          "name": "Nickname",
+          "type": "string"
+        },
+        {
+          "name": "City",
+          "type": "string"
+        },
+        {
+          "name": "StateProv",
+          "type": "string"
+        },
+        {
+          "name": "Country",
+          "type": "string"
+        },
+        {
+          "name": "SchoolName",
+          "type": "string"
+        },
+        {
+          "name": "RookieYear",
+          "type": "int"
+        },
+        {
+          "name": "RobotName",
+          "type": "string"
+        },
+        {
+          "name": "Accomplishments",
+          "type": "string"
+        },
+        {
+          "name": "WpaKey",
+          "type": "string"
+        },
+        {
+          "name": "YellowCard",
+          "type": "bool"
+        },
+        {
+          "name": "HasConnected",
+          "type": "bool"
+        },
+        {
+          "name": "FtaNotes",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "UserSession",
+      "file": "model/user_session.go",
+      "line": 10,
+      "fields": [
+        {
+          "name": "Id",
+          "type": "int `db:\"id\"`"
+        },
+        {
+          "name": "Token",
+          "type": "string"
+        },
+        {
+          "name": "Username",
+          "type": "string"
+        },
+        {
+          "name": "CreatedAt",
+          "type": "time.Time"
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "name": "NewArena",
+      "receiver": "",
+      "file": "field/arena.go",
+      "line": 127
+    },
+    {
+      "name": "LoadSettings",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 173
+    },
+    {
+      "name": "CreatePlayoffTournament",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 308
+    },
+    {
+      "name": "CreatePlayoffMatches",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 317
+    },
+    {
+      "name": "UpdatePlayoffTournament",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 322
+    },
+    {
+      "name": "LoadMatch",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 334
+    },
+    {
+      "name": "LoadTestMatch",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 419
+    },
+    {
+      "name": "LoadNextMatch",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 424
+    },
+    {
+      "name": "SubstituteTeams",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 457
+    },
+    {
+      "name": "StartMatch",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 510
+    },
+    {
+      "name": "AbortMatch",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 551
+    },
+    {
+      "name": "ResetMatch",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 573
+    },
+    {
+      "name": "StartTimeout",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 593
+    },
+    {
+      "name": "StartAdHocTimeout",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 598
+    },
+    {
+      "name": "SetTimeoutDisplay",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 603
+    },
+    {
+      "name": "startTimeout",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 609
+    },
+    {
+      "name": "currentMatchDisplayName",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 634
+    },
+    {
+      "name": "SetAudienceDisplayMode",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 646
+    },
+    {
+      "name": "SetAllianceStationDisplayMode",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 664
+    },
+    {
+      "name": "MatchTimeSec",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 676
+    },
+    {
+      "name": "Update",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 686
+    },
+    {
+      "name": "checkEndgameStart",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 837
+    },
+    {
+      "name": "logTeamSnapshots",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 856
+    },
+    {
+      "name": "Run",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 877
+    },
+    {
+      "name": "RedScoreSummary",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 903
+    },
+    {
+      "name": "BlueScoreSummary",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 908
+    },
+    {
+      "name": "validateTeams",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 913
+    },
+    {
+      "name": "startTeamMatchLog",
+      "receiver": "allianceStation *AllianceStation",
+      "file": "field/arena.go",
+      "line": 930
+    },
+    {
+      "name": "closeTeamMatchLog",
+      "receiver": "allianceStation *AllianceStation",
+      "file": "field/arena.go",
+      "line": 949
+    },
+    {
+      "name": "closeTeamMatchLogs",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 957
+    },
+    {
+      "name": "assignTeam",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 964
+    },
+    {
+      "name": "getNextMatch",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1005
+    },
+    {
+      "name": "preLoadNextMatch",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1025
+    },
+    {
+      "name": "setSCCEthernetEnabled",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1064
+    },
+    {
+      "name": "setupNetwork",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1083
+    },
+    {
+      "name": "checkCanStartMatch",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1110
+    },
+    {
+      "name": "getStartMatchConditions",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1119
+    },
+    {
+      "name": "checkAllianceStationsReady",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1161
+    },
+    {
+      "name": "getAllianceStationStartConditions",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1169
+    },
+    {
+      "name": "sendDsPacket",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1214
+    },
+    {
+      "name": "getAssignedAllianceStation",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1234
+    },
+    {
+      "name": "handleAutoWinner",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1245
+    },
+    {
+      "name": "handlePlcInputOutput",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1268
+    },
+    {
+      "name": "getHubLightStates",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1358
+    },
+    {
+      "name": "ToggleBypass",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1398
+    },
+    {
+      "name": "handleTeamStop",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1407
+    },
+    {
+      "name": "SignalVolunteers",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1425
+    },
+    {
+      "name": "SignalReset",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1439
+    },
+    {
+      "name": "handleSounds",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1456
+    },
+    {
+      "name": "PlaySound",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1476
+    },
+    {
+      "name": "positionPostMatchScoreReady",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1482
+    },
+    {
+      "name": "checkForUpdatedNexusLineup",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1487
+    },
+    {
+      "name": "runPeriodicTasks",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1517
+    },
+    {
+      "name": "AutomateAudienceDisplay",
+      "receiver": "arena *Arena",
+      "file": "field/arena.go",
+      "line": 1524
+    },
+    {
+      "name": "updateHubLeds",
+      "receiver": "arena *Arena",
+      "file": "field/arena_leds.go",
+      "line": 21
+    },
+    {
+      "name": "updateTeleopHubLeds",
+      "receiver": "arena *Arena",
+      "file": "field/arena_leds.go",
+      "line": 47
+    },
+    {
+      "name": "configureNotifiers",
+      "receiver": "arena *Arena",
+      "file": "field/arena_notifiers.go",
+      "line": 48
+    },
+    {
+      "name": "generateAllianceSelectionMessage",
+      "receiver": "arena *Arena",
+      "file": "field/arena_notifiers.go",
+      "line": 72
+    },
+    {
+      "name": "generateAllianceStationDisplayModeMessage",
+      "receiver": "arena *Arena",
+      "file": "field/arena_notifiers.go",
+      "line": 86
+    },
+    {
+      "name": "generateArenaStatusMessage",
+      "receiver": "arena *Arena",
+      "file": "field/arena_notifiers.go",
+      "line": 90
+    },
+    {
+      "name": "generateAudienceDisplayModeMessage",
+      "receiver": "arena *Arena",
+      "file": "field/arena_notifiers.go",
+      "line": 123
+    },
+    {
+      "name": "generateDisplayConfigurationMessage",
+      "receiver": "arena *Arena",
+      "file": "field/arena_notifiers.go",
+      "line": 127
+    },
+    {
+      "name": "generateEventStatusMessage",
+      "receiver": "arena *Arena",
+      "file": "field/arena_notifiers.go",
+      "line": 138
+    },
+    {
+      "name": "generateLowerThirdMessage",
+      "receiver": "arena *Arena",
+      "file": "field/arena_notifiers.go",
+      "line": 142
+    },
+    {
+      "name": "GenerateMatchLoadMessage",
+      "receiver": "arena *Arena",
+      "file": "field/arena_notifiers.go",
+      "line": 149
+    },
+    {
+      "name": "getAllianceYellowCard",
+      "receiver": "arena *Arena",
+      "file": "field/arena_notifiers.go",
+      "line": 243
+    },
+    {
+      "name": "generateMatchTimeMessage",
+      "receiver": "arena *Arena",
+      "file": "field/arena_notifiers.go",
+      "line": 252
+    },
+    {
+      "name": "generateMatchTimingMessage",
+      "receiver": "arena *Arena",
+      "file": "field/arena_notifiers.go",
+      "line": 256
+    },
+    {
+      "name": "generateRealtimeScoreMessage",
+      "receiver": "arena *Arena",
+      "file": "field/arena_notifiers.go",
+      "line": 260
+    },
+    {
+      "name": "GenerateScorePostedMessage",
+      "receiver": "arena *Arena",
+      "file": "field/arena_notifiers.go",
+      "line": 281
+    },
+    {
+      "name": "generateScoringStatusMessage",
+      "receiver": "arena *Arena",
+      "file": "field/arena_notifiers.go",
+      "line": 388
+    },
+    {
+      "name": "getAudienceAllianceScoreFields",
+      "receiver": "",
+      "file": "field/arena_notifiers.go",
+      "line": 415
+    },
+    {
+      "name": "getRulesViolated",
+      "receiver": "",
+      "file": "field/arena_notifiers.go",
+      "line": 428
+    },
+    {
+      "name": "DisplayFromUrl",
+      "receiver": "",
+      "file": "field/display.go",
+      "line": 101
+    },
+    {
+      "name": "ToUrl",
+      "receiver": "display *Display",
+      "file": "field/display.go",
+      "line": 144
+    },
+    {
+      "name": "generateDisplayConfigurationMessage",
+      "receiver": "display *Display",
+      "file": "field/display.go",
+      "line": 169
+    },
+    {
+      "name": "NextDisplayId",
+      "receiver": "arena *Arena",
+      "file": "field/display.go",
+      "line": 174
+    },
+    {
+      "name": "RegisterDisplay",
+      "receiver": "arena *Arena",
+      "file": "field/display.go",
+      "line": 190
+    },
+    {
+      "name": "UpdateDisplay",
+      "receiver": "arena *Arena",
+      "file": "field/display.go",
+      "line": 224
+    },
+    {
+      "name": "MarkDisplayDisconnected",
+      "receiver": "arena *Arena",
+      "file": "field/display.go",
+      "line": 243
+    },
+    {
+      "name": "purgeDisconnectedDisplays",
+      "receiver": "arena *Arena",
+      "file": "field/display.go",
+      "line": 262
+    },
+    {
+      "name": "driverStationTeamIdFromRemoteAddr",
+      "receiver": "",
+      "file": "field/driver_station_connection.go",
+      "line": 76
+    },
+    {
+      "name": "newDriverStationConnection",
+      "receiver": "",
+      "file": "field/driver_station_connection.go",
+      "line": 92
+    },
+    {
+      "name": "initializeUdpListener",
+      "receiver": "arena *Arena",
+      "file": "field/driver_station_connection.go",
+      "line": 119
+    },
+    {
+      "name": "listenForDsUdpPackets",
+      "receiver": "arena *Arena",
+      "file": "field/driver_station_connection.go",
+      "line": 139
+    },
+    {
+      "name": "update",
+      "receiver": "dsConn *DriverStationConnection",
+      "file": "field/driver_station_connection.go",
+      "line": 210
+    },
+    {
+      "name": "close",
+      "receiver": "dsConn *DriverStationConnection",
+      "file": "field/driver_station_connection.go",
+      "line": 228
+    },
+    {
+      "name": "encodeControlPacket",
+      "receiver": "dsConn *DriverStationConnection",
+      "file": "field/driver_station_connection.go",
+      "line": 237
+    },
+    {
+      "name": "sendControlPacket",
+      "receiver": "dsConn *DriverStationConnection",
+      "file": "field/driver_station_connection.go",
+      "line": 338
+    },
+    {
+      "name": "listenAddress",
+      "receiver": "",
+      "file": "field/driver_station_connection.go",
+      "line": 356
+    },
+    {
+      "name": "listenForDriverStations",
+      "receiver": "arena *Arena",
+      "file": "field/driver_station_connection.go",
+      "line": 364
+    },
+    {
+      "name": "serveDriverStations",
+      "receiver": "arena *Arena",
+      "file": "field/driver_station_connection.go",
+      "line": 384
+    },
+    {
+      "name": "readTaggedTcpPacket",
+      "receiver": "",
+      "file": "field/driver_station_connection.go",
+      "line": 567
+    },
+    {
+      "name": "handleTcpConnection",
+      "receiver": "dsConn *DriverStationConnection",
+      "file": "field/driver_station_connection.go",
+      "line": 594
+    },
+    {
+      "name": "copyDsReportedStatus",
+      "receiver": "dsConn *DriverStationConnection",
+      "file": "field/driver_station_connection.go",
+      "line": 621
+    },
+    {
+      "name": "parseDsLogPacket",
+      "receiver": "dsConn *DriverStationConnection",
+      "file": "field/driver_station_connection.go",
+      "line": 630
+    },
+    {
+      "name": "handleInvalidTcpConnection",
+      "receiver": "",
+      "file": "field/driver_station_connection.go",
+      "line": 645
+    },
+    {
+      "name": "closeTcpConn",
+      "receiver": "",
+      "file": "field/driver_station_connection.go",
+      "line": 682
+    },
+    {
+      "name": "checkGameData",
+      "receiver": "dsConn *DriverStationConnection",
+      "file": "field/driver_station_connection.go",
+      "line": 688
+    },
+    {
+      "name": "sendGameDataPacketTcp",
+      "receiver": "dsConn *DriverStationConnection",
+      "file": "field/driver_station_connection.go",
+      "line": 707
+    },
+    {
+      "name": "updateCycleTime",
+      "receiver": "arena *Arena",
+      "file": "field/event_status.go",
+      "line": 26
+    },
+    {
+      "name": "updateEarlyLateMessage",
+      "receiver": "arena *Arena",
+      "file": "field/event_status.go",
+      "line": 61
+    },
+    {
+      "name": "getEarlyLateMessage",
+      "receiver": "arena *Arena",
+      "file": "field/event_status.go",
+      "line": 70
+    },
+    {
+      "name": "NewRealtimeScore",
+      "receiver": "",
+      "file": "field/realtime_score.go",
+      "line": 19
+    },
+    {
+      "name": "initialize",
+      "receiver": "registry *ScoringPanelRegistry",
+      "file": "field/scoring_panel_registry.go",
+      "line": 18
+    },
+    {
+      "name": "resetScoreCommitted",
+      "receiver": "registry *ScoringPanelRegistry",
+      "file": "field/scoring_panel_registry.go",
+      "line": 23
+    },
+    {
+      "name": "GetNumPanels",
+      "receiver": "registry *ScoringPanelRegistry",
+      "file": "field/scoring_panel_registry.go",
+      "line": 35
+    },
+    {
+      "name": "GetNumScoreCommitted",
+      "receiver": "registry *ScoringPanelRegistry",
+      "file": "field/scoring_panel_registry.go",
+      "line": 43
+    },
+    {
+      "name": "RegisterPanel",
+      "receiver": "registry *ScoringPanelRegistry",
+      "file": "field/scoring_panel_registry.go",
+      "line": 57
+    },
+    {
+      "name": "SetScoreCommitted",
+      "receiver": "registry *ScoringPanelRegistry",
+      "file": "field/scoring_panel_registry.go",
+      "line": 68
+    },
+    {
+      "name": "UnregisterPanel",
+      "receiver": "registry *ScoringPanelRegistry",
+      "file": "field/scoring_panel_registry.go",
+      "line": 76
+    },
+    {
+      "name": "NewTeamMatchLog",
+      "receiver": "",
+      "file": "field/team_match_log.go",
+      "line": 30
+    },
+    {
+      "name": "LogStationSnapshot",
+      "receiver": "log *TeamMatchLog",
+      "file": "field/team_match_log.go",
+      "line": 61
+    },
+    {
+      "name": "Close",
+      "receiver": "log *TeamMatchLog",
+      "file": "field/team_match_log.go",
+      "line": 141
+    },
+    {
+      "name": "NewTeamSigns",
+      "receiver": "",
+      "file": "field/team_sign.go",
+      "line": 76
+    },
+    {
+      "name": "Update",
+      "receiver": "signs *TeamSigns",
+      "file": "field/team_sign.go",
+      "line": 84
+    },
+    {
+      "name": "SetNextMatchTeams",
+      "receiver": "signs *TeamSigns",
+      "file": "field/team_sign.go",
+      "line": 128
+    },
+    {
+      "name": "SetId",
+      "receiver": "sign *TeamSign",
+      "file": "field/team_sign.go",
+      "line": 138
+    },
+    {
+      "name": "update",
+      "receiver": "sign *TeamSign",
+      "file": "field/team_sign.go",
+      "line": 175
+    },
+    {
+      "name": "generateInMatchTeamRearText",
+      "receiver": "",
+      "file": "field/team_sign.go",
+      "line": 195
+    },
+    {
+      "name": "generateInMatchTimerRearText",
+      "receiver": "",
+      "file": "field/team_sign.go",
+      "line": 222
+    },
+    {
+      "name": "generateTeamSignAllianceScores",
+      "receiver": "",
+      "file": "field/team_sign.go",
+      "line": 228
+    },
+    {
+      "name": "formatTeamSignRearText",
+      "receiver": "",
+      "file": "field/team_sign.go",
+      "line": 248
+    },
+    {
+      "name": "generateTeamSignPeriodText",
+      "receiver": "",
+      "file": "field/team_sign.go",
+      "line": 253
+    },
+    {
+      "name": "generateTeamSignPeriodPrefix",
+      "receiver": "",
+      "file": "field/team_sign.go",
+      "line": 265
+    },
+    {
+      "name": "generateTimerTexts",
+      "receiver": "",
+      "file": "field/team_sign.go",
+      "line": 289
+    },
+    {
+      "name": "generateTeamNumberTexts",
+      "receiver": "sign *TeamSign",
+      "file": "field/team_sign.go",
+      "line": 327
+    },
+    {
+      "name": "sendPacket",
+      "receiver": "sign *TeamSign",
+      "file": "field/team_sign.go",
+      "line": 415
+    },
+    {
+      "name": "writePacketData",
+      "receiver": "sign *TeamSign",
+      "file": "field/team_sign.go",
+      "line": 460
+    },
+    {
+      "name": "blinkColor",
+      "receiver": "",
+      "file": "field/team_sign.go",
+      "line": 468
+    },
+    {
+      "name": "SetupTestArena",
+      "receiver": "",
+      "file": "field/test_helpers.go",
+      "line": 17
+    },
+    {
+      "name": "setupTestArena",
+      "receiver": "",
+      "file": "field/test_helpers.go",
+      "line": 32
+    },
+    {
+      "name": "Rule",
+      "receiver": "foul *Foul",
+      "file": "game/foul.go",
+      "line": 16
+    },
+    {
+      "name": "PointValue",
+      "receiver": "foul *Foul",
+      "file": "game/foul.go",
+      "line": 21
+    },
+    {
+      "name": "UpdateState",
+      "receiver": "hub *Hub",
+      "file": "game/hub.go",
+      "line": 34
+    },
+    {
+      "name": "GetTeleopActiveFuelCount",
+      "receiver": "hub *Hub",
+      "file": "game/hub.go",
+      "line": 57
+    },
+    {
+      "name": "GetShiftCount",
+      "receiver": "hub *Hub",
+      "file": "game/hub.go",
+      "line": 67
+    },
+    {
+      "name": "GetCurrentShiftTiming",
+      "receiver": "hub *Hub",
+      "file": "game/hub.go",
+      "line": 76
+    },
+    {
+      "name": "GetActiveShiftTiming",
+      "receiver": "hub *Hub",
+      "file": "game/hub.go",
+      "line": 103
+    },
+    {
+      "name": "isShiftActive",
+      "receiver": "hub *Hub",
+      "file": "game/hub.go",
+      "line": 115
+    },
+    {
+      "name": "getCurrentShift",
+      "receiver": "hub *Hub",
+      "file": "game/hub.go",
+      "line": 130
+    },
+    {
+      "name": "getScoringGracePeriod",
+      "receiver": "hub *Hub",
+      "file": "game/hub.go",
+      "line": 159
+    },
+    {
+      "name": "UniqueMatchSounds",
+      "receiver": "",
+      "file": "game/match_sounds.go",
+      "line": 19
+    },
+    {
+      "name": "UpdateMatchSounds",
+      "receiver": "",
+      "file": "game/match_sounds.go",
+      "line": 37
+    },
+    {
+      "name": "GetTeleopDurationSec",
+      "receiver": "",
+      "file": "game/match_timing.go",
+      "line": 24
+    },
+    {
+      "name": "GetDurationToAutoEnd",
+      "receiver": "",
+      "file": "game/match_timing.go",
+      "line": 28
+    },
+    {
+      "name": "GetDurationToTeleopStart",
+      "receiver": "",
+      "file": "game/match_timing.go",
+      "line": 32
+    },
+    {
+      "name": "GetDurationToTeleopEnd",
+      "receiver": "",
+      "file": "game/match_timing.go",
+      "line": 38
+    },
+    {
+      "name": "GetWinRankingPoints",
+      "receiver": "",
+      "file": "game/ranking_fields.go",
+      "line": 34
+    },
+    {
+      "name": "AddScoreSummary",
+      "receiver": "fields *RankingFields",
+      "file": "game/ranking_fields.go",
+      "line": 41
+    },
+    {
+      "name": "Len",
+      "receiver": "rankings Rankings",
+      "file": "game/ranking_fields.go",
+      "line": 72
+    },
+    {
+      "name": "Less",
+      "receiver": "rankings Rankings",
+      "file": "game/ranking_fields.go",
+      "line": 77
+    },
+    {
+      "name": "Swap",
+      "receiver": "rankings Rankings",
+      "file": "game/ranking_fields.go",
+      "line": 98
+    },
+    {
+      "name": "GetRuleById",
+      "receiver": "",
+      "file": "game/rule.go",
+      "line": 56
+    },
+    {
+      "name": "GetAllRules",
+      "receiver": "",
+      "file": "game/rule.go",
+      "line": 61
+    },
+    {
+      "name": "Summarize",
+      "receiver": "score *Score",
+      "file": "game/score.go",
+      "line": 32
+    },
+    {
+      "name": "Equals",
+      "receiver": "score *Score",
+      "file": "game/score.go",
+      "line": 123
+    },
+    {
+      "name": "Get",
+      "receiver": "t MatchStatus",
+      "file": "game/score_summary.go",
+      "line": 38
+    },
+    {
+      "name": "DetermineMatchStatus",
+      "receiver": "",
+      "file": "game/score_summary.go",
+      "line": 44
+    },
+    {
+      "name": "comparePoints",
+      "receiver": "",
+      "file": "game/score_summary.go",
+      "line": 83
+    },
+    {
+      "name": "TestScore1",
+      "receiver": "",
+      "file": "game/test_helpers.go",
+      "line": 8
+    },
+    {
+      "name": "TestScore2",
+      "receiver": "",
+      "file": "game/test_helpers.go",
+      "line": 30
+    },
+    {
+      "name": "TestRanking1",
+      "receiver": "",
+      "file": "game/test_helpers.go",
+      "line": 43
+    },
+    {
+      "name": "TestRanking2",
+      "receiver": "",
+      "file": "game/test_helpers.go",
+      "line": 47
+    },
+    {
+      "name": "Scale",
+      "receiver": "color Color",
+      "file": "led/color.go",
+      "line": 24
+    },
+    {
+      "name": "NewController",
+      "receiver": "",
+      "file": "led/controller.go",
+      "line": 40
+    },
+    {
+      "name": "SetUniverseMode",
+      "receiver": "controller *Controller",
+      "file": "led/controller.go",
+      "line": 50
+    },
+    {
+      "name": "SetAddress",
+      "receiver": "controller *Controller",
+      "file": "led/controller.go",
+      "line": 59
+    },
+    {
+      "name": "SetMode",
+      "receiver": "controller *Controller",
+      "file": "led/controller.go",
+      "line": 77
+    },
+    {
+      "name": "GetModes",
+      "receiver": "controller *Controller",
+      "file": "led/controller.go",
+      "line": 89
+    },
+    {
+      "name": "GetPixels",
+      "receiver": "controller *Controller",
+      "file": "led/controller.go",
+      "line": 94
+    },
+    {
+      "name": "Update",
+      "receiver": "controller *Controller",
+      "file": "led/controller.go",
+      "line": 100
+    },
+    {
+      "name": "populateFixtureData",
+      "receiver": "controller *Controller",
+      "file": "led/controller.go",
+      "line": 136
+    },
+    {
+      "name": "shouldSendPacket",
+      "receiver": "universe *universe",
+      "file": "led/controller.go",
+      "line": 166
+    },
+    {
+      "name": "markSent",
+      "receiver": "universe *universe",
+      "file": "led/controller.go",
+      "line": 173
+    },
+    {
+      "name": "createBlankPacket",
+      "receiver": "",
+      "file": "led/controller.go",
+      "line": 180
+    },
+    {
+      "name": "sendPacket",
+      "receiver": "controller *Controller",
+      "file": "led/controller.go",
+      "line": 287
+    },
+    {
+      "name": "getModeNames",
+      "receiver": "",
+      "file": "led/mode.go",
+      "line": 51
+    },
+    {
+      "name": "IsValidMode",
+      "receiver": "",
+      "file": "led/mode.go",
+      "line": 67
+    },
+    {
+      "name": "colorForMode",
+      "receiver": "",
+      "file": "led/mode.go",
+      "line": 72
+    },
+    {
+      "name": "updatePixels",
+      "receiver": "zone *zone",
+      "file": "led/zone.go",
+      "line": 40
+    },
+    {
+      "name": "updateSingleColorMode",
+      "receiver": "zone *zone",
+      "file": "led/zone.go",
+      "line": 68
+    },
+    {
+      "name": "updatePulseMode",
+      "receiver": "zone *zone",
+      "file": "led/zone.go",
+      "line": 75
+    },
+    {
+      "name": "updateStartupMode",
+      "receiver": "zone *zone",
+      "file": "led/zone.go",
+      "line": 84
+    },
+    {
+      "name": "fillSide",
+      "receiver": "zone *zone",
+      "file": "led/zone.go",
+      "line": 108
+    },
+    {
+      "name": "fillFixture",
+      "receiver": "zone *zone",
+      "file": "led/zone.go",
+      "line": 124
+    },
+    {
+      "name": "fillOrder",
+      "receiver": "",
+      "file": "led/zone.go",
+      "line": 141
+    },
+    {
+      "name": "updateAdvantageMode",
+      "receiver": "zone *zone",
+      "file": "led/zone.go",
+      "line": 155
+    },
+    {
+      "name": "sweepFixture",
+      "receiver": "zone *zone",
+      "file": "led/zone.go",
+      "line": 170
+    },
+    {
+      "name": "updateRainbowMode",
+      "receiver": "zone *zone",
+      "file": "led/zone.go",
+      "line": 191
+    },
+    {
+      "name": "updateSideTestMode",
+      "receiver": "zone *zone",
+      "file": "led/zone.go",
+      "line": 245
+    },
+    {
+      "name": "main",
+      "receiver": "",
+      "file": "main.go",
+      "line": 18
+    },
+    {
+      "name": "CreateAlliance",
+      "receiver": "database *Database",
+      "file": "model/alliance.go",
+      "line": 23
+    },
+    {
+      "name": "GetAllianceById",
+      "receiver": "database *Database",
+      "file": "model/alliance.go",
+      "line": 27
+    },
+    {
+      "name": "UpdateAlliance",
+      "receiver": "database *Database",
+      "file": "model/alliance.go",
+      "line": 31
+    },
+    {
+      "name": "DeleteAlliance",
+      "receiver": "database *Database",
+      "file": "model/alliance.go",
+      "line": 35
+    },
+    {
+      "name": "TruncateAlliances",
+      "receiver": "database *Database",
+      "file": "model/alliance.go",
+      "line": 39
+    },
+    {
+      "name": "GetAllAlliances",
+      "receiver": "database *Database",
+      "file": "model/alliance.go",
+      "line": 43
+    },
+    {
+      "name": "UpdateAllianceFromMatch",
+      "receiver": "database *Database",
+      "file": "model/alliance.go",
+      "line": 58
+    },
+    {
+      "name": "GetOffFieldTeamIds",
+      "receiver": "database *Database",
+      "file": "model/alliance.go",
+      "line": 93
+    },
+    {
+      "name": "getOffFieldTeamIdsForAlliance",
+      "receiver": "database *Database",
+      "file": "model/alliance.go",
+      "line": 111
+    },
+    {
+      "name": "TbaTypeEnumString",
+      "receiver": "award Award",
+      "file": "model/award.go",
+      "line": 22
+    },
+    {
+      "name": "CreateAward",
+      "receiver": "database *Database",
+      "file": "model/award.go",
+      "line": 37
+    },
+    {
+      "name": "GetAwardById",
+      "receiver": "database *Database",
+      "file": "model/award.go",
+      "line": 41
+    },
+    {
+      "name": "UpdateAward",
+      "receiver": "database *Database",
+      "file": "model/award.go",
+      "line": 45
+    },
+    {
+      "name": "DeleteAward",
+      "receiver": "database *Database",
+      "file": "model/award.go",
+      "line": 49
+    },
+    {
+      "name": "TruncateAwards",
+      "receiver": "database *Database",
+      "file": "model/award.go",
+      "line": 53
+    },
+    {
+      "name": "GetAllAwards",
+      "receiver": "database *Database",
+      "file": "model/award.go",
+      "line": 57
+    },
+    {
+      "name": "GetAwardsByType",
+      "receiver": "database *Database",
+      "file": "model/award.go",
+      "line": 71
+    },
+    {
+      "name": "OpenDatabase",
+      "receiver": "",
+      "file": "model/database.go",
+      "line": 42
+    },
+    {
+      "name": "Close",
+      "receiver": "database *Database",
+      "file": "model/database.go",
+      "line": 94
+    },
+    {
+      "name": "Backup",
+      "receiver": "database *Database",
+      "file": "model/database.go",
+      "line": 99
+    },
+    {
+      "name": "WriteBackup",
+      "receiver": "database *Database",
+      "file": "model/database.go",
+      "line": 127
+    },
+    {
+      "name": "GetEventSettings",
+      "receiver": "database *Database",
+      "file": "model/event_settings.go",
+      "line": 124
+    },
+    {
+      "name": "UpdateEventSettings",
+      "receiver": "database *Database",
+      "file": "model/event_settings.go",
+      "line": 164
+    },
+    {
+      "name": "CreateJudgingSlot",
+      "receiver": "database *Database",
+      "file": "model/judging_slot.go",
+      "line": 24
+    },
+    {
+      "name": "TruncateJudgingSlots",
+      "receiver": "database *Database",
+      "file": "model/judging_slot.go",
+      "line": 28
+    },
+    {
+      "name": "GetAllJudgingSlots",
+      "receiver": "database *Database",
+      "file": "model/judging_slot.go",
+      "line": 32
+    },
+    {
+      "name": "CreateLowerThird",
+      "receiver": "database *Database",
+      "file": "model/lower_third.go",
+      "line": 20
+    },
+    {
+      "name": "GetLowerThirdById",
+      "receiver": "database *Database",
+      "file": "model/lower_third.go",
+      "line": 24
+    },
+    {
+      "name": "UpdateLowerThird",
+      "receiver": "database *Database",
+      "file": "model/lower_third.go",
+      "line": 28
+    },
+    {
+      "name": "DeleteLowerThird",
+      "receiver": "database *Database",
+      "file": "model/lower_third.go",
+      "line": 32
+    },
+    {
+      "name": "TruncateLowerThirds",
+      "receiver": "database *Database",
+      "file": "model/lower_third.go",
+      "line": 36
+    },
+    {
+      "name": "GetAllLowerThirds",
+      "receiver": "database *Database",
+      "file": "model/lower_third.go",
+      "line": 40
+    },
+    {
+      "name": "GetLowerThirdsByAwardId",
+      "receiver": "database *Database",
+      "file": "model/lower_third.go",
+      "line": 54
+    },
+    {
+      "name": "GetNextLowerThirdDisplayOrder",
+      "receiver": "database *Database",
+      "file": "model/lower_third.go",
+      "line": 69
+    },
+    {
+      "name": "Get",
+      "receiver": "t MatchType",
+      "file": "model/match.go",
+      "line": 27
+    },
+    {
+      "name": "CreateMatch",
+      "receiver": "database *Database",
+      "file": "model/match.go",
+      "line": 68
+    },
+    {
+      "name": "GetMatchById",
+      "receiver": "database *Database",
+      "file": "model/match.go",
+      "line": 72
+    },
+    {
+      "name": "UpdateMatch",
+      "receiver": "database *Database",
+      "file": "model/match.go",
+      "line": 76
+    },
+    {
+      "name": "DeleteMatch",
+      "receiver": "database *Database",
+      "file": "model/match.go",
+      "line": 80
+    },
+    {
+      "name": "TruncateMatches",
+      "receiver": "database *Database",
+      "file": "model/match.go",
+      "line": 84
+    },
+    {
+      "name": "GetMatchByTypeOrder",
+      "receiver": "database *Database",
+      "file": "model/match.go",
+      "line": 88
+    },
+    {
+      "name": "GetMatchesByType",
+      "receiver": "database *Database",
+      "file": "model/match.go",
+      "line": 102
+    },
+    {
+      "name": "IsComplete",
+      "receiver": "match *Match",
+      "file": "model/match.go",
+      "line": 124
+    },
+    {
+      "name": "ShouldAllowSubstitution",
+      "receiver": "match *Match",
+      "file": "model/match.go",
+      "line": 129
+    },
+    {
+      "name": "ShouldAllowNexusSubstitution",
+      "receiver": "match *Match",
+      "file": "model/match.go",
+      "line": 134
+    },
+    {
+      "name": "ShouldUpdateCards",
+      "receiver": "match *Match",
+      "file": "model/match.go",
+      "line": 139
+    },
+    {
+      "name": "ShouldUpdateRankings",
+      "receiver": "match *Match",
+      "file": "model/match.go",
+      "line": 144
+    },
+    {
+      "name": "ShouldUpdatePlayoffMatches",
+      "receiver": "match *Match",
+      "file": "model/match.go",
+      "line": 149
+    },
+    {
+      "name": "IsLineupEqual",
+      "receiver": "match *Match",
+      "file": "model/match.go",
+      "line": 154
+    },
+    {
+      "name": "MatchTypeFromString",
+      "receiver": "",
+      "file": "model/match.go",
+      "line": 159
+    },
+    {
+      "name": "String",
+      "receiver": "key TbaMatchKey",
+      "file": "model/match.go",
+      "line": 174
+    },
+    {
+      "name": "NewMatchResult",
+      "receiver": "",
+      "file": "model/match_result.go",
+      "line": 26
+    },
+    {
+      "name": "CreateMatchResult",
+      "receiver": "database *Database",
+      "file": "model/match_result.go",
+      "line": 35
+    },
+    {
+      "name": "GetMatchResultForMatch",
+      "receiver": "database *Database",
+      "file": "model/match_result.go",
+      "line": 39
+    },
+    {
+      "name": "UpdateMatchResult",
+      "receiver": "database *Database",
+      "file": "model/match_result.go",
+      "line": 55
+    },
+    {
+      "name": "DeleteMatchResult",
+      "receiver": "database *Database",
+      "file": "model/match_result.go",
+      "line": 59
+    },
+    {
+      "name": "TruncateMatchResults",
+      "receiver": "database *Database",
+      "file": "model/match_result.go",
+      "line": 63
+    },
+    {
+      "name": "RedScoreSummary",
+      "receiver": "matchResult *MatchResult",
+      "file": "model/match_result.go",
+      "line": 68
+    },
+    {
+      "name": "BlueScoreSummary",
+      "receiver": "matchResult *MatchResult",
+      "file": "model/match_result.go",
+      "line": 73
+    },
+    {
+      "name": "CorrectPlayoffScore",
+      "receiver": "matchResult *MatchResult",
+      "file": "model/match_result.go",
+      "line": 78
+    },
+    {
+      "name": "_",
+      "receiver": "",
+      "file": "model/matchtype_string.go",
+      "line": 7
+    },
+    {
+      "name": "String",
+      "receiver": "i MatchType",
+      "file": "model/matchtype_string.go",
+      "line": 21
+    },
+    {
+      "name": "CreateRanking",
+      "receiver": "database *Database",
+      "file": "model/ranking.go",
+      "line": 13
+    },
+    {
+      "name": "GetRankingForTeam",
+      "receiver": "database *Database",
+      "file": "model/ranking.go",
+      "line": 17
+    },
+    {
+      "name": "UpdateRanking",
+      "receiver": "database *Database",
+      "file": "model/ranking.go",
+      "line": 21
+    },
+    {
+      "name": "DeleteRanking",
+      "receiver": "database *Database",
+      "file": "model/ranking.go",
+      "line": 25
+    },
+    {
+      "name": "TruncateRankings",
+      "receiver": "database *Database",
+      "file": "model/ranking.go",
+      "line": 29
+    },
+    {
+      "name": "GetAllRankings",
+      "receiver": "database *Database",
+      "file": "model/ranking.go",
+      "line": 33
+    },
+    {
+      "name": "ReplaceAllRankings",
+      "receiver": "database *Database",
+      "file": "model/ranking.go",
+      "line": 48
+    },
+    {
+      "name": "CreateScheduleBlock",
+      "receiver": "database *Database",
+      "file": "model/schedule_block.go",
+      "line": 21
+    },
+    {
+      "name": "GetScheduleBlocksByMatchType",
+      "receiver": "database *Database",
+      "file": "model/schedule_block.go",
+      "line": 25
+    },
+    {
+      "name": "DeleteScheduleBlocksByMatchType",
+      "receiver": "database *Database",
+      "file": "model/schedule_block.go",
+      "line": 47
+    },
+    {
+      "name": "TruncateScheduleBlocks",
+      "receiver": "database *Database",
+      "file": "model/schedule_block.go",
+      "line": 61
+    },
+    {
+      "name": "CreateScheduledBreak",
+      "receiver": "database *Database",
+      "file": "model/scheduled_break.go",
+      "line": 22
+    },
+    {
+      "name": "GetScheduledBreakById",
+      "receiver": "database *Database",
+      "file": "model/scheduled_break.go",
+      "line": 26
+    },
+    {
+      "name": "UpdateScheduledBreak",
+      "receiver": "database *Database",
+      "file": "model/scheduled_break.go",
+      "line": 30
+    },
+    {
+      "name": "GetScheduledBreaksByMatchType",
+      "receiver": "database *Database",
+      "file": "model/scheduled_break.go",
+      "line": 34
+    },
+    {
+      "name": "GetScheduledBreakByMatchTypeOrder",
+      "receiver": "database *Database",
+      "file": "model/scheduled_break.go",
+      "line": 56
+    },
+    {
+      "name": "DeleteScheduledBreaksByMatchType",
+      "receiver": "database *Database",
+      "file": "model/scheduled_break.go",
+      "line": 73
+    },
+    {
+      "name": "TruncateScheduledBreaks",
+      "receiver": "database *Database",
+      "file": "model/scheduled_break.go",
+      "line": 87
+    },
+    {
+      "name": "CreateSponsorSlide",
+      "receiver": "database *Database",
+      "file": "model/sponsor_slide.go",
+      "line": 20
+    },
+    {
+      "name": "GetSponsorSlideById",
+      "receiver": "database *Database",
+      "file": "model/sponsor_slide.go",
+      "line": 24
+    },
+    {
+      "name": "UpdateSponsorSlide",
+      "receiver": "database *Database",
+      "file": "model/sponsor_slide.go",
+      "line": 28
+    },
+    {
+      "name": "DeleteSponsorSlide",
+      "receiver": "database *Database",
+      "file": "model/sponsor_slide.go",
+      "line": 32
+    },
+    {
+      "name": "TruncateSponsorSlides",
+      "receiver": "database *Database",
+      "file": "model/sponsor_slide.go",
+      "line": 36
+    },
+    {
+      "name": "GetAllSponsorSlides",
+      "receiver": "database *Database",
+      "file": "model/sponsor_slide.go",
+      "line": 40
+    },
+    {
+      "name": "GetNextSponsorSlideDisplayOrder",
+      "receiver": "database *Database",
+      "file": "model/sponsor_slide.go",
+      "line": 54
+    },
+    {
+      "name": "newTable",
+      "receiver": "",
+      "file": "model/table.go",
+      "line": 28
+    },
+    {
+      "name": "getById",
+      "receiver": "table *table[R]",
+      "file": "model/table.go",
+      "line": 82
+    },
+    {
+      "name": "getAll",
+      "receiver": "table *table[R]",
+      "file": "model/table.go",
+      "line": 104
+    },
+    {
+      "name": "create",
+      "receiver": "table *table[R]",
+      "file": "model/table.go",
+      "line": 130
+    },
+    {
+      "name": "update",
+      "receiver": "table *table[R]",
+      "file": "model/table.go",
+      "line": 178
+    },
+    {
+      "name": "delete",
+      "receiver": "table *table[R]",
+      "file": "model/table.go",
+      "line": 210
+    },
+    {
+      "name": "truncate",
+      "receiver": "table *table[R]",
+      "file": "model/table.go",
+      "line": 231
+    },
+    {
+      "name": "getBucket",
+      "receiver": "table *table[R]",
+      "file": "model/table.go",
+      "line": 251
+    },
+    {
+      "name": "idToKey",
+      "receiver": "",
+      "file": "model/table.go",
+      "line": 260
+    },
+    {
+      "name": "CreateTeam",
+      "receiver": "database *Database",
+      "file": "model/team.go",
+      "line": 27
+    },
+    {
+      "name": "GetTeamById",
+      "receiver": "database *Database",
+      "file": "model/team.go",
+      "line": 31
+    },
+    {
+      "name": "UpdateTeam",
+      "receiver": "database *Database",
+      "file": "model/team.go",
+      "line": 35
+    },
+    {
+      "name": "DeleteTeam",
+      "receiver": "database *Database",
+      "file": "model/team.go",
+      "line": 39
+    },
+    {
+      "name": "TruncateTeams",
+      "receiver": "database *Database",
+      "file": "model/team.go",
+      "line": 43
+    },
+    {
+      "name": "GetAllTeams",
+      "receiver": "database *Database",
+      "file": "model/team.go",
+      "line": 47
+    },
+    {
+      "name": "SetupTestDb",
+      "receiver": "",
+      "file": "model/test_helpers.go",
+      "line": 15
+    },
+    {
+      "name": "BuildTestMatchResult",
+      "receiver": "",
+      "file": "model/test_helpers.go",
+      "line": 29
+    },
+    {
+      "name": "BuildTestAlliances",
+      "receiver": "",
+      "file": "model/test_helpers.go",
+      "line": 38
+    },
+    {
+      "name": "CreateUserSession",
+      "receiver": "database *Database",
+      "file": "model/user_session.go",
+      "line": 17
+    },
+    {
+      "name": "GetUserSessionByToken",
+      "receiver": "database *Database",
+      "file": "model/user_session.go",
+      "line": 21
+    },
+    {
+      "name": "DeleteUserSession",
+      "receiver": "database *Database",
+      "file": "model/user_session.go",
+      "line": 35
+    },
+    {
+      "name": "TruncateUserSessions",
+      "receiver": "database *Database",
+      "file": "model/user_session.go",
+      "line": 39
+    },
+    {
+      "name": "SetSettings",
+      "receiver": "ap *AccessPoint",
+      "file": "network/access_point.go",
+      "line": 80
+    },
+    {
+      "name": "Run",
+      "receiver": "ap *AccessPoint",
+      "file": "network/access_point.go",
+      "line": 95
+    },
+    {
+      "name": "ConfigureTeamWifi",
+      "receiver": "ap *AccessPoint",
+      "file": "network/access_point.go",
+      "line": 114
+    },
+    {
+      "name": "updateMonitoring",
+      "receiver": "ap *AccessPoint",
+      "file": "network/access_point.go",
+      "line": 169
+    },
+    {
+      "name": "statusMatchesLastConfiguration",
+      "receiver": "ap *AccessPoint",
+      "file": "network/access_point.go",
+      "line": 229
+    },
+    {
+      "name": "addStation",
+      "receiver": "",
+      "file": "network/access_point.go",
+      "line": 247
+    },
+    {
+      "name": "updateTeamWifiStatus",
+      "receiver": "",
+      "file": "network/access_point.go",
+      "line": 258
+    },
+    {
+      "name": "toLogString",
+      "receiver": "apStatus *accessPointStatus",
+      "file": "network/access_point.go",
+      "line": 288
+    },
+    {
+      "name": "NewSCCSwitch",
+      "receiver": "",
+      "file": "network/sccswitch.go",
+      "line": 38
+    },
+    {
+      "name": "SetTeamEthernetEnabled",
+      "receiver": "scc *SCCSwitch",
+      "file": "network/sccswitch.go",
+      "line": 52
+    },
+    {
+      "name": "runCommandSequence",
+      "receiver": "scc *SCCSwitch",
+      "file": "network/sccswitch.go",
+      "line": 80
+    },
+    {
+      "name": "NewSwitch",
+      "receiver": "",
+      "file": "network/switch.go",
+      "line": 49
+    },
+    {
+      "name": "ConfigureTeamEthernet",
+      "receiver": "sw *Switch",
+      "file": "network/switch.go",
+      "line": 61
+    },
+    {
+      "name": "runCommand",
+      "receiver": "sw *Switch",
+      "file": "network/switch.go",
+      "line": 132
+    },
+    {
+      "name": "runConfigCommand",
+      "receiver": "sw *Switch",
+      "file": "network/switch.go",
+      "line": 167
+    },
+    {
+      "name": "NewBlackmagicClient",
+      "receiver": "",
+      "file": "partner/blackmagic.go",
+      "line": 27
+    },
+    {
+      "name": "StartRecording",
+      "receiver": "client *BlackmagicClient",
+      "file": "partner/blackmagic.go",
+      "line": 39
+    },
+    {
+      "name": "StopRecording",
+      "receiver": "client *BlackmagicClient",
+      "file": "partner/blackmagic.go",
+      "line": 44
+    },
+    {
+      "name": "sendCommand",
+      "receiver": "client *BlackmagicClient",
+      "file": "partner/blackmagic.go",
+      "line": 50
+    },
+    {
+      "name": "NewCompanionClient",
+      "receiver": "",
+      "file": "partner/companion.go",
+      "line": 48
+    },
+    {
+      "name": "SendEvent",
+      "receiver": "client *CompanionClient",
+      "file": "partner/companion.go",
+      "line": 61
+    },
+    {
+      "name": "sendCommand",
+      "receiver": "client *CompanionClient",
+      "file": "partner/companion.go",
+      "line": 77
+    },
+    {
+      "name": "IsEnabled",
+      "receiver": "client *CompanionClient",
+      "file": "partner/companion.go",
+      "line": 101
+    },
+    {
+      "name": "GetEventConfig",
+      "receiver": "client *CompanionClient",
+      "file": "partner/companion.go",
+      "line": 106
+    },
+    {
+      "name": "NewNexusClient",
+      "receiver": "",
+      "file": "partner/nexus.go",
+      "line": 65
+    },
+    {
+      "name": "GetLineup",
+      "receiver": "client *NexusClient",
+      "file": "partner/nexus.go",
+      "line": 70
+    },
+    {
+      "name": "AutoQueue",
+      "receiver": "client *NexusClient",
+      "file": "partner/nexus.go",
+      "line": 121
+    },
+    {
+      "name": "MatchStarted",
+      "receiver": "client *NexusClient",
+      "file": "partner/nexus.go",
+      "line": 137
+    },
+    {
+      "name": "BreakStarted",
+      "receiver": "client *NexusClient",
+      "file": "partner/nexus.go",
+      "line": 143
+    },
+    {
+      "name": "BreakEnded",
+      "receiver": "client *NexusClient",
+      "file": "partner/nexus.go",
+      "line": 149
+    },
+    {
+      "name": "postAutoQueueRequest",
+      "receiver": "client *NexusClient",
+      "file": "partner/nexus.go",
+      "line": 155
+    },
+    {
+      "name": "getRequest",
+      "receiver": "client *NexusClient",
+      "file": "partner/nexus.go",
+      "line": 200
+    },
+    {
+      "name": "stringPtr",
+      "receiver": "",
+      "file": "partner/tba.go",
+      "line": 162
+    },
+    {
+      "name": "NewTbaClient",
+      "receiver": "",
+      "file": "partner/tba.go",
+      "line": 174
+    },
+    {
+      "name": "GetTeam",
+      "receiver": "client *TbaClient",
+      "file": "partner/tba.go",
+      "line": 184
+    },
+    {
+      "name": "GetRobotName",
+      "receiver": "client *TbaClient",
+      "file": "partner/tba.go",
+      "line": 204
+    },
+    {
+      "name": "GetTeamAwards",
+      "receiver": "client *TbaClient",
+      "file": "partner/tba.go",
+      "line": 231
+    },
+    {
+      "name": "DownloadTeamAvatar",
+      "receiver": "client *TbaClient",
+      "file": "partner/tba.go",
+      "line": 264
+    },
+    {
+      "name": "PublishTeams",
+      "receiver": "client *TbaClient",
+      "file": "partner/tba.go",
+      "line": 305
+    },
+    {
+      "name": "PublishMatches",
+      "receiver": "client *TbaClient",
+      "file": "partner/tba.go",
+      "line": 329
+    },
+    {
+      "name": "PublishRankings",
+      "receiver": "client *TbaClient",
+      "file": "partner/tba.go",
+      "line": 445
+    },
+    {
+      "name": "PublishAlliances",
+      "receiver": "client *TbaClient",
+      "file": "partner/tba.go",
+      "line": 482
+    },
+    {
+      "name": "PublishAwards",
+      "receiver": "client *TbaClient",
+      "file": "partner/tba.go",
+      "line": 525
+    },
+    {
+      "name": "DeletePublishedMatches",
+      "receiver": "client *TbaClient",
+      "file": "partner/tba.go",
+      "line": 556
+    },
+    {
+      "name": "checkTbaPostResponse",
+      "receiver": "",
+      "file": "partner/tba.go",
+      "line": 564
+    },
+    {
+      "name": "getEventName",
+      "receiver": "client *TbaClient",
+      "file": "partner/tba.go",
+      "line": 583
+    },
+    {
+      "name": "getTbaTeam",
+      "receiver": "",
+      "file": "partner/tba.go",
+      "line": 607
+    },
+    {
+      "name": "getRequest",
+      "receiver": "client *TbaClient",
+      "file": "partner/tba.go",
+      "line": 612
+    },
+    {
+      "name": "postRequest",
+      "receiver": "client *TbaClient",
+      "file": "partner/tba.go",
+      "line": 626
+    },
+    {
+      "name": "createTbaAlliance",
+      "receiver": "",
+      "file": "partner/tba.go",
+      "line": 657
+    },
+    {
+      "name": "createTbaScoringBreakdown",
+      "receiver": "",
+      "file": "partner/tba.go",
+      "line": 678
+    },
+    {
+      "name": "AllianceId",
+      "receiver": "source allianceSelectionSource",
+      "file": "playoff/alliance_source.go",
+      "line": 33
+    },
+    {
+      "name": "displayName",
+      "receiver": "source allianceSelectionSource",
+      "file": "playoff/alliance_source.go",
+      "line": 37
+    },
+    {
+      "name": "setDestination",
+      "receiver": "source allianceSelectionSource",
+      "file": "playoff/alliance_source.go",
+      "line": 41
+    },
+    {
+      "name": "update",
+      "receiver": "source allianceSelectionSource",
+      "file": "playoff/alliance_source.go",
+      "line": 45
+    },
+    {
+      "name": "traverse",
+      "receiver": "source allianceSelectionSource",
+      "file": "playoff/alliance_source.go",
+      "line": 49
+    },
+    {
+      "name": "AllianceId",
+      "receiver": "source matchupSource",
+      "file": "playoff/alliance_source.go",
+      "line": 60
+    },
+    {
+      "name": "displayName",
+      "receiver": "source matchupSource",
+      "file": "playoff/alliance_source.go",
+      "line": 68
+    },
+    {
+      "name": "setDestination",
+      "receiver": "source matchupSource",
+      "file": "playoff/alliance_source.go",
+      "line": 75
+    },
+    {
+      "name": "update",
+      "receiver": "source matchupSource",
+      "file": "playoff/alliance_source.go",
+      "line": 86
+    },
+    {
+      "name": "traverse",
+      "receiver": "source matchupSource",
+      "file": "playoff/alliance_source.go",
+      "line": 93
+    },
+    {
+      "name": "newDoubleEliminationBracket",
+      "receiver": "",
+      "file": "playoff/double_elimination.go",
+      "line": 15
+    },
+    {
+      "name": "newFourAllianceDoubleEliminationBracket",
+      "receiver": "",
+      "file": "playoff/double_elimination.go",
+      "line": 27
+    },
+    {
+      "name": "newEightAllianceDoubleEliminationBracket",
+      "receiver": "",
+      "file": "playoff/double_elimination.go",
+      "line": 91
+    },
+    {
+      "name": "newDoubleEliminationMatch",
+      "receiver": "",
+      "file": "playoff/double_elimination.go",
+      "line": 216
+    },
+    {
+      "name": "collectMatchGroups",
+      "receiver": "",
+      "file": "playoff/match_group.go",
+      "line": 44
+    },
+    {
+      "name": "collectMatchSpecs",
+      "receiver": "",
+      "file": "playoff/match_group.go",
+      "line": 59
+    },
+    {
+      "name": "Id",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 30
+    },
+    {
+      "name": "MatchSpecs",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 34
+    },
+    {
+      "name": "update",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 38
+    },
+    {
+      "name": "setSourceDestinations",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 90
+    },
+    {
+      "name": "traverse",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 95
+    },
+    {
+      "name": "RedAllianceSourceDisplayName",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 110
+    },
+    {
+      "name": "BlueAllianceSourceDisplayName",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 116
+    },
+    {
+      "name": "RedAllianceDestination",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 121
+    },
+    {
+      "name": "BlueAllianceDestination",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 126
+    },
+    {
+      "name": "StatusText",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 131
+    },
+    {
+      "name": "WinningAllianceId",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 156
+    },
+    {
+      "name": "LosingAllianceId",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 167
+    },
+    {
+      "name": "IsComplete",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 178
+    },
+    {
+      "name": "IsLosingAllianceEliminated",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 183
+    },
+    {
+      "name": "isFinal",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 188
+    },
+    {
+      "name": "allianceDestination",
+      "receiver": "matchup *Matchup",
+      "file": "playoff/matchup.go",
+      "line": 193
+    },
+    {
+      "name": "formatDestinationMatchName",
+      "receiver": "",
+      "file": "playoff/matchup.go",
+      "line": 217
+    },
+    {
+      "name": "NewPlayoffTournament",
+      "receiver": "",
+      "file": "playoff/playoff_tournament.go",
+      "line": 24
+    },
+    {
+      "name": "MatchGroups",
+      "receiver": "tournament *PlayoffTournament",
+      "file": "playoff/playoff_tournament.go",
+      "line": 64
+    },
+    {
+      "name": "FinalMatchup",
+      "receiver": "tournament *PlayoffTournament",
+      "file": "playoff/playoff_tournament.go",
+      "line": 69
+    },
+    {
+      "name": "IsComplete",
+      "receiver": "tournament *PlayoffTournament",
+      "file": "playoff/playoff_tournament.go",
+      "line": 74
+    },
+    {
+      "name": "WinningAllianceId",
+      "receiver": "tournament *PlayoffTournament",
+      "file": "playoff/playoff_tournament.go",
+      "line": 80
+    },
+    {
+      "name": "FinalistAllianceId",
+      "receiver": "tournament *PlayoffTournament",
+      "file": "playoff/playoff_tournament.go",
+      "line": 86
+    },
+    {
+      "name": "Traverse",
+      "receiver": "tournament *PlayoffTournament",
+      "file": "playoff/playoff_tournament.go",
+      "line": 91
+    },
+    {
+      "name": "CreateMatchesAndBreaks",
+      "receiver": "tournament *PlayoffTournament",
+      "file": "playoff/playoff_tournament.go",
+      "line": 97
+    },
+    {
+      "name": "UpdateMatches",
+      "receiver": "tournament *PlayoffTournament",
+      "file": "playoff/playoff_tournament.go",
+      "line": 186
+    },
+    {
+      "name": "positionRedTeams",
+      "receiver": "",
+      "file": "playoff/playoff_tournament.go",
+      "line": 254
+    },
+    {
+      "name": "positionBlueTeams",
+      "receiver": "",
+      "file": "playoff/playoff_tournament.go",
+      "line": 261
+    },
+    {
+      "name": "newSingleEliminationBracket",
+      "receiver": "",
+      "file": "playoff/single_elimination.go",
+      "line": 16
+    },
+    {
+      "name": "newSingleEliminationAllianceSource",
+      "receiver": "",
+      "file": "playoff/single_elimination.go",
+      "line": 206
+    },
+    {
+      "name": "newSingleEliminationMatch",
+      "receiver": "",
+      "file": "playoff/single_elimination.go",
+      "line": 220
+    },
+    {
+      "name": "newFinalMatches",
+      "receiver": "",
+      "file": "playoff/single_elimination.go",
+      "line": 232
+    },
+    {
+      "name": "setupTestDb",
+      "receiver": "",
+      "file": "playoff/test_helpers.go",
+      "line": 14
+    },
+    {
+      "name": "assertMatchSpecs",
+      "receiver": "",
+      "file": "playoff/test_helpers.go",
+      "line": 31
+    },
+    {
+      "name": "assertMatchSpecAlliances",
+      "receiver": "",
+      "file": "playoff/test_helpers.go",
+      "line": 59
+    },
+    {
+      "name": "assertMatchGroups",
+      "receiver": "",
+      "file": "playoff/test_helpers.go",
+      "line": 72
+    },
+    {
+      "name": "assertMatch",
+      "receiver": "",
+      "file": "playoff/test_helpers.go",
+      "line": 83
+    },
+    {
+      "name": "assertBreak",
+      "receiver": "",
+      "file": "playoff/test_helpers.go",
+      "line": 132
+    },
+    {
+      "name": "assertMatchupOutcome",
+      "receiver": "",
+      "file": "playoff/test_helpers.go",
+      "line": 147
+    },
+    {
+      "name": "_",
+      "receiver": "",
+      "file": "plc/armorblock_string.go",
+      "line": 7
+    },
+    {
+      "name": "String",
+      "receiver": "i armorBlock",
+      "file": "plc/armorblock_string.go",
+      "line": 22
+    },
+    {
+      "name": "_",
+      "receiver": "",
+      "file": "plc/coil_string.go",
+      "line": 7
+    },
+    {
+      "name": "String",
+      "receiver": "i coil",
+      "file": "plc/coil_string.go",
+      "line": 31
+    },
+    {
+      "name": "_",
+      "receiver": "",
+      "file": "plc/input_string.go",
+      "line": 7
+    },
+    {
+      "name": "String",
+      "receiver": "i input",
+      "file": "plc/input_string.go",
+      "line": 46
+    },
+    {
+      "name": "SetAddress",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 162
+    },
+    {
+      "name": "IsEnabled",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 173
+    },
+    {
+      "name": "IsHealthy",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 178
+    },
+    {
+      "name": "IoChangeNotifier",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 183
+    },
+    {
+      "name": "Run",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 188
+    },
+    {
+      "name": "GetArmorBlockStatuses",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 212
+    },
+    {
+      "name": "GetFieldEStop",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 221
+    },
+    {
+      "name": "GetTeamEStops",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 226
+    },
+    {
+      "name": "GetTeamAStops",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 238
+    },
+    {
+      "name": "GetEthernetConnected",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 250
+    },
+    {
+      "name": "IsFtaReady",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 264
+    },
+    {
+      "name": "ResetMatch",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 269
+    },
+    {
+      "name": "SetStackLights",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 282
+    },
+    {
+      "name": "SetStackBuzzer",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 290
+    },
+    {
+      "name": "SetFieldResetLight",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 295
+    },
+    {
+      "name": "SetAwardsModeLight",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 300
+    },
+    {
+      "name": "GetHubCounts",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 305
+    },
+    {
+      "name": "SetHubMotors",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 310
+    },
+    {
+      "name": "SetHubLights",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 316
+    },
+    {
+      "name": "GetCycleState",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 321
+    },
+    {
+      "name": "GetInputNames",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 325
+    },
+    {
+      "name": "GetRegisterNames",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 333
+    },
+    {
+      "name": "GetCoilNames",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 341
+    },
+    {
+      "name": "SetCoilOverride",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 349
+    },
+    {
+      "name": "ClearCoilOverride",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 359
+    },
+    {
+      "name": "connect",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 366
+    },
+    {
+      "name": "resetConnection",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 383
+    },
+    {
+      "name": "update",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 393
+    },
+    {
+      "name": "readInputs",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 423
+    },
+    {
+      "name": "readRegisters",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 442
+    },
+    {
+      "name": "writeCoils",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 465
+    },
+    {
+      "name": "generateIoChangeMessage",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 485
+    },
+    {
+      "name": "getEffectiveCoils",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 496
+    },
+    {
+      "name": "getCoilOverrideStates",
+      "receiver": "plc *ModbusPlc",
+      "file": "plc/plc.go",
+      "line": 506
+    },
+    {
+      "name": "byteToBool",
+      "receiver": "",
+      "file": "plc/plc.go",
+      "line": 521
+    },
+    {
+      "name": "byteToUint",
+      "receiver": "",
+      "file": "plc/plc.go",
+      "line": 532
+    },
+    {
+      "name": "boolToByte",
+      "receiver": "",
+      "file": "plc/plc.go",
+      "line": 540
+    },
+    {
+      "name": "_",
+      "receiver": "",
+      "file": "plc/register_string.go",
+      "line": 7
+    },
+    {
+      "name": "String",
+      "receiver": "i register",
+      "file": "plc/register_string.go",
+      "line": 29
+    },
+    {
+      "name": "CalculateAllianceCards",
+      "receiver": "",
+      "file": "tournament/alliance_cards.go",
+      "line": 11
+    },
+    {
+      "name": "CreateOrUpdateAward",
+      "receiver": "",
+      "file": "tournament/awards.go",
+      "line": 14
+    },
+    {
+      "name": "DeleteAward",
+      "receiver": "",
+      "file": "tournament/awards.go",
+      "line": 80
+    },
+    {
+      "name": "CreateOrUpdateWinnerAndFinalistAwards",
+      "receiver": "",
+      "file": "tournament/awards.go",
+      "line": 100
+    },
+    {
+      "name": "createOrUpdateAwardLowerThird",
+      "receiver": "",
+      "file": "tournament/awards.go",
+      "line": 168
+    },
+    {
+      "name": "BuildJudgingSchedule",
+      "receiver": "",
+      "file": "tournament/judging_schedule.go",
+      "line": 43
+    },
+    {
+      "name": "createTeamMatchMap",
+      "receiver": "",
+      "file": "tournament/judging_schedule.go",
+      "line": 201
+    },
+    {
+      "name": "getNextSlotForTeam",
+      "receiver": "",
+      "file": "tournament/judging_schedule.go",
+      "line": 220
+    },
+    {
+      "name": "CalculateRankings",
+      "receiver": "",
+      "file": "tournament/qualification_rankings.go",
+      "line": 17
+    },
+    {
+      "name": "CalculateTeamCards",
+      "receiver": "",
+      "file": "tournament/qualification_rankings.go",
+      "line": 81
+    },
+    {
+      "name": "addMatchResultToRankings",
+      "receiver": "",
+      "file": "tournament/qualification_rankings.go",
+      "line": 135
+    },
+    {
+      "name": "sortRankings",
+      "receiver": "",
+      "file": "tournament/qualification_rankings.go",
+      "line": 161
+    },
+    {
+      "name": "BuildRandomSchedule",
+      "receiver": "",
+      "file": "tournament/schedule.go",
+      "line": 28
+    },
+    {
+      "name": "countMatches",
+      "receiver": "",
+      "file": "tournament/schedule.go",
+      "line": 111
+    },
+    {
+      "name": "CreateTestAlliances",
+      "receiver": "",
+      "file": "tournament/test_helpers.go",
+      "line": 13
+    },
+    {
+      "name": "setupTestDb",
+      "receiver": "",
+      "file": "tournament/test_helpers.go",
+      "line": 24
+    },
+    {
+      "name": "allianceSelectionGetHandler",
+      "receiver": "web *Web",
+      "file": "web/alliance_selection.go",
+      "line": 33
+    },
+    {
+      "name": "allianceSelectionPostHandler",
+      "receiver": "web *Web",
+      "file": "web/alliance_selection.go",
+      "line": 42
+    },
+    {
+      "name": "allianceSelectionStartHandler",
+      "receiver": "web *Web",
+      "file": "web/alliance_selection.go",
+      "line": 103
+    },
+    {
+      "name": "allianceSelectionResetHandler",
+      "receiver": "web *Web",
+      "file": "web/alliance_selection.go",
+      "line": 148
+    },
+    {
+      "name": "allianceSelectionFinalizeHandler",
+      "receiver": "web *Web",
+      "file": "web/alliance_selection.go",
+      "line": 178
+    },
+    {
+      "name": "allianceSelectionWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/alliance_selection.go",
+      "line": 274
+    },
+    {
+      "name": "renderAllianceSelection",
+      "receiver": "web *Web",
+      "file": "web/alliance_selection.go",
+      "line": 368
+    },
+    {
+      "name": "canModifyAllianceSelection",
+      "receiver": "web *Web",
+      "file": "web/alliance_selection.go",
+      "line": 413
+    },
+    {
+      "name": "canResetAllianceSelection",
+      "receiver": "web *Web",
+      "file": "web/alliance_selection.go",
+      "line": 422
+    },
+    {
+      "name": "determineNextCell",
+      "receiver": "web *Web",
+      "file": "web/alliance_selection.go",
+      "line": 436
+    },
+    {
+      "name": "allianceStationDisplayHandler",
+      "receiver": "web *Web",
+      "file": "web/alliance_station_display.go",
+      "line": 15
+    },
+    {
+      "name": "allianceStationDisplayWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/alliance_station_display.go",
+      "line": 37
+    },
+    {
+      "name": "announcerDisplayHandler",
+      "receiver": "web *Web",
+      "file": "web/announcer_display.go",
+      "line": 15
+    },
+    {
+      "name": "announcerDisplayMatchLoadHandler",
+      "receiver": "web *Web",
+      "file": "web/announcer_display.go",
+      "line": 37
+    },
+    {
+      "name": "announcerDisplayScorePostedHandler",
+      "receiver": "web *Web",
+      "file": "web/announcer_display.go",
+      "line": 52
+    },
+    {
+      "name": "announcerDisplayWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/announcer_display.go",
+      "line": 67
+    },
+    {
+      "name": "matchesApiHandler",
+      "receiver": "web *Web",
+      "file": "web/api.go",
+      "line": 51
+    },
+    {
+      "name": "sponsorSlidesApiHandler",
+      "receiver": "web *Web",
+      "file": "web/api.go",
+      "line": 97
+    },
+    {
+      "name": "rankingsApiHandler",
+      "receiver": "web *Web",
+      "file": "web/api.go",
+      "line": 124
+    },
+    {
+      "name": "alliancesApiHandler",
+      "receiver": "web *Web",
+      "file": "web/api.go",
+      "line": 185
+    },
+    {
+      "name": "arenaWebsocketApiHandler",
+      "receiver": "web *Web",
+      "file": "web/api.go",
+      "line": 208
+    },
+    {
+      "name": "teamAvatarsApiHandler",
+      "receiver": "web *Web",
+      "file": "web/api.go",
+      "line": 221
+    },
+    {
+      "name": "bracketSvgApiHandler",
+      "receiver": "web *Web",
+      "file": "web/api.go",
+      "line": 236
+    },
+    {
+      "name": "generateBracketSvg",
+      "receiver": "web *Web",
+      "file": "web/api.go",
+      "line": 254
+    },
+    {
+      "name": "audienceDisplayHandler",
+      "receiver": "web *Web",
+      "file": "web/audience_display.go",
+      "line": 16
+    },
+    {
+      "name": "audienceDisplayWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/audience_display.go",
+      "line": 48
+    },
+    {
+      "name": "bracketDisplayHandler",
+      "receiver": "web *Web",
+      "file": "web/bracket_display.go",
+      "line": 15
+    },
+    {
+      "name": "bracketDisplayWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/bracket_display.go",
+      "line": 36
+    },
+    {
+      "name": "enforceDisplayConfiguration",
+      "receiver": "web *Web",
+      "file": "web/display_utils.go",
+      "line": 18
+    },
+    {
+      "name": "registerDisplay",
+      "receiver": "web *Web",
+      "file": "web/display_utils.go",
+      "line": 58
+    },
+    {
+      "name": "fieldMonitorDisplayHandler",
+      "receiver": "web *Web",
+      "file": "web/field_monitor_display.go",
+      "line": 18
+    },
+    {
+      "name": "fmsFieldMonitorDisplayHandler",
+      "receiver": "web *Web",
+      "file": "web/field_monitor_display.go",
+      "line": 43
+    },
+    {
+      "name": "fieldMonitorDisplayWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/field_monitor_display.go",
+      "line": 68
+    },
+    {
+      "name": "loginHandler",
+      "receiver": "web *Web",
+      "file": "web/login.go",
+      "line": 19
+    },
+    {
+      "name": "loginPostHandler",
+      "receiver": "web *Web",
+      "file": "web/login.go",
+      "line": 24
+    },
+    {
+      "name": "renderLogin",
+      "receiver": "web *Web",
+      "file": "web/login.go",
+      "line": 45
+    },
+    {
+      "name": "userIsAdmin",
+      "receiver": "web *Web",
+      "file": "web/login.go",
+      "line": 63
+    },
+    {
+      "name": "getUserSessionFromCookie",
+      "receiver": "web *Web",
+      "file": "web/login.go",
+      "line": 81
+    },
+    {
+      "name": "checkAuthPassword",
+      "receiver": "web *Web",
+      "file": "web/login.go",
+      "line": 93
+    },
+    {
+      "name": "logoDisplayHandler",
+      "receiver": "web *Web",
+      "file": "web/logo_display.go",
+      "line": 15
+    },
+    {
+      "name": "logoDisplayWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/logo_display.go",
+      "line": 36
+    },
+    {
+      "name": "matchLogsHandler",
+      "receiver": "web *Web",
+      "file": "web/match_logs.go",
+      "line": 70
+    },
+    {
+      "name": "matchLogsViewGetHandler",
+      "receiver": "web *Web",
+      "file": "web/match_logs.go",
+      "line": 114
+    },
+    {
+      "name": "getMatchLogFromRequest",
+      "receiver": "web *Web",
+      "file": "web/match_logs.go",
+      "line": 144
+    },
+    {
+      "name": "parseOptionalString",
+      "receiver": "",
+      "file": "web/match_logs.go",
+      "line": 270
+    },
+    {
+      "name": "parseOptionalBool",
+      "receiver": "",
+      "file": "web/match_logs.go",
+      "line": 279
+    },
+    {
+      "name": "parseOptionalFloat",
+      "receiver": "",
+      "file": "web/match_logs.go",
+      "line": 292
+    },
+    {
+      "name": "parseOptionalInt",
+      "receiver": "",
+      "file": "web/match_logs.go",
+      "line": 305
+    },
+    {
+      "name": "buildMatchLogsList",
+      "receiver": "web *Web",
+      "file": "web/match_logs.go",
+      "line": 318
+    },
+    {
+      "name": "matchPlayHandler",
+      "receiver": "web *Web",
+      "file": "web/match_play.go",
+      "line": 36
+    },
+    {
+      "name": "matchPlayMatchLoadHandler",
+      "receiver": "web *Web",
+      "file": "web/match_play.go",
+      "line": 65
+    },
+    {
+      "name": "matchPlayWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/match_play.go",
+      "line": 116
+    },
+    {
+      "name": "commitPostAndLoadNextMatch",
+      "receiver": "web *Web",
+      "file": "web/match_play.go",
+      "line": 378
+    },
+    {
+      "name": "commitMatchScore",
+      "receiver": "web *Web",
+      "file": "web/match_play.go",
+      "line": 402
+    },
+    {
+      "name": "getCurrentMatchResult",
+      "receiver": "web *Web",
+      "file": "web/match_play.go",
+      "line": 539
+    },
+    {
+      "name": "commitCurrentMatchScore",
+      "receiver": "web *Web",
+      "file": "web/match_play.go",
+      "line": 553
+    },
+    {
+      "name": "Len",
+      "receiver": "list MatchPlayList",
+      "file": "web/match_play.go",
+      "line": 558
+    },
+    {
+      "name": "Less",
+      "receiver": "list MatchPlayList",
+      "file": "web/match_play.go",
+      "line": 563
+    },
+    {
+      "name": "Swap",
+      "receiver": "list MatchPlayList",
+      "file": "web/match_play.go",
+      "line": 568
+    },
+    {
+      "name": "buildMatchPlayList",
+      "receiver": "web *Web",
+      "file": "web/match_play.go",
+      "line": 573
+    },
+    {
+      "name": "matchReviewHandler",
+      "receiver": "web *Web",
+      "file": "web/match_review.go",
+      "line": 45
+    },
+    {
+      "name": "matchReviewEditGetHandler",
+      "receiver": "web *Web",
+      "file": "web/match_review.go",
+      "line": 89
+    },
+    {
+      "name": "matchReviewSummaryPostHandler",
+      "receiver": "web *Web",
+      "file": "web/match_review.go",
+      "line": 142
+    },
+    {
+      "name": "matchReviewEditPostHandler",
+      "receiver": "web *Web",
+      "file": "web/match_review.go",
+      "line": 183
+    },
+    {
+      "name": "getMatchResultFromRequest",
+      "receiver": "web *Web",
+      "file": "web/match_review.go",
+      "line": 229
+    },
+    {
+      "name": "normalizeMatchResult",
+      "receiver": "",
+      "file": "web/match_review.go",
+      "line": 260
+    },
+    {
+      "name": "buildMatchReviewList",
+      "receiver": "web *Web",
+      "file": "web/match_review.go",
+      "line": 285
+    },
+    {
+      "name": "placeholderDisplayHandler",
+      "receiver": "web *Web",
+      "file": "web/placeholder_display.go",
+      "line": 15
+    },
+    {
+      "name": "placeholderDisplayWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/placeholder_display.go",
+      "line": 36
+    },
+    {
+      "name": "queueingDisplayHandler",
+      "receiver": "web *Web",
+      "file": "web/queueing_display.go",
+      "line": 22
+    },
+    {
+      "name": "queueingDisplayMatchLoadHandler",
+      "receiver": "web *Web",
+      "file": "web/queueing_display.go",
+      "line": 46
+    },
+    {
+      "name": "queueingDisplayWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/queueing_display.go",
+      "line": 110
+    },
+    {
+      "name": "rankingsDisplayHandler",
+      "receiver": "web *Web",
+      "file": "web/rankings_display.go",
+      "line": 15
+    },
+    {
+      "name": "rankingsDisplayWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/rankings_display.go",
+      "line": 36
+    },
+    {
+      "name": "refereePanelHandler",
+      "receiver": "web *Web",
+      "file": "web/referee_panel.go",
+      "line": 23
+    },
+    {
+      "name": "refereePanelFoulListHandler",
+      "receiver": "web *Web",
+      "file": "web/referee_panel.go",
+      "line": 45
+    },
+    {
+      "name": "refereePanelWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/referee_panel.go",
+      "line": 71
+    },
+    {
+      "name": "newReportPdf",
+      "receiver": "",
+      "file": "web/report_pdf.go",
+      "line": 35
+    },
+    {
+      "name": "registerReportFont",
+      "receiver": "",
+      "file": "web/report_pdf.go",
+      "line": 60
+    },
+    {
+      "name": "SetFont",
+      "receiver": "pdf *reportPdf",
+      "file": "web/report_pdf.go",
+      "line": 67
+    },
+    {
+      "name": "findArialFontFiles",
+      "receiver": "",
+      "file": "web/report_pdf.go",
+      "line": 87
+    },
+    {
+      "name": "arialFontStyle",
+      "receiver": "",
+      "file": "web/report_pdf.go",
+      "line": 126
+    },
+    {
+      "name": "normalizeFontName",
+      "receiver": "",
+      "file": "web/report_pdf.go",
+      "line": 149
+    },
+    {
+      "name": "rankingsCsvReportHandler",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 25
+    },
+    {
+      "name": "rankingsPdfReportHandler",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 55
+    },
+    {
+      "name": "findBackupTeams",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 128
+    },
+    {
+      "name": "backupTeamsCsvReportHandler",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 173
+    },
+    {
+      "name": "backupsPdfReportHandler",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 223
+    },
+    {
+      "name": "couponsPdfReportHandler",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 290
+    },
+    {
+      "name": "drawCoupon",
+      "receiver": "",
+      "file": "web/reports.go",
+      "line": 324
+    },
+    {
+      "name": "drawEventWatermark",
+      "receiver": "",
+      "file": "web/reports.go",
+      "line": 336
+    },
+    {
+      "name": "drawCenteredText",
+      "receiver": "",
+      "file": "web/reports.go",
+      "line": 354
+    },
+    {
+      "name": "drawPdfLogo",
+      "receiver": "",
+      "file": "web/reports.go",
+      "line": 359
+    },
+    {
+      "name": "scheduleCsvReportHandler",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 374
+    },
+    {
+      "name": "schedulePdfReportHandler",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 410
+    },
+    {
+      "name": "teamsCsvReportHandler",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 554
+    },
+    {
+      "name": "teamsPdfReportHandler",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 584
+    },
+    {
+      "name": "wpaKeysCsvReportHandler",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 661
+    },
+    {
+      "name": "alliancesPdfReportHandler",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 684
+    },
+    {
+      "name": "bracketPdfReportHandler",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 807
+    },
+    {
+      "name": "surrogateText",
+      "receiver": "",
+      "file": "web/reports.go",
+      "line": 836
+    },
+    {
+      "name": "cyclePdfReportHandler",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 845
+    },
+    {
+      "name": "ftaCsvReportHandler",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 949
+    },
+    {
+      "name": "judgingSchedulePdfReportHandler",
+      "receiver": "web *Web",
+      "file": "web/reports.go",
+      "line": 979
+    },
+    {
+      "name": "addTimeGeneratedFooter",
+      "receiver": "",
+      "file": "web/reports.go",
+      "line": 1102
+    },
+    {
+      "name": "drawMultiLineCell",
+      "receiver": "",
+      "file": "web/reports.go",
+      "line": 1111
+    },
+    {
+      "name": "scoringPanelHandler",
+      "receiver": "web *Web",
+      "file": "web/scoring_panel.go",
+      "line": 37
+    },
+    {
+      "name": "scoringPanelWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/scoring_panel.go",
+      "line": 67
+    },
+    {
+      "name": "awardsGetHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_awards.go",
+      "line": 17
+    },
+    {
+      "name": "awardsPostHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_awards.go",
+      "line": 54
+    },
+    {
+      "name": "breaksGetHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_breaks.go",
+      "line": 15
+    },
+    {
+      "name": "breaksPostHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_breaks.go",
+      "line": 42
+    },
+    {
+      "name": "displaysGetHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_displays.go",
+      "line": 20
+    },
+    {
+      "name": "displaysWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_displays.go",
+      "line": 42
+    },
+    {
+      "name": "fieldTestingGetHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_field_testing.go",
+      "line": 28
+    },
+    {
+      "name": "fieldTestingWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_field_testing.go",
+      "line": 69
+    },
+    {
+      "name": "fieldTestingOverridesAllowed",
+      "receiver": "",
+      "file": "web/setup_field_testing.go",
+      "line": 187
+    },
+    {
+      "name": "judgingGetHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_judging.go",
+      "line": 25
+    },
+    {
+      "name": "judgingGeneratePostHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_judging.go",
+      "line": 34
+    },
+    {
+      "name": "judgingClearPostHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_judging.go",
+      "line": 92
+    },
+    {
+      "name": "renderJudging",
+      "receiver": "web *Web",
+      "file": "web/setup_judging.go",
+      "line": 106
+    },
+    {
+      "name": "lowerThirdsGetHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_lower_thirds.go",
+      "line": 19
+    },
+    {
+      "name": "lowerThirdsWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_lower_thirds.go",
+      "line": 48
+    },
+    {
+      "name": "saveLowerThird",
+      "receiver": "web *Web",
+      "file": "web/setup_lower_thirds.go",
+      "line": 158
+    },
+    {
+      "name": "reorderLowerThird",
+      "receiver": "web *Web",
+      "file": "web/setup_lower_thirds.go",
+      "line": 180
+    },
+    {
+      "name": "scheduleGetHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_schedule.go",
+      "line": 22
+    },
+    {
+      "name": "scheduleGeneratePostHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_schedule.go",
+      "line": 38
+    },
+    {
+      "name": "scheduleSavePostHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_schedule.go",
+      "line": 122
+    },
+    {
+      "name": "renderSchedule",
+      "receiver": "web *Web",
+      "file": "web/setup_schedule.go",
+      "line": 171
+    },
+    {
+      "name": "getScheduleBlocks",
+      "receiver": "",
+      "file": "web/setup_schedule.go",
+      "line": 220
+    },
+    {
+      "name": "getMatchType",
+      "receiver": "",
+      "file": "web/setup_schedule.go",
+      "line": 247
+    },
+    {
+      "name": "settingsGetHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_settings.go",
+      "line": 23
+    },
+    {
+      "name": "settingsPostHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_settings.go",
+      "line": 32
+    },
+    {
+      "name": "settingsSaveAllowed",
+      "receiver": "",
+      "file": "web/setup_settings.go",
+      "line": 213
+    },
+    {
+      "name": "settingsTabFromRequest",
+      "receiver": "",
+      "file": "web/setup_settings.go",
+      "line": 217
+    },
+    {
+      "name": "saveDbHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_settings.go",
+      "line": 227
+    },
+    {
+      "name": "restoreDbHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_settings.go",
+      "line": 244
+    },
+    {
+      "name": "clearDbHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_settings.go",
+      "line": 330
+    },
+    {
+      "name": "settingsPublishAlliancesHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_settings.go",
+      "line": 381
+    },
+    {
+      "name": "settingsPublishAwardsHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_settings.go",
+      "line": 403
+    },
+    {
+      "name": "settingsPublishMatchesHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_settings.go",
+      "line": 425
+    },
+    {
+      "name": "settingsPublishRankingsHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_settings.go",
+      "line": 454
+    },
+    {
+      "name": "settingsPublishTeamsHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_settings.go",
+      "line": 476
+    },
+    {
+      "name": "renderSettings",
+      "receiver": "web *Web",
+      "file": "web/setup_settings.go",
+      "line": 497
+    },
+    {
+      "name": "renderSettingsWithStatus",
+      "receiver": "web *Web",
+      "file": "web/setup_settings.go",
+      "line": 501
+    },
+    {
+      "name": "deleteMatchDataForType",
+      "receiver": "web *Web",
+      "file": "web/setup_settings.go",
+      "line": 526
+    },
+    {
+      "name": "sponsorSlidesGetHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_sponsor_slides.go",
+      "line": 15
+    },
+    {
+      "name": "sponsorSlidesPostHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_sponsor_slides.go",
+      "line": 46
+    },
+    {
+      "name": "reorderSponsorSlide",
+      "receiver": "web *Web",
+      "file": "web/setup_sponsor_slides.go",
+      "line": 104
+    },
+    {
+      "name": "teamsGetHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_teams.go",
+      "line": 26
+    },
+    {
+      "name": "teamsPostHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_teams.go",
+      "line": 35
+    },
+    {
+      "name": "teamsRefreshHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_teams.go",
+      "line": 76
+    },
+    {
+      "name": "teamsClearHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_teams.go",
+      "line": 108
+    },
+    {
+      "name": "teamEditGetHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_teams.go",
+      "line": 127
+    },
+    {
+      "name": "teamEditPostHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_teams.go",
+      "line": 160
+    },
+    {
+      "name": "teamDeletePostHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_teams.go",
+      "line": 202
+    },
+    {
+      "name": "teamsGenerateWpaKeysHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_teams.go",
+      "line": 231
+    },
+    {
+      "name": "teamsUpdateProgressBarHandler",
+      "receiver": "web *Web",
+      "file": "web/setup_teams.go",
+      "line": 260
+    },
+    {
+      "name": "renderTeams",
+      "receiver": "web *Web",
+      "file": "web/setup_teams.go",
+      "line": 268
+    },
+    {
+      "name": "canModifyTeamList",
+      "receiver": "web *Web",
+      "file": "web/setup_teams.go",
+      "line": 293
+    },
+    {
+      "name": "populateOfficialTeamInfo",
+      "receiver": "web *Web",
+      "file": "web/setup_teams.go",
+      "line": 302
+    },
+    {
+      "name": "twitchDisplayHandler",
+      "receiver": "web *Web",
+      "file": "web/twitch_display.go",
+      "line": 15
+    },
+    {
+      "name": "twitchDisplayWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/twitch_display.go",
+      "line": 36
+    },
+    {
+      "name": "unpickedDisplayHandler",
+      "receiver": "web *Web",
+      "file": "web/unpicked_display.go",
+      "line": 13
+    },
+    {
+      "name": "unpickedDisplayWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/unpicked_display.go",
+      "line": 38
+    },
+    {
+      "name": "wallDisplayHandler",
+      "receiver": "web *Web",
+      "file": "web/wall_display.go",
+      "line": 16
+    },
+    {
+      "name": "wallDisplayWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/wall_display.go",
+      "line": 49
+    },
+    {
+      "name": "NewWeb",
+      "receiver": "",
+      "file": "web/web.go",
+      "line": 31
+    },
+    {
+      "name": "ServeWebInterface",
+      "receiver": "web *Web",
+      "file": "web/web.go",
+      "line": 89
+    },
+    {
+      "name": "indexHandler",
+      "receiver": "web *Web",
+      "file": "web/web.go",
+      "line": 101
+    },
+    {
+      "name": "addNoCacheHeader",
+      "receiver": "",
+      "file": "web/web.go",
+      "line": 118
+    },
+    {
+      "name": "newHandler",
+      "receiver": "web *Web",
+      "file": "web/web.go",
+      "line": 128
+    },
+    {
+      "name": "handleWebErr",
+      "receiver": "",
+      "file": "web/web.go",
+      "line": 249
+    },
+    {
+      "name": "parseFiles",
+      "receiver": "web *Web",
+      "file": "web/web.go",
+      "line": 255
+    },
+    {
+      "name": "webpageDisplayHandler",
+      "receiver": "web *Web",
+      "file": "web/webpage_display.go",
+      "line": 15
+    },
+    {
+      "name": "webpageDisplayWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/webpage_display.go",
+      "line": 36
+    },
+    {
+      "name": "writeWebsocketError",
+      "receiver": "",
+      "file": "web/websocket_helpers.go",
+      "line": 11
+    },
+    {
+      "name": "writeWebsocketMessage",
+      "receiver": "",
+      "file": "web/websocket_helpers.go",
+      "line": 17
+    },
+    {
+      "name": "closeWebsocket",
+      "receiver": "",
+      "file": "web/websocket_helpers.go",
+      "line": 23
+    },
+    {
+      "name": "youtubeDisplayHandler",
+      "receiver": "web *Web",
+      "file": "web/youtube_display.go",
+      "line": 15
+    },
+    {
+      "name": "youtubeDisplayWebsocketHandler",
+      "receiver": "web *Web",
+      "file": "web/youtube_display.go",
+      "line": 36
+    },
+    {
+      "name": "NewNotifier",
+      "receiver": "",
+      "file": "websocket/notifier.go",
+      "line": 28
+    },
+    {
+      "name": "Notify",
+      "receiver": "notifier *Notifier",
+      "file": "websocket/notifier.go",
+      "line": 36
+    },
+    {
+      "name": "NotifyWithMessage",
+      "receiver": "notifier *Notifier",
+      "file": "websocket/notifier.go",
+      "line": 42
+    },
+    {
+      "name": "notifyListener",
+      "receiver": "notifier *Notifier",
+      "file": "websocket/notifier.go",
+      "line": 52
+    },
+    {
+      "name": "listen",
+      "receiver": "notifier *Notifier",
+      "file": "websocket/notifier.go",
+      "line": 72
+    },
+    {
+      "name": "getMessageBody",
+      "receiver": "notifier *Notifier",
+      "file": "websocket/notifier.go",
+      "line": 82
+    },
+    {
+      "name": "NewWebsocket",
+      "receiver": "",
+      "file": "websocket/websocket.go",
+      "line": 37
+    },
+    {
+      "name": "NewTestWebsocket",
+      "receiver": "",
+      "file": "websocket/websocket.go",
+      "line": 45
+    },
+    {
+      "name": "Close",
+      "receiver": "ws *Websocket",
+      "file": "websocket/websocket.go",
+      "line": 49
+    },
+    {
+      "name": "Read",
+      "receiver": "ws *Websocket",
+      "file": "websocket/websocket.go",
+      "line": 53
+    },
+    {
+      "name": "ReadWithTimeout",
+      "receiver": "ws *Websocket",
+      "file": "websocket/websocket.go",
+      "line": 72
+    },
+    {
+      "name": "Write",
+      "receiver": "ws *Websocket",
+      "file": "websocket/websocket.go",
+      "line": 92
+    },
+    {
+      "name": "WriteNotifier",
+      "receiver": "ws *Websocket",
+      "file": "websocket/websocket.go",
+      "line": 105
+    },
+    {
+      "name": "WriteError",
+      "receiver": "ws *Websocket",
+      "file": "websocket/websocket.go",
+      "line": 109
+    },
+    {
+      "name": "HandleNotifiers",
+      "receiver": "ws *Websocket",
+      "file": "websocket/websocket.go",
+      "line": 114
+    }
+  ]
+}
