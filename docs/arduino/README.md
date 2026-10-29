@@ -19,6 +19,8 @@ Sunucu, olayın kabul anındaki gerçek Arena durumunu ve mevcut `Hub.ScoringShi
 
 Maç öncesi, Manual Mode, kurtarma, kapanmış/onaylanmış sonuç veya geçersiz fazda otomatik puan eklenmez. Normal maç sonunda ve abort sonrasında mevcut 3 saniyelik grace sınırı uygulanır. Arduino seçiliyse PLC takılı olmasa da sonuç onayı bu pencerenin kapanmasını bekler. Sonuç onayı aynı işlem bariyerini kullanır; sonradan gelen olay skoru değiştiremez.
 
+Olayın kabulü kalıcı yazım tamamlanınca kesinleşir. AUTO kazananı o anda Arena'ya uygulanmış skordan belirlenir; faz sınırındaki disk gecikmesi nedeniyle sonradan onaylanan AUTO olayı skoru düzeltebilir fakat belirlenmiş HUB sırasını ve DS oyun verisini geriye dönük değiştirmez. Ağ/disk sınırında bu ayrım saha kabul testinde ayrıca kontrol edilmelidir.
+
 ## Ağ ve switch
 
 | Bileşen | Adres / bağlantı |
@@ -179,6 +181,8 @@ Otomatik kapsam:
 İlk tam çalışmada yeni web testindeki yönlendirme beklentisi 303 yerine mevcut sistemin 307 davranışıyla düzeltildi; test kapatılmadı. Son doğrulamada tam Go test paketi ve 17/17 Node testi geçti. RED ve BLUE Uno firmware'leri derlendi: varsayılan tek kanal için her biri **18.348 bayt flash (%56), 986 bayt statik RAM (%48)**; derleyici stack/yerel değişkenler için 1062 bayt kaldığını raporladı. İki kanallı yapılandırma da derlendi (18.392 bayt flash, aynı statik RAM). Bu değerler runtime stack/soak testinin yerine geçmez. Arduino CLI 1.5.2-rc.1, AVR core 1.8.6, Ethernet 2.0.2 ve Crypto 0.4.0 kullanıldı.
 
 `--warnings all` ile Arduino core/Crypto'nun mevcut unused-parameter uyarıları görüldü; derlemeler başarılı. `go vet -composites=false -hostport=false -structtag=false ./...` geçti; tam vet'teki önceden mevcut uyarılar temizlenmiş gibi sunulmuyor. Önceki sürümde belgelenen Windows ThreadSanitizer bellek ayırma sorunu devam eden ortam sınırıdır; race-clean iddiası yoktur.
+
+Çalışan yerel sunucuda ayrıca panel/asset HTTP 200, iki ayrı kapalı cihaz yapılandırması ve simülasyonun canlı skor ile işlem günlüğünü değiştirmediği doğrulandı. Özel anahtarların durum JSON'una veya Git'e girmediği kontrol edildi. Güncellemeden önceki DB yedeği `event-before-arduino-integration.db` olarak yerelde tutuldu.
 
 Gerçek Uno, shield, sensör, saha NIC'i ve Cisco bağlantısı bu oturumda erişilebilir değildi. Firmware derlemesi ve gerçek loopback TCP testleri, fiziksel kabulün yerine geçmez. Sahada her ittifak için ID/IP kontrolü, tek/çift top ve maksimum hız, debounce/pulse aralığı, kuyruk taşması, kablo çekme/yeniden takma, reboot, AUTO/TELEOP ve aktif/pasif grace sınırları, E-stop/A-stop, sonuç onayı ve ekran/TBA çıktısı doğrulanmalıdır.
 
