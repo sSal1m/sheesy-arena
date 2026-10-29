@@ -15,6 +15,7 @@ import (
 )
 
 type ArenaNotifiers struct {
+	ManualFuelNotifier                 *websocket.Notifier
 	AllianceSelectionNotifier          *websocket.Notifier
 	AllianceStationDisplayModeNotifier *websocket.Notifier
 	ArenaStatusNotifier                *websocket.Notifier
@@ -46,6 +47,7 @@ type audienceAllianceScoreFields struct {
 
 // Instantiates notifiers and configures their message producing methods.
 func (arena *Arena) configureNotifiers() {
+	arena.ManualFuelNotifier = websocket.NewNotifier("manualFuelState", func() any { return arena.FuelState() })
 	arena.AllianceSelectionNotifier = websocket.NewNotifier("allianceSelection", arena.generateAllianceSelectionMessage)
 	arena.AllianceStationDisplayModeNotifier = websocket.NewNotifier(
 		"allianceStationDisplayMode", arena.generateAllianceStationDisplayModeMessage,
@@ -258,6 +260,13 @@ func (arena *Arena) generateMatchTimingMessage() any {
 }
 
 func (arena *Arena) generateRealtimeScoreMessage() any {
+	arena.scoreMutex.RLock()
+	result := arena.scoreResultLocked()
+	red := *arena.RedRealtimeScore
+	blue := *arena.BlueRealtimeScore
+	phase := MatchState(arena.fuel.Phase)
+	arena.scoreMutex.RUnlock()
+	red.CurrentScore, blue.CurrentScore = *result.RedScore, *result.BlueScore
 	fields := struct {
 		Red                     *audienceAllianceScoreFields
 		Blue                    *audienceAllianceScoreFields
@@ -267,13 +276,13 @@ func (arena *Arena) generateRealtimeScoreMessage() any {
 		PlayoffBlueAllianceCard string
 		MatchState
 	}{
-		getAudienceAllianceScoreFields(arena.RedRealtimeScore, arena.RedScoreSummary()),
-		getAudienceAllianceScoreFields(arena.BlueRealtimeScore, arena.BlueScoreSummary()),
-		arena.RedRealtimeScore.Cards,
-		arena.BlueRealtimeScore.Cards,
-		arena.RedRealtimeScore.PlayoffAllianceCard,
-		arena.BlueRealtimeScore.PlayoffAllianceCard,
-		arena.MatchState,
+		getAudienceAllianceScoreFields(&red, result.RedScoreSummary()),
+		getAudienceAllianceScoreFields(&blue, result.BlueScoreSummary()),
+		result.RedCards,
+		result.BlueCards,
+		result.PlayoffRedAllianceCard,
+		result.PlayoffBlueAllianceCard,
+		phase,
 	}
 	return &fields
 }
@@ -386,6 +395,9 @@ func (arena *Arena) GenerateScorePostedMessage() any {
 }
 
 func (arena *Arena) generateScoringStatusMessage() any {
+	arena.scoreMutex.RLock()
+	refereeReady := arena.RedRealtimeScore.FoulsCommitted && arena.BlueRealtimeScore.FoulsCommitted
+	arena.scoreMutex.RUnlock()
 	type positionStatus struct {
 		Ready          bool
 		NumPanels      int
@@ -403,7 +415,7 @@ func (arena *Arena) generateScoringStatusMessage() any {
 		RefereeScoreReady bool
 		PositionStatuses  map[string]positionStatus
 	}{
-		arena.RedRealtimeScore.FoulsCommitted && arena.BlueRealtimeScore.FoulsCommitted,
+		refereeReady,
 		map[string]positionStatus{
 			"red":  getStatusForPosition("red"),
 			"blue": getStatusForPosition("blue"),

@@ -185,7 +185,7 @@ func (web *Web) matchReviewEditPostHandler(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	match, _, isCurrent, err := web.getMatchResultFromRequest(r)
+	match, previousResult, isCurrent, err := web.getMatchResultFromRequest(r)
 	if err != nil {
 		handleWebErr(w, err)
 		return
@@ -203,18 +203,17 @@ func (web *Web) matchReviewEditPostHandler(w http.ResponseWriter, r *http.Reques
 	normalizeMatchResult(match, &matchResult)
 
 	if isCurrent {
-		// If editing the current match, just save it back to memory.
-		web.arena.RedRealtimeScore.CurrentScore = *matchResult.RedScore
-		web.arena.BlueRealtimeScore.CurrentScore = *matchResult.BlueScore
-		web.arena.RedRealtimeScore.Cards = matchResult.RedCards
-		web.arena.BlueRealtimeScore.Cards = matchResult.BlueCards
-		web.arena.RedRealtimeScore.PlayoffAllianceCard = matchResult.PlayoffRedAllianceCard
-		web.arena.BlueRealtimeScore.PlayoffAllianceCard = matchResult.PlayoffBlueAllianceCard
-
-		web.arena.RealtimeScoreNotifier.Notify()
+		if err := web.arena.ReplaceLiveResult(&matchResult); err != nil {
+			handleWebErr(w, err)
+			return
+		}
 
 		http.Redirect(w, r, "/match_play", 303)
 	} else {
+		if err := model.ReconcileFuelMetadata(&matchResult, previousResult.FuelControl); err != nil {
+			handleWebErr(w, err)
+			return
+		}
 		err = web.commitMatchScore(match, &matchResult, true)
 		if err != nil {
 			handleWebErr(w, err)

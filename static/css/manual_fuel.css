@@ -1,0 +1,12 @@
+.fuel-panel { max-width: 1200px; margin-inline: auto; }
+.fuel-alliance { border-top-width: 5px; }
+.fuel-red { border-top-color: #ec5368; }
+.fuel-blue { border-top-color: #5699ff; }
+.fuel-red h2 { color: #ff8496; }
+.fuel-blue h2 { color: #85b6ff; }
+.fuel-counter + .fuel-counter { border-top: 1px solid var(--bs-border-color); }
+.fuel-value { display: block; font-size: clamp(3rem, 6vw, 5rem); font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.fuel-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; }
+.fuel-buttons .btn { min-height: 58px; font-size: 1.4rem; touch-action: manipulation; }
+.fuel-buttons .btn:disabled { opacity: .3; }
+@media (max-width: 575px) { .fuel-panel { padding-inline: .5rem; } .fuel-buttons { gap: .5rem; } }

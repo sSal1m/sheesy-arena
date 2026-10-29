@@ -6,10 +6,14 @@
 package field
 
 import (
+	"github.com/Team254/cheesy-arena/plc"
 	"github.com/Team254/cheesy-arena/websocket"
+	"time"
 )
 
 type FakePlc struct {
+	fuelSnapshot          *plc.FuelSnapshot
+	fuelSequence          uint64
 	isEnabled             bool
 	fieldEStop            bool
 	redEStops             [3]bool
@@ -98,6 +102,14 @@ func (plc *FakePlc) SetAwardsModeLight(state bool) {
 
 func (plc *FakePlc) GetHubCounts() (int, int) {
 	return plc.redHubCount, plc.blueHubCount
+}
+
+func (fake *FakePlc) GetFuelSnapshot() plc.FuelSnapshot {
+	if fake.fuelSnapshot != nil {
+		return *fake.fuelSnapshot
+	}
+	fake.fuelSequence++
+	return plc.FuelSnapshot{Red: fake.redHubCount, Blue: fake.blueHubCount, Sequence: fake.fuelSequence, Connection: 1, Healthy: true, ReadAt: time.Now()}
 }
 
 func (plc *FakePlc) SetHubMotors(red, blue bool) {

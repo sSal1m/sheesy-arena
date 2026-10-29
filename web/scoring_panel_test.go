@@ -37,14 +37,14 @@ func TestScoringPanelWebsocket(t *testing.T) {
 	assert.Nil(t, err)
 	defer redConn.Close()
 	redWs := websocket.NewTestWebsocket(redConn)
-	assert.Equal(t, 1, web.arena.ScoringPanelRegistry.GetNumPanels("red"))
+	assert.Eventually(t, func() bool { return web.arena.ScoringPanelRegistry.GetNumPanels("red") == 1 }, time.Second, time.Millisecond)
 	assert.Equal(t, 0, web.arena.ScoringPanelRegistry.GetNumPanels("blue"))
 	blueConn, _, err := gorillawebsocket.DefaultDialer.Dial(wsUrl+"/panels/scoring/blue/websocket", nil)
 	assert.Nil(t, err)
 	defer blueConn.Close()
 	blueWs := websocket.NewTestWebsocket(blueConn)
 	assert.Equal(t, 1, web.arena.ScoringPanelRegistry.GetNumPanels("red"))
-	assert.Equal(t, 1, web.arena.ScoringPanelRegistry.GetNumPanels("blue"))
+	assert.Eventually(t, func() bool { return web.arena.ScoringPanelRegistry.GetNumPanels("blue") == 1 }, time.Second, time.Millisecond)
 
 	// Should get a few status updates right after connection.
 	readWebsocketType(t, redWs, "resetLocalState")

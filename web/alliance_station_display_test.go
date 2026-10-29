@@ -60,12 +60,12 @@ func TestAllianceStationDisplayWebsocket(t *testing.T) {
 	web.arena.AllianceStations["B3"].Bypass = true
 	web.arena.StartMatch()
 	web.arena.Update()
-	messages := readWebsocketMultiple(t, ws, 3)
+	messages := readWebsocketUntilTypes(t, ws, "allianceStationDisplayMode", "matchTime", "arenaStatus", "realtimeScore")
 	_, ok := messages["matchTime"]
 	assert.True(t, ok)
 	web.arena.MatchStartTime = time.Now().Add(-time.Duration(game.MatchTiming.AutoDurationSec) * time.Second)
 	web.arena.Update()
-	messages = readWebsocketMultiple(t, ws, 2)
+	messages = readWebsocketUntilTypes(t, ws, "matchTime", "arenaStatus", "realtimeScore")
 	_, ok = messages["arenaStatus"]
 	assert.True(t, ok)
 	_, ok = messages["matchTime"]

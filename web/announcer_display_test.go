@@ -115,7 +115,7 @@ func TestAnnouncerDisplayWebsocket(t *testing.T) {
 	web.arena.AllianceStations["B3"].Bypass = true
 	web.arena.StartMatch()
 	web.arena.Update()
-	messages := readWebsocketMultiple(t, ws, 3)
+	messages := readWebsocketUntilTypes(t, ws, "audienceDisplayMode", "eventStatus", "matchTime", "realtimeScore")
 	_, ok := messages["audienceDisplayMode"]
 	assert.True(t, ok)
 	_, ok = messages["eventStatus"]

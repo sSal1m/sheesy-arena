@@ -200,6 +200,8 @@ func generateInMatchTeamRearText(arena *Arena, isRed bool, countdown string, cur
 	}
 
 	var realtimeScore, opponentRealtimeScore *RealtimeScore
+	arena.scoreMutex.RLock()
+	defer arena.scoreMutex.RUnlock()
 	if isRed {
 		realtimeScore = arena.RedRealtimeScore
 		opponentRealtimeScore = arena.BlueRealtimeScore
@@ -226,6 +228,8 @@ func generateInMatchTimerRearText(arena *Arena, isRed bool, countdown string) st
 
 // Returns the live score string for the given alliance, excluding post-match points.
 func generateTeamSignAllianceScores(arena *Arena, isRed bool) string {
+	arena.scoreMutex.RLock()
+	defer arena.scoreMutex.RUnlock()
 	var realtimeScore, opponentRealtimeScore *RealtimeScore
 	var formatString string
 	if isRed {
@@ -251,7 +255,10 @@ func formatTeamSignRearText(text string) string {
 
 // Returns the match period indicator and remaining time shown at the start of the team sign rear text.
 func generateTeamSignPeriodText(arena *Arena, currentTime time.Time) string {
-	shift, remaining, _, ok := arena.RedRealtimeScore.CurrentScore.Hub.GetCurrentShiftTiming(
+	arena.scoreMutex.RLock()
+	hub := arena.RedRealtimeScore.CurrentScore.Hub
+	arena.scoreMutex.RUnlock()
+	shift, remaining, _, ok := hub.GetCurrentShiftTiming(
 		arena.MatchStartTime, currentTime,
 	)
 	periodPrefix := generateTeamSignPeriodPrefix(arena, shift)
@@ -263,6 +270,8 @@ func generateTeamSignPeriodText(arena *Arena, currentTime time.Time) string {
 
 // Returns the sign character corresponding to the given Hub shift.
 func generateTeamSignPeriodPrefix(arena *Arena, shift game.Shift) string {
+	arena.scoreMutex.RLock()
+	defer arena.scoreMutex.RUnlock()
 	switch shift {
 	case game.ShiftAuto:
 		return "A"

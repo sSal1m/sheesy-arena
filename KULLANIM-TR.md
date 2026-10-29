@@ -1,5 +1,7 @@
 # Cheesy Arena
 
+Manual FUEL Control: http://localhost:8080/panels/manual_fuel — [kullanım, teknik açıklama, test raporu ve ekran görüntüleri](docs/manual-fuel/README.md).
+
 Bu klasorde Team254/cheesy-arena kaynak kodu ve Windows icin derlenmis uygulama bulunur.
 
 - Baslatmak icin `Baslat.cmd` dosyasina cift tiklayin. Uygulama arka planda baslar ve tarayicida http://localhost:8080/ acilir.

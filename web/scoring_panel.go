@@ -76,13 +76,6 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	var realtimeScore **field.RealtimeScore
-	if parameters.Alliance == "red" {
-		realtimeScore = &web.arena.RedRealtimeScore
-	} else {
-		realtimeScore = &web.arena.BlueRealtimeScore
-	}
-
 	ws, err := websocket.NewWebsocket(w, r)
 	if err != nil {
 		handleWebErr(w, err)
@@ -116,8 +109,6 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 			log.Println(err)
 			return
 		}
-		score := &(*realtimeScore).CurrentScore
-		scoreChanged := false
 
 		if command == "commitMatch" {
 			if web.arena.MatchState != field.PostMatch {
@@ -141,8 +132,17 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 			if args.TeamPosition >= 1 && args.TeamPosition <= 3 && args.AutoTowerStatus >= 0 &&
 				args.AutoTowerStatus <= 3 {
 				autoTowerStatus := game.TowerStatus(args.AutoTowerStatus)
-				score.AutoTowerStatuses[args.TeamPosition-1] = autoTowerStatus
-				scoreChanged = true
+				err = web.arena.EditLiveScore(func(red, blue *field.RealtimeScore) error {
+					score := red
+					if parameters.Alliance == "blue" {
+						score = blue
+					}
+					score.CurrentScore.AutoTowerStatuses[args.TeamPosition-1] = autoTowerStatus
+					return nil
+				})
+				if err != nil {
+					writeWebsocketError(ws, err.Error())
+				}
 			}
 		} else if command == "endgame" {
 			args := struct {
@@ -158,8 +158,17 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 			if args.TeamPosition >= 1 && args.TeamPosition <= 3 && args.EndgameTowerStatus >= 0 &&
 				args.EndgameTowerStatus <= 3 {
 				endgameStatus := game.TowerStatus(args.EndgameTowerStatus)
-				score.EndgameTowerStatuses[args.TeamPosition-1] = endgameStatus
-				scoreChanged = true
+				err = web.arena.EditLiveScore(func(red, blue *field.RealtimeScore) error {
+					score := red
+					if parameters.Alliance == "blue" {
+						score = blue
+					}
+					score.CurrentScore.EndgameTowerStatuses[args.TeamPosition-1] = endgameStatus
+					return nil
+				})
+				if err != nil {
+					writeWebsocketError(ws, err.Error())
+				}
 			}
 		} else if command == "addFoul" {
 			args := struct {
@@ -172,21 +181,10 @@ func (web *Web) scoringPanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 				continue
 			}
 
-			// Add the foul to the correct alliance's list.
-			foul := game.Foul{FoulId: web.arena.NextFoulId, IsMajor: args.IsMajor}
-			web.arena.NextFoulId++
-			if args.Alliance == "red" {
-				web.arena.RedRealtimeScore.CurrentScore.Fouls =
-					append(web.arena.RedRealtimeScore.CurrentScore.Fouls, foul)
-			} else {
-				web.arena.BlueRealtimeScore.CurrentScore.Fouls =
-					append(web.arena.BlueRealtimeScore.CurrentScore.Fouls, foul)
+			if err := web.arena.AddLiveFoul(args.Alliance, args.IsMajor); err != nil {
+				writeWebsocketError(ws, err.Error())
 			}
-			web.arena.RealtimeScoreNotifier.Notify()
 		}
 
-		if scoreChanged {
-			web.arena.RealtimeScoreNotifier.Notify()
-		}
 	}
 }

@@ -1,5 +1,7 @@
 # Sheesy Arena — ayrıntılı sistem haritası
 
+Sonraki geliştirme: [Manual FUEL Control — yeni skor katmanları, endpoint'ler, kullanım ve test raporu](manual-fuel/README.md). Aşağıdaki envanter, belirtilen temel sürümün haritasıdır.
+
 İnceleme tarihi: **29 Ekim 2026**. Temel alınan sürüm: **a525aa290cebdcb9bc8139e51e0a098f390399f3**. Repo: **sSal1m/sheesy-arena**. Bu belge mevcut kodun haritasıdır; önerilen değişiklikler ve test bulguları ayrıca işaretlenmiştir.
 
 Sistem; bir FRC etkinliğinde takım listesini, maç programını, robotların maç durumunu, saha giriş/çıkışlarını, canlı skoru, sonuçları, sıralamaları ve yayın ekranlarını aynı Go uygulamasında birleştirir. İncelenen oyun kodu **2026 Hub/Fuel/Tower** mantığına özeldir. Yeni repo adı henüz uygulamanın ekrandaki `Cheesy Arena` markasını veya Go modül yolunu değiştirmemiştir.

@@ -11,6 +11,7 @@ import (
 	"github.com/goburrow/modbus"
 	"log"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -32,6 +33,7 @@ type Plc interface {
 	SetFieldResetLight(state bool)
 	SetAwardsModeLight(state bool)
 	GetHubCounts() (int, int)
+	GetFuelSnapshot() FuelSnapshot
 	SetHubMotors(red, blue bool)
 	SetHubLights(red, blue bool)
 	GetCycleState(max, index, duration int) bool
@@ -43,6 +45,8 @@ type Plc interface {
 }
 
 type ModbusPlc struct {
+	fuelMutex        sync.RWMutex
+	fuelSnapshot     FuelSnapshot
 	address          string
 	handler          *modbus.TCPClientHandler
 	client           modbus.Client
@@ -267,6 +271,10 @@ func (plc *ModbusPlc) IsFtaReady() bool {
 
 // Resets the internal state of the PLC to start a new match.
 func (plc *ModbusPlc) ResetMatch() {
+	plc.fuelMutex.Lock()
+	plc.fuelSnapshot.Reset++
+	plc.fuelSnapshot.ReadAt = time.Time{}
+	plc.fuelMutex.Unlock()
 	plc.coils[matchReset] = true
 	plc.matchResetCycles = 0
 	plc.coilOverrides = nil
@@ -375,12 +383,18 @@ func (plc *ModbusPlc) connect() error {
 	log.Printf("Connected to PLC at %s", address)
 
 	plc.handler = handler
+	plc.fuelMutex.Lock()
+	plc.fuelSnapshot.Connection++
+	plc.fuelMutex.Unlock()
 	plc.client = modbus.NewClient(plc.handler)
 	plc.writeCoils() // Force initial write of the coils upon connection since they may not be triggered by a change.
 	return nil
 }
 
 func (plc *ModbusPlc) resetConnection() {
+	plc.fuelMutex.Lock()
+	plc.fuelSnapshot.Healthy = false
+	plc.fuelMutex.Unlock()
 	if plc.handler != nil {
 		if err := plc.handler.Close(); err != nil {
 			log.Printf("PLC error closing connection: %v", err)
@@ -444,6 +458,7 @@ func (plc *ModbusPlc) readRegisters() bool {
 		return true
 	}
 
+	epoch := plc.GetFuelSnapshot()
 	registers, err := plc.client.ReadHoldingRegisters(0, uint16(len(plc.registers)))
 	if err != nil {
 		log.Printf("PLC error reading registers: %v", err)
@@ -459,6 +474,7 @@ func (plc *ModbusPlc) readRegisters() bool {
 	}
 
 	copy(plc.registers[:], byteToUint(registers, len(plc.registers)))
+	plc.publishFuelRegisters(plc.registers, epoch)
 	return true
 }
 

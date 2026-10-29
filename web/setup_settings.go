@@ -245,6 +245,17 @@ func (web *Web) restoreDbHandler(w http.ResponseWriter, r *http.Request) {
 	if !web.userIsAdmin(w, r) {
 		return
 	}
+	finishFuel, maintenanceErr := web.arena.BeginFuelMaintenance()
+	if maintenanceErr != nil {
+		web.renderSettings(w, r, maintenanceErr.Error())
+		return
+	}
+	databaseChanged := false
+	defer func() {
+		if err := finishFuel(databaseChanged); err != nil {
+			log.Printf("FUEL database recovery failed: %v", err)
+		}
+	}()
 
 	file, _, err := r.FormFile("databaseFile")
 	if err != nil {
@@ -317,6 +328,7 @@ func (web *Web) restoreDbHandler(w http.ResponseWriter, r *http.Request) {
 		handleWebErr(w, err)
 		return
 	}
+	databaseChanged = true
 	err = web.arena.LoadSettings()
 	if err != nil {
 		handleWebErr(w, err)
@@ -331,6 +343,17 @@ func (web *Web) clearDbHandler(w http.ResponseWriter, r *http.Request) {
 	if !web.userIsAdmin(w, r) {
 		return
 	}
+	finishFuel, maintenanceErr := web.arena.BeginFuelMaintenance()
+	if maintenanceErr != nil {
+		web.renderSettings(w, r, maintenanceErr.Error())
+		return
+	}
+	databaseChanged := false
+	defer func() {
+		if err := finishFuel(databaseChanged); err != nil {
+			log.Printf("FUEL database recovery failed: %v", err)
+		}
+	}()
 
 	matchType, err := model.MatchTypeFromString(r.PathValue("type"))
 	if err != nil || matchType == model.Test {
@@ -346,6 +369,7 @@ func (web *Web) clearDbHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	databaseChanged = true
 	switch matchType {
 	case model.Practice:
 		if err = web.deleteMatchDataForType(model.Practice); err != nil {

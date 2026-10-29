@@ -1,0 +1,47 @@
+{{define "title"}}Manual FUEL Control{{end}}
+{{define "body"}}
+<link rel="stylesheet" href="/static/css/manual_fuel.css">
+<main class="fuel-panel my-4">
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+    <div><h1 class="h3 mb-1">Manual FUEL Control</h1><p class="text-body-secondary mb-0">Scored FUEL · shared, server-authoritative controls</p></div>
+    <a href="/match_play" class="btn btn-outline-secondary">Match Play</a>
+  </div>
+  <div id="fuelError" class="alert alert-danger" role="alert" hidden></div>
+  <div id="fuelRecovery" class="alert alert-warning" hidden>Recovered score — robots and match clock remain stopped. Review this result before posting or discarding it.</div>
+  <section class="card mb-4"><div class="card-body">
+    <div class="row g-3 align-items-end">
+      <div class="col-md-4"><div class="small text-body-secondary">Current match</div><strong id="fuelMatch">Connecting…</strong><div id="fuelPhase" class="small mt-1">—</div></div>
+      <div class="col-md-4"><label for="fuelMode" class="form-label">FUEL source mode</label><select id="fuelMode" class="form-select" disabled><option value="plc_correction">PLC + Manual Correction</option><option value="manual">Manual</option></select></div>
+      <div class="col-md-4"><label for="fuelOperator" class="form-label">Operator label <span class="text-body-secondary">(optional)</span></label><input id="fuelOperator" class="form-control" maxlength="64" autocomplete="name" placeholder="Name / scoring station"></div>
+    </div>
+    <div class="d-flex flex-wrap gap-3 small mt-3"><span id="fuelConnection" role="status">Disconnected</span><span id="fuelPending">0 pending</span><span id="fuelSaved">No checkpoint yet</span></div>
+  </div></section>
+  <div class="row g-4">
+    {{template "fuelAlliance" "red"}}
+    {{template "fuelAlliance" "blue"}}
+  </div>
+  <p class="small text-body-secondary mt-3">Controls adjust scored FUEL, including previous-phase corrections. Mode changes are allowed only before play. AUTO corrections after TELEOP starts do not change the Hub activation order. Negative totals are rejected.</p>
+  <details class="card mt-4"><summary class="card-header">Recent operator actions</summary><div class="card-body"><button id="fuelHistoryRefresh" class="btn btn-sm btn-outline-secondary mb-3">Refresh log</button><div class="table-responsive"><table class="table table-sm"><thead><tr><th>Time</th><th>Operator</th><th>Action</th><th>Before → after</th></tr></thead><tbody id="fuelHistory"></tbody></table></div></div></details>
+</main>
+{{end}}
+{{define "fuelAlliance"}}
+<section class="col-lg-6" aria-label="{{.}} alliance">
+  <div class="card fuel-alliance fuel-{{.}} h-100"><div class="card-body p-4">
+    <h2 class="h4 text-uppercase mb-3">{{.}} alliance</h2>
+    <div id="{{.}}FuelSource" class="small text-body-secondary mb-2">Waiting for server state</div>
+    <div id="{{.}}FuelWarning" class="alert alert-warning py-2 small" hidden></div>
+    <button type="button" data-rebase="{{.}}" class="btn btn-sm btn-outline-warning mb-3" hidden>Rebase PLC counter…</button>
+    {{template "fuelCounter" dict "alliance" . "phase" "auto" "label" "AUTO FUEL"}}
+    {{template "fuelCounter" dict "alliance" . "phase" "teleop" "label" "TELEOP FUEL"}}
+  </div></div>
+</section>
+{{end}}
+{{define "fuelCounter"}}
+<div class="fuel-counter py-3" data-alliance="{{.alliance}}" data-phase="{{.phase}}">
+  <h3 class="h6 text-body-secondary">{{.label}}</h3>
+  <output class="fuel-value" id="{{.alliance}}-{{.phase}}-value" aria-live="polite">—</output>
+  <div class="small text-body-secondary mb-3" id="{{.alliance}}-{{.phase}}-source">PLC — · correction —</div>
+  <div class="fuel-buttons"><button type="button" data-delta="-5" class="btn btn-outline-secondary" disabled>−5</button><button type="button" data-delta="-1" class="btn btn-outline-light" disabled>−1</button><button type="button" data-delta="1" class="btn btn-light" disabled>+1</button><button type="button" data-delta="5" class="btn btn-outline-light" disabled>+5</button></div>
+</div>
+{{end}}
+{{define "script"}}<script src="/static/js/manual_fuel_client.js"></script><script src="/static/js/manual_fuel.js"></script>{{end}}

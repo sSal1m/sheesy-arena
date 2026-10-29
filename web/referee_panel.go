@@ -10,7 +10,6 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/Team254/cheesy-arena/field"
 	"github.com/Team254/cheesy-arena/game"
@@ -49,6 +48,7 @@ func (web *Web) refereePanelFoulListHandler(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
+	result := web.arena.ScoreResultSnapshot()
 	data := struct {
 		Match     *model.Match
 		RedFouls  []game.Foul
@@ -56,8 +56,8 @@ func (web *Web) refereePanelFoulListHandler(w http.ResponseWriter, r *http.Reque
 		Rules     map[int]*game.Rule
 	}{
 		web.arena.CurrentMatch,
-		web.arena.RedRealtimeScore.CurrentScore.Fouls,
-		web.arena.BlueRealtimeScore.CurrentScore.Fouls,
+		result.RedScore.Fouls,
+		result.BlueScore.Fouls,
 		game.GetAllRules(),
 	}
 	err = template.ExecuteTemplate(w, "referee_panel_foul_list", data)
@@ -114,17 +114,9 @@ func (web *Web) refereePanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 				continue
 			}
 
-			// Add the foul to the correct alliance's list.
-			foul := game.Foul{FoulId: web.arena.NextFoulId, IsMajor: args.IsMajor}
-			web.arena.NextFoulId++
-			if args.Alliance == "red" {
-				web.arena.RedRealtimeScore.CurrentScore.Fouls =
-					append(web.arena.RedRealtimeScore.CurrentScore.Fouls, foul)
-			} else {
-				web.arena.BlueRealtimeScore.CurrentScore.Fouls =
-					append(web.arena.BlueRealtimeScore.CurrentScore.Fouls, foul)
+			if err := web.arena.AddLiveFoul(args.Alliance, args.IsMajor); err != nil {
+				writeWebsocketError(ws, err.Error())
 			}
-			web.arena.RealtimeScoreNotifier.Notify()
 		case "toggleFoulType", "updateFoulTeam", "updateFoulRule", "deleteFoul":
 			args := struct {
 				Alliance string
@@ -138,30 +130,8 @@ func (web *Web) refereePanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 				continue
 			}
 
-			// Find the foul in the correct alliance's list.
-			var fouls *[]game.Foul
-			if args.Alliance == "red" {
-				fouls = &web.arena.RedRealtimeScore.CurrentScore.Fouls
-			} else {
-				fouls = &web.arena.BlueRealtimeScore.CurrentScore.Fouls
-			}
-			if args.Index >= 0 && args.Index < len(*fouls) {
-				switch messageType {
-				case "toggleFoulType":
-					(*fouls)[args.Index].IsMajor = !(*fouls)[args.Index].IsMajor
-					(*fouls)[args.Index].RuleId = 0
-				case "deleteFoul":
-					*fouls = append((*fouls)[:args.Index], (*fouls)[args.Index+1:]...)
-				case "updateFoulTeam":
-					if (*fouls)[args.Index].TeamId == args.TeamId {
-						(*fouls)[args.Index].TeamId = 0
-					} else {
-						(*fouls)[args.Index].TeamId = args.TeamId
-					}
-				case "updateFoulRule":
-					(*fouls)[args.Index].RuleId = args.RuleId
-				}
-				web.arena.RealtimeScoreNotifier.Notify()
+			if err := web.arena.EditLiveFoul(args.Alliance, messageType, args.Index, args.TeamId, args.RuleId); err != nil {
+				writeWebsocketError(ws, err.Error())
 			}
 		case "card":
 			args := struct {
@@ -175,19 +145,9 @@ func (web *Web) refereePanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 				continue
 			}
 
-			// Playoff cards belong to an alliance; other match types use individual teams.
-			score := web.arena.BlueRealtimeScore
-			if args.Alliance == "red" {
-				score = web.arena.RedRealtimeScore
+			if err := web.arena.SetLiveCard(args.Alliance, args.TeamId, args.Card); err != nil {
+				writeWebsocketError(ws, err.Error())
 			}
-			if web.arena.CurrentMatch.Type == model.Playoff {
-				score.PlayoffAllianceCard = args.Card
-				score.Cards = make(map[string]string)
-				web.getCurrentMatchResult().CorrectPlayoffScore()
-			} else {
-				score.Cards[strconv.Itoa(args.TeamId)] = args.Card
-			}
-			web.arena.RealtimeScoreNotifier.Notify()
 		case "toggleBypass":
 			station, ok := data.(string)
 			if !ok {
@@ -208,9 +168,7 @@ func (web *Web) refereePanelWebsocketHandler(w http.ResponseWriter, r *http.Requ
 				// Don't allow committing the fouls until the match is over.
 				continue
 			}
-			web.arena.RedRealtimeScore.FoulsCommitted = true
-			web.arena.BlueRealtimeScore.FoulsCommitted = true
-			web.arena.ScoringStatusNotifier.Notify()
+			web.arena.SetFoulsCommitted()
 
 			err = web.commitPostAndLoadNextMatch()
 			if err != nil {

@@ -733,6 +733,9 @@ func TestPlcEStopAStop(t *testing.T) {
 	assert.Nil(t, err)
 	arena.Update()
 	assert.Equal(t, AutoPeriod, arena.MatchState)
+	// Stay away from exactly zero elapsed time on coarse Windows clocks. An
+	// E-stop is intentionally released by handleTeamStop when MatchTimeSec()==0.
+	arena.MatchStartTime = time.Now().Add(-100 * time.Millisecond)
 	assert.Equal(t, true, arena.AllianceStations["R1"].DsConn.Enabled)
 
 	// Press the R1 A-stop.

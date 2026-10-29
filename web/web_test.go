@@ -83,6 +83,27 @@ func readWebsocketMultiple(t *testing.T, ws *websocket.Websocket, count int) map
 	return messages
 }
 
+// Independent notifier channels have no total order. Wait for the complete
+// expected event set instead of leaving a trailing event in the socket buffer.
+func readWebsocketUntilTypes(t *testing.T, ws *websocket.Websocket, types ...string) map[string]any {
+	t.Helper()
+	wanted := make(map[string]bool, len(types))
+	for _, kind := range types {
+		wanted[kind] = true
+	}
+	messages := make(map[string]any)
+	deadline := time.Now().Add(time.Second)
+	for len(wanted) > 0 {
+		kind, data, err := ws.ReadWithTimeout(time.Until(deadline))
+		if err != nil {
+			t.Fatalf("waiting for websocket events %v: %v", wanted, err)
+		}
+		messages[kind] = data
+		delete(wanted, kind)
+	}
+	return messages
+}
+
 func setupTestWeb(t *testing.T) *Web {
 	game.MatchTiming.PauseDurationSec = 2
 	arena := field.SetupTestArena(t)

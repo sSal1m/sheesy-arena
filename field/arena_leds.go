@@ -45,17 +45,20 @@ func (arena *Arena) updateHubLeds(currentTime time.Time) {
 
 // updateTeleopHubLeds updates teleop LED modes using the active Hub shift, auto winner, and warning window.
 func (arena *Arena) updateTeleopHubLeds(currentTime time.Time) {
-	shift, remaining, _, ok := arena.RedRealtimeScore.CurrentScore.Hub.GetCurrentShiftTiming(
+	arena.scoreMutex.RLock()
+	redHub, blueHub := arena.RedRealtimeScore.CurrentScore.Hub, arena.BlueRealtimeScore.CurrentScore.Hub
+	arena.scoreMutex.RUnlock()
+	shift, remaining, _, ok := redHub.GetCurrentShiftTiming(
 		arena.MatchStartTime, currentTime,
 	)
 	if !ok {
 		return
 	}
 
-	redRemaining, _ := arena.RedRealtimeScore.CurrentScore.Hub.GetActiveShiftTiming(
+	redRemaining, _ := redHub.GetActiveShiftTiming(
 		arena.MatchStartTime, currentTime,
 	)
-	blueRemaining, _ := arena.BlueRealtimeScore.CurrentScore.Hub.GetActiveShiftTiming(
+	blueRemaining, _ := blueHub.GetActiveShiftTiming(
 		arena.MatchStartTime, currentTime,
 	)
 

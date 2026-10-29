@@ -10,7 +10,10 @@ import (
 )
 
 type MatchResult struct {
-	Id                      int `db:"id"`
+	FuelContext             string        `json:",omitempty"`
+	FuelRevision            uint64        `json:",omitempty"`
+	FuelControl             *FuelMetadata `json:",omitempty"`
+	Id                      int           `db:"id"`
 	MatchId                 int
 	PlayNumber              int
 	MatchType               MatchType
@@ -30,6 +33,34 @@ func NewMatchResult() *MatchResult {
 	matchResult.RedCards = make(map[string]string)
 	matchResult.BlueCards = make(map[string]string)
 	return matchResult
+}
+
+// Clone returns an independent publication/review snapshot, including slices
+// and maps which must not alias the live arena or a mutable request object.
+func (result *MatchResult) Clone() *MatchResult {
+	copy := *result
+	cloneScore := func(score *game.Score) *game.Score {
+		if score == nil {
+			return nil
+		}
+		cloned := *score
+		cloned.Fouls = append([]game.Foul{}, score.Fouls...)
+		return &cloned
+	}
+	cloneCards := func(cards map[string]string) map[string]string {
+		cloned := make(map[string]string, len(cards))
+		for key, value := range cards {
+			cloned[key] = value
+		}
+		return cloned
+	}
+	copy.RedScore, copy.BlueScore = cloneScore(result.RedScore), cloneScore(result.BlueScore)
+	copy.RedCards, copy.BlueCards = cloneCards(result.RedCards), cloneCards(result.BlueCards)
+	if result.FuelControl != nil {
+		metadata := *result.FuelControl
+		copy.FuelControl = &metadata
+	}
+	return &copy
 }
 
 func (database *Database) CreateMatchResult(matchResult *MatchResult) error {

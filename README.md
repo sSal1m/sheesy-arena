@@ -4,6 +4,8 @@ A field management system that just works.
 
 Türkçe teknik dokümantasyon: [Ayrıntılı sistem haritası](docs/SISTEM-HARITASI.md).
 
+2026 REBUILT: [Manual FUEL Control — kullanım, mimari ve test raporu](docs/manual-fuel/README.md).
+
 For the game-agnostic version, see [Cheesy Arena Lite](https://github.com/Team254/cheesy-arena-lite).
 
 ## Key features

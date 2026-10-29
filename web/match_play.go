@@ -527,9 +527,10 @@ func (web *Web) commitMatchScore(match *model.Match, matchResult *model.MatchRes
 
 	if !isMatchReviewEdit {
 		// Store the result in the buffer to be shown in the audience display.
-		web.arena.SavedMatch = match
-		web.arena.SavedMatchResult = matchResult
-		web.arena.SavedRankings = updatedRankings
+		postedMatch := *match
+		web.arena.SavedMatch = &postedMatch
+		web.arena.SavedMatchResult = matchResult.Clone()
+		web.arena.SavedRankings = append(game.Rankings(nil), updatedRankings...)
 		web.arena.ScorePostedNotifier.Notify()
 	}
 
@@ -537,21 +538,18 @@ func (web *Web) commitMatchScore(match *model.Match, matchResult *model.MatchRes
 }
 
 func (web *Web) getCurrentMatchResult() *model.MatchResult {
-	return &model.MatchResult{
-		MatchId:                 web.arena.CurrentMatch.Id,
-		MatchType:               web.arena.CurrentMatch.Type,
-		RedScore:                &web.arena.RedRealtimeScore.CurrentScore,
-		BlueScore:               &web.arena.BlueRealtimeScore.CurrentScore,
-		RedCards:                web.arena.RedRealtimeScore.Cards,
-		BlueCards:               web.arena.BlueRealtimeScore.Cards,
-		PlayoffRedAllianceCard:  web.arena.RedRealtimeScore.PlayoffAllianceCard,
-		PlayoffBlueAllianceCard: web.arena.BlueRealtimeScore.PlayoffAllianceCard,
-	}
+	return web.arena.ScoreResultSnapshot()
 }
 
 // Saves the realtime result as the final score for the match currently loaded into the arena.
 func (web *Web) commitCurrentMatchScore() error {
-	return web.commitMatchScore(web.arena.CurrentMatch, web.getCurrentMatchResult(), false)
+	result, finish, err := web.arena.BeginFuelCommit()
+	if err != nil {
+		return err
+	}
+	err = web.commitMatchScore(web.arena.CurrentMatch, result, false)
+	finish(err == nil)
+	return err
 }
 
 // Helper function to implement the required interface for Sort.

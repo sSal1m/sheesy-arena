@@ -55,22 +55,29 @@ const (
 )
 
 type Arena struct {
-	Database         *model.Database
-	EventSettings    *model.EventSettings
-	accessPoint      network.AccessPoint
-	networkSwitch    *network.Switch
-	redSCC           *network.SCCSwitch
-	blueSCC          *network.SCCSwitch
-	Plc              plc.Plc
-	TbaClient        *partner.TbaClient
-	NexusClient      *partner.NexusClient
-	BlackmagicClient *partner.BlackmagicClient
-	CompanionClient  *partner.CompanionClient
-	AllianceStations map[string]*AllianceStation
-	Displays         map[string]*Display
-	displayRevision  uint64
-	TeamSigns        *TeamSigns
-	Leds             *led.Controller
+	scoreMutex               sync.RWMutex
+	fuelOperationMutex       sync.Mutex
+	fuel                     model.FuelCheckpoint
+	fuelStorageError         string
+	fuelPersistenceUncertain bool
+	fuelBooting              bool
+	lastFuelPublished        uint64
+	Database                 *model.Database
+	EventSettings            *model.EventSettings
+	accessPoint              network.AccessPoint
+	networkSwitch            *network.Switch
+	redSCC                   *network.SCCSwitch
+	blueSCC                  *network.SCCSwitch
+	Plc                      plc.Plc
+	TbaClient                *partner.TbaClient
+	NexusClient              *partner.NexusClient
+	BlackmagicClient         *partner.BlackmagicClient
+	CompanionClient          *partner.CompanionClient
+	AllianceStations         map[string]*AllianceStation
+	Displays                 map[string]*Display
+	displayRevision          uint64
+	TeamSigns                *TeamSigns
+	Leds                     *led.Controller
 	ScoringPanelRegistry
 	ArenaNotifiers
 	MatchState
@@ -153,10 +160,19 @@ func NewArena(dbPath string) (*Arena, error) {
 	}
 
 	arena.ScoringPanelRegistry.initialize()
+	checkpoint, err := arena.Database.GetFuelCheckpoint()
+	if err != nil {
+		return nil, err
+	}
+	if checkpoint != nil {
+		arena.fuel.Mode = checkpoint.Mode
+	}
 
 	// Load empty match as current.
 	arena.MatchState = PreMatch
+	arena.fuelBooting = true
 	arena.LoadTestMatch()
+	arena.fuelBooting = false
 	arena.LastMatchTimeSec = 0
 	arena.lastMatchState = -1
 
@@ -165,6 +181,9 @@ func NewArena(dbPath string) (*Arena, error) {
 	arena.SavedMatch = &model.Match{}
 	arena.SavedMatchResult = model.NewMatchResult()
 	arena.AllianceStationDisplayMode = "match"
+	if err := arena.recoverFuel(checkpoint); err != nil {
+		return nil, err
+	}
 
 	return arena, nil
 }
@@ -332,6 +351,18 @@ func (arena *Arena) UpdatePlayoffTournament() error {
 
 // Sets up the arena for the given match.
 func (arena *Arena) LoadMatch(match *model.Match) error {
+	arena.fuelOperationMutex.Lock()
+	defer arena.fuelOperationMutex.Unlock()
+	if err := arena.loadMatch(match); err != nil {
+		return err
+	}
+	if !arena.fuelBooting {
+		return arena.persistFuelLocked()
+	}
+	return nil
+}
+
+func (arena *Arena) loadMatch(match *model.Match) error {
 	if arena.MatchState != PreMatch && arena.MatchState != TimeoutActive {
 		return fmt.Errorf("cannot load match while there is a match still in progress or with results pending")
 	}
@@ -397,9 +428,12 @@ func (arena *Arena) LoadMatch(match *model.Match) error {
 	}
 
 	// Reset the arena state and realtime scores.
+	arena.scoreMutex.Lock()
 	arena.soundsPlayed = make(map[*game.MatchSound]struct{})
 	arena.RedRealtimeScore = NewRealtimeScore()
 	arena.BlueRealtimeScore = NewRealtimeScore()
+	arena.newFuelAttemptLocked(match)
+	arena.scoreMutex.Unlock()
 	arena.ScoringPanelRegistry.resetScoreCommitted()
 	arena.Plc.ResetMatch()
 	arena.NextFoulId = 1
@@ -508,6 +542,8 @@ func (arena *Arena) SubstituteTeams(red1, red2, red3, blue1, blue2, blue3 int) e
 
 // Starts the match if all conditions are met.
 func (arena *Arena) StartMatch() error {
+	arena.fuelOperationMutex.Lock()
+	defer arena.fuelOperationMutex.Unlock()
 	err := arena.checkCanStartMatch()
 	if err == nil {
 		// Save the match start time to the database for posterity.
@@ -539,6 +575,14 @@ func (arena *Arena) StartMatch() error {
 		arena.lastTeamLogTime = time.Time{}
 
 		arena.MatchState = StartMatch
+		arena.scoreMutex.Lock()
+		arena.fuel.Started = true
+		arena.fuel.Match = *arena.CurrentMatch
+		arena.fuel.Revision++
+		arena.scoreMutex.Unlock()
+		if persistErr := arena.persistFuelLocked(); persistErr != nil {
+			log.Printf("FUEL start checkpoint failed: %v", persistErr)
+		}
 
 		if arena.EventSettings.NexusAutoQueueEnabled && arena.CurrentMatch.Type != model.Test {
 			go arena.NexusClient.MatchStarted(arena.CurrentMatch.LongName, arena.CurrentMatch.TypeOrder)
@@ -571,8 +615,19 @@ func (arena *Arena) AbortMatch() error {
 
 // Clears out the match and resets the arena state unless there is a match underway.
 func (arena *Arena) ResetMatch() error {
+	arena.fuelOperationMutex.Lock()
+	defer arena.fuelOperationMutex.Unlock()
 	if arena.MatchState != PostMatch && arena.MatchState != PreMatch && arena.MatchState != TimeoutActive {
 		return fmt.Errorf("cannot reset match while it is in progress")
+	}
+	arena.scoreMutex.Lock()
+	if arena.fuel.Status != "committed" {
+		arena.fuel.Status = "discarded"
+	}
+	arena.fuel.Revision++
+	arena.scoreMutex.Unlock()
+	if err := arena.persistFuelLocked(); err != nil {
+		return err
 	}
 	if arena.MatchState != TimeoutActive {
 		arena.MatchState = PreMatch
@@ -710,6 +765,7 @@ func (arena *Arena) Update() {
 		enabled = true
 		sendDsPacket = true
 		arena.Plc.ResetMatch()
+		arena.resetFuelCursor()
 		arena.FieldVolunteers = false
 		arena.FieldReset = false
 	case AutoPeriod:
@@ -794,8 +850,10 @@ func (arena *Arena) Update() {
 
 	arena.handleSounds(matchTimeSec)
 
-	oldRedScore := arena.RedRealtimeScore.CurrentScore
-	oldBlueScore := arena.BlueRealtimeScore.CurrentScore
+	arena.syncFuelPhase()
+	arena.scoreMutex.Lock()
+	oldRedScore := cloneGameScore(arena.RedRealtimeScore.CurrentScore)
+	oldBlueScore := cloneGameScore(arena.BlueRealtimeScore.CurrentScore)
 	oldRedActiveRemainingSec := arena.RedRealtimeScore.ActiveRemainingSec
 	redActiveRemaining, redActiveDuration := arena.RedRealtimeScore.CurrentScore.Hub.GetActiveShiftTiming(
 		arena.MatchStartTime, currentTime,
@@ -808,6 +866,7 @@ func (arena *Arena) Update() {
 	)
 	arena.BlueRealtimeScore.ActiveRemainingSec = int(math.Ceil(blueActiveRemaining.Seconds()))
 	arena.BlueRealtimeScore.ActiveDurationSec = int(math.Ceil(blueActiveDuration.Seconds()))
+	arena.scoreMutex.Unlock()
 
 	// Handle field sensors/lights/actuators.
 	arena.handlePlcInputOutput()
@@ -819,11 +878,21 @@ func (arena *Arena) Update() {
 	// Log after PLC input so each sample includes the latest physical DS Ethernet state.
 	arena.logTeamSnapshots()
 
-	if !oldRedScore.Equals(&arena.RedRealtimeScore.CurrentScore) ||
+	arena.scoreMutex.RLock()
+	scoreChanged := !oldRedScore.Equals(&arena.RedRealtimeScore.CurrentScore) ||
 		!oldBlueScore.Equals(&arena.BlueRealtimeScore.CurrentScore) ||
 		oldRedActiveRemainingSec != arena.RedRealtimeScore.ActiveRemainingSec ||
-		oldBlueActiveRemainingSec != arena.BlueRealtimeScore.ActiveRemainingSec {
+		oldBlueActiveRemainingSec != arena.BlueRealtimeScore.ActiveRemainingSec
+	arena.scoreMutex.RUnlock()
+	if scoreChanged {
 		arena.RealtimeScoreNotifier.Notify()
+	}
+	arena.scoreMutex.Lock()
+	publishFuel := arena.lastFuelPublished != arena.fuel.Revision
+	arena.lastFuelPublished = arena.fuel.Revision
+	arena.scoreMutex.Unlock()
+	if publishFuel {
+		arena.ManualFuelNotifier.Notify()
 	}
 
 	// Handle the team number / timer displays.
@@ -875,6 +944,7 @@ func (arena *Arena) logTeamSnapshots() {
 
 // Loops indefinitely to track and update the arena components.
 func (arena *Arena) Run() {
+	go arena.runFuelCheckpoints()
 	// Bind the shared driver station UDP socket before any loop sends control packets from it.
 	arena.initializeUdpListener()
 
@@ -901,11 +971,15 @@ func (arena *Arena) Run() {
 
 // Calculates the red alliance score summary for the given realtime snapshot.
 func (arena *Arena) RedScoreSummary() *game.ScoreSummary {
+	arena.scoreMutex.RLock()
+	defer arena.scoreMutex.RUnlock()
 	return arena.RedRealtimeScore.CurrentScore.Summarize(&arena.BlueRealtimeScore.CurrentScore)
 }
 
 // Calculates the blue alliance score summary for the given realtime snapshot.
 func (arena *Arena) BlueScoreSummary() *game.ScoreSummary {
+	arena.scoreMutex.RLock()
+	defer arena.scoreMutex.RUnlock()
 	return arena.BlueRealtimeScore.CurrentScore.Summarize(&arena.RedRealtimeScore.CurrentScore)
 }
 
@@ -1243,6 +1317,8 @@ func (arena *Arena) getAssignedAllianceStation(teamId int) string {
 
 // handleAutoWinner determines which alliance "won" the autonomous period and triggers downstream effects.
 func (arena *Arena) handleAutoWinner() {
+	arena.scoreMutex.Lock()
+	defer arena.scoreMutex.Unlock()
 	// Calculate auto winner and propagate the result.
 	redAutoFuel := arena.RedRealtimeScore.CurrentScore.Hub.GetShiftCount(game.ShiftAuto, true)
 	blueAutoFuel := arena.BlueRealtimeScore.CurrentScore.Hub.GetShiftCount(game.ShiftAuto, true)
@@ -1253,6 +1329,10 @@ func (arena *Arena) handleAutoWinner() {
 	}
 	arena.RedRealtimeScore.CurrentScore.Hub.WonAuto = arena.redWonAuto
 	arena.BlueRealtimeScore.CurrentScore.Hub.WonAuto = !arena.redWonAuto
+	arena.fuel.Red.Raw.WonAuto = arena.redWonAuto
+	arena.fuel.Blue.Raw.WonAuto = !arena.redWonAuto
+	arena.fuel.AutoWinnerFrozen = true
+	arena.fuel.Revision++
 
 	// Populate the game data; it'll get automatically sent to the team driver stations in the next loop.
 	gameData := "B"
@@ -1322,8 +1402,10 @@ func (arena *Arena) handlePlcInputOutput() {
 		if arena.FieldReset {
 			arena.Plc.SetFieldResetLight(true)
 		}
+		arena.scoreMutex.RLock()
 		scoreReady := arena.RedRealtimeScore.FoulsCommitted && arena.BlueRealtimeScore.FoulsCommitted &&
 			arena.positionPostMatchScoreReady("red") && arena.positionPostMatchScoreReady("blue")
+		arena.scoreMutex.RUnlock()
 		arena.Plc.SetStackLights(false, false, !scoreReady, false)
 	case AutoPeriod, PausePeriod, TeleopPeriod:
 		arena.Plc.SetStackBuzzer(false)
@@ -1332,9 +1414,7 @@ func (arena *Arena) handlePlcInputOutput() {
 
 	matchStartTime := arena.MatchStartTime
 	currentTime := time.Now()
-	redHubCount, blueHubCount := arena.Plc.GetHubCounts()
-	arena.RedRealtimeScore.CurrentScore.Hub.UpdateState(redHubCount, matchStartTime, currentTime)
-	arena.BlueRealtimeScore.CurrentScore.Hub.UpdateState(blueHubCount, matchStartTime, currentTime)
+	arena.processFuelSnapshot(arena.Plc.GetFuelSnapshot(), currentTime)
 
 	// Run the hub motors for extra time after the match ends or is aborted to help exhaust balls, but stop them
 	// immediately while the field e-stop is pressed.
@@ -1349,6 +1429,9 @@ func (arena *Arena) handlePlcInputOutput() {
 		arena.MatchState == TeleopPeriod ||
 		arena.MatchState == PostMatch && currentTime.Before(motorCutoff)) &&
 		!arena.Plc.GetFieldEStop()
+	if arena.FuelState().Recovered {
+		motorsOn = false
+	}
 	arena.Plc.SetHubMotors(motorsOn, motorsOn)
 
 	redHubLight, blueHubLight := arena.getHubLightStates(currentTime)
@@ -1356,6 +1439,8 @@ func (arena *Arena) handlePlcInputOutput() {
 }
 
 func (arena *Arena) getHubLightStates(currentTime time.Time) (bool, bool) {
+	arena.scoreMutex.RLock()
+	defer arena.scoreMutex.RUnlock()
 	switch arena.MatchState {
 	case AutoPeriod, PausePeriod:
 		return true, true
